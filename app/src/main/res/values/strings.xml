@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">滴水穿石</string>
+    <string name="share">分  享</string>
+    <string name="about">关  于</string>
+    <string name="menu_home">首页</string>
+    <string name="menu_demo">演练</string>
+    <string name="menu_collect">精选</string>
+    <string name="menu_account">我的</string>
+</resources>

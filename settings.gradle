@@ -1,0 +1,2 @@
+include ':app', ':core', ':ui', ':optimize', ':common'
+rootProject.name='DripStone'
