@@ -18,7 +18,7 @@ import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
 import com.walker.dripstone.fragment.DemoFragment
-import com.walker.dripstone.fragment.HomeFragment
+import com.walker.dripstone.home.headline.HomeFragment
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : AppCompatActivity() {

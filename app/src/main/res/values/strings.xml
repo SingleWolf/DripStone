@@ -6,4 +6,6 @@
     <string name="menu_demo">演练</string>
     <string name="menu_collect">精选</string>
     <string name="menu_account">我的</string>
+
+    <string name="msg_empty">这是空的哦</string>
 </resources>

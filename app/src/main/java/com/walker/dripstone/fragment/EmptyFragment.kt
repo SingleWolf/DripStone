@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.FragmentOthersBinding
 
-class HomeFragment : Fragment() {
+class EmptyFragment : Fragment() {
     private lateinit var mBinding: FragmentOthersBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +22,8 @@ class HomeFragment : Fragment() {
             container,
             false
         )
-        mBinding.tvTitle.text = getString(R.string.menu_home)
+        mBinding.tvTitle.text=getString(R.string.msg_empty)
         return mBinding.root
     }
+
 }
