@@ -1,6 +1,9 @@
 package com.walker.dripstone.home.headline
 
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
+import com.walker.common.arouter.RouteServiceManager
+import com.walker.common.arouter.ui.ISummaryProvider
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import com.walker.dripstone.fragment.EmptyFragment
@@ -53,7 +56,12 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
                 "}"
 
         fun createFragment(key: String): Fragment {
-            return EmptyFragment()
+            var fragment: Fragment = EmptyFragment()
+            if (TextUtils.equals("101", key)) {
+                val summaryProvider = RouteServiceManager.provide(ISummaryProvider::class.java,ISummaryProvider.UI_SUMMARY_SERVICE)
+                fragment = summaryProvider?.getSummaryFragment()!!
+            }
+            return fragment
         }
     }
 

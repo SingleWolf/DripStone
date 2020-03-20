@@ -36,14 +36,13 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraint_layout_verson"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidx_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidx_version"
-    implementation 'com.kingja.loadsir:loadsir:1.3.6'
+    api "com.google.code.gson:gson:$rootProject.ext.gson_version"
+    api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"
+    api "com.kingja.loadsir:loadsir:$rootProject.ext.loadsir_version"
     implementation 'com.airbnb.android:lottie:2.8.0'
-    //引入rxjava
-    api 'io.reactivex.rxjava2:rxjava:2.1.16'
 }
