@@ -1,5 +1,5 @@
 package com.walker.dripstone.home
 
-data class Channel(val channelId: String, val channelName: String, val uri: String?)
+data class Channel(var channelId: String="", var channelName: String="", var uri: String="")
 
 data class HomeChannels(val channelList:ArrayList<Channel>)

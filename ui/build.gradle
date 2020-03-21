@@ -47,10 +47,16 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidx_version"
+
     implementation project(':core')
     implementation project(':common')
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
 
     api "com.alibaba:arouter-api:$rootProject.ext.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
 }

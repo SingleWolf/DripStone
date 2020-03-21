@@ -6,16 +6,19 @@ import com.walker.common.arouter.RouteServiceManager
 import com.walker.common.arouter.ui.ISummaryProvider
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
+import com.walker.core.util.Utils
 import com.walker.dripstone.fragment.EmptyFragment
 import com.walker.dripstone.home.Channel
 import com.walker.dripstone.home.HomeChannels
+import com.walker.dripstone.home.MockHomeChannels
+import kotlinx.coroutines.*
 
 class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     HomeChannels::class.java
 ) {
 
     companion object {
-        const val CHANNEL_DATA = "{\n" +
+        const val DEFAULT_CHANNEL_DATA = "{\n" +
                 "    \"channelList\": [\n" +
                 "        {\n" +
                 "            \"channelId\": \"101\",\n" +
@@ -39,16 +42,6 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
                 "        },\n" +
                 "        {\n" +
                 "            \"channelId\": \"105\",\n" +
-                "            \"channelName\": \"排雷\",\n" +
-                "            \"uri\": \"\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"channelId\": \"106\",\n" +
-                "            \"channelName\": \"推荐\",\n" +
-                "            \"uri\": \"\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"channelId\": \"107\",\n" +
                 "            \"channelName\": \"工具\",\n" +
                 "            \"uri\": \"\"\n" +
                 "        }\n" +
@@ -58,7 +51,10 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
         fun createFragment(key: String): Fragment {
             var fragment: Fragment = EmptyFragment()
             if (TextUtils.equals("101", key)) {
-                val summaryProvider = RouteServiceManager.provide(ISummaryProvider::class.java,ISummaryProvider.UI_SUMMARY_SERVICE)
+                val summaryProvider = RouteServiceManager.provide(
+                    ISummaryProvider::class.java,
+                    ISummaryProvider.UI_SUMMARY_SERVICE
+                )
                 fragment = summaryProvider?.getSummaryFragment()!!
             }
             return fragment
@@ -78,15 +74,23 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     }
 
     override fun load() {
-        val data = mockData()
-        if (data == null) {
-            onFailure(Throwable("数据加载失败"))
-        } else {
-            onSuccess(data, false)
+        runBlocking {
+            val data= withContext(Dispatchers.Default) { mockData() }
+            takeIf { data != null }?.also {
+                onSuccess(data, false)
+            } ?: onFailure(Throwable("数据加载失败"))
         }
     }
 
-    fun mockData(): HomeChannels? {
-        return GsonUtils.fromLocalJson(CHANNEL_DATA, HomeChannels::class.java)
+    suspend fun mockData(): HomeChannels? {
+        var homeChannels: HomeChannels? = null
+        withContext(Dispatchers.IO) {
+            var jsonData = MockHomeChannels.getChannels()
+            if (Utils.isEmpty(jsonData)) {
+                jsonData = DEFAULT_CHANNEL_DATA
+            }
+            homeChannels = GsonUtils.fromLocalJson(jsonData, HomeChannels::class.java)
+        }
+        return homeChannels
     }
 }

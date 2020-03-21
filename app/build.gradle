@@ -57,6 +57,7 @@ dependencies {
     implementation project(':common')
     implementation project(':ui')
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
     implementation 'q.rorbin:badgeview:1.1.3'
 
     api "com.alibaba:arouter-api:$rootProject.ext.arouter_api_version"

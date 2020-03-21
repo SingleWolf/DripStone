@@ -17,7 +17,7 @@ class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
     private val fragmentHashMap = HashMap<String, Fragment>()
 
     override fun getItem(pos: Int): Fragment {
-        val key = channels[pos].channelId + "_" + channels[pos].channelName
+        val key = "${channels[pos].channelId}_$${channels[pos].channelName}"
         var fragment: Fragment? = fragmentHashMap[key]
         fragment ?: let {
             fragment = HomeChannelModel.createFragment(channels[pos].channelId)

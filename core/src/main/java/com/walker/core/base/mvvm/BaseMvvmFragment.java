@@ -154,6 +154,7 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     break;
                 case NO_MORE_DATA:
                     ToastUtils.show(getString(R.string.no_more_data));
+                    loadEnd();
                     break;
                 case REFRESH_ERROR:
                     if (((ObservableArrayList)viewModel.dataList.getValue()).size() == 0) {
@@ -161,6 +162,7 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     } else {
                         ToastUtils.show(viewModel.errorMessage.getValue().toString());
                     }
+                    loadEnd();
                     break;
                 case LOAD_MORE_FAILED:
                     ToastUtils.show(viewModel.errorMessage.getValue().toString());
@@ -182,4 +184,6 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
             mLoadService.showCallback(LoadingCallback.class);
         }
     }
+
+    protected abstract void loadEnd();
 }
