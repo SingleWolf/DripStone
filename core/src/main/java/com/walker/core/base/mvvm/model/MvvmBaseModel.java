@@ -20,13 +20,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcquireDataObserver<F>{
+public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcquireDataObserver<F> {
     private CompositeDisposable compositeDisposable;
     protected ReferenceQueue<IBaseModelListener> mReferenceQueue;
     protected ConcurrentLinkedQueue<WeakReference<IBaseModelListener>> mWeakListenerArrayList;
     private BaseCachedData<F> mCachedData;
     protected boolean isRefresh = true;
     protected int pageNumber = 0;
+    protected int resetPageNumber = 0;
     /**
      * 缓存数据获取key
      */
@@ -45,14 +46,15 @@ public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcqui
     private Class<F> clazz;
 
     public MvvmBaseModel(Class<F> clazz) {
-        this(clazz,false,null,null,0);
+        this(clazz, false, null, null, 0);
     }
 
     public MvvmBaseModel(Class<F> clazz, boolean isPaging, String cacheDataKey, String apkPredefinedData, int... initPageNumber) {
         this.mIsPaging = isPaging;
         this.clazz = clazz;
-        if(initPageNumber != null && initPageNumber.length == 1) {
+        if (initPageNumber != null && initPageNumber.length == 1) {
             this.pageNumber = initPageNumber[0];
+            resetPageNumber = pageNumber;
         }
         this.mCachedDataKey = cacheDataKey;
         this.mApkPredefinedData = apkPredefinedData;
@@ -118,7 +120,7 @@ public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcqui
     }
 
     protected void saveDataToCache(F data) {
-        if(data != null) {
+        if (data != null) {
             mCachedData.data = data;
             mCachedData.updateTimeInMills = System.currentTimeMillis();
             BasicDataSPHelper.get().setString(mCachedDataKey, GsonUtils.toJson(mCachedData));
@@ -178,7 +180,7 @@ public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcqui
 
             if (mApkPredefinedData != null) {
                 F savedData = GsonUtils.fromLocalJson(mApkPredefinedData, clazz);
-                if(savedData != null) {
+                if (savedData != null) {
                     onSuccess(savedData, true);
                 }
             }
@@ -195,19 +197,26 @@ public abstract class MvvmBaseModel<F, T extends ArrayList> implements MvvmAcqui
                 if (weakListener.get() instanceof IBaseModelListener) {
                     IBaseModelListener listenerItem = weakListener.get();
                     if (listenerItem != null) {
+                        //分页
                         if (isPaging()) {
+                            //刷新时，将页数标识重置
+                            if (isRefresh) {
+                                pageNumber = resetPageNumber;
+                            }
+                            //真正获取到有效数据时，当前页数自动累加
+                            if (!isFromCache && 0 < data.size()) {
+                                pageNumber++;
+                            }
                             listenerItem.onLoadFinish(this, data,
-                                    isFromCache? new PagingResult(false, true, true) :
+                                    isFromCache ? new PagingResult(false, true, true) :
                                             new PagingResult(data.isEmpty(), isRefresh, data.size() > 0));
-                            if(!Utils.isEmpty(mCachedDataKey) && isRefresh && !isFromCache) {
+                            if (!Utils.isEmpty(mCachedDataKey) && isRefresh && !isFromCache) {
                                 saveDataToCache(networkResonseBean);
                             }
-                            if(!isFromCache) {
-                                pageNumber ++;
-                            }
                         } else {
+                            //未分页
                             listenerItem.onLoadFinish(this, data);
-                            if(!Utils.isEmpty(mCachedDataKey)) {
+                            if (!Utils.isEmpty(mCachedDataKey)) {
                                 saveDataToCache(networkResonseBean);
                             }
                         }
