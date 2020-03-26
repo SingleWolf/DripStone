@@ -1,6 +1,6 @@
 package com.walker.ui
 
-import com.walker.core.log.LogUtils
+import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
@@ -38,7 +38,7 @@ class MockSummaryData private constructor() {
                     desc = ""
                     add(this)
 
-                    LogUtils.d("generateSummary",title,true)
+                    LogHelper.get().d("generateSummary", title, true)
                 }
             }
         }
@@ -59,10 +59,12 @@ class MockSummaryData private constructor() {
                     if (0 <= index && index < dataPool.size) {
                         summaryList.add(dataPool[index])
                     }
-                    LogUtils.d("listSummary","获取第${index}个数据",true)
                 }
             }
         }
+        LogHelper.get().d("generateSummary", "listSummary success", true,true)
+
+
         summaryListBean = SummaryListBean(summaryList, dataPool.size, pageNum)
         return GsonUtils.toJson(summaryListBean)
     }

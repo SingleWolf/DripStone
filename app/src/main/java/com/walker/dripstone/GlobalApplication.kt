@@ -5,14 +5,14 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.kingja.loadsir.core.LoadSir
 import com.walker.core.exception.CrashHandler
 import com.walker.core.log.DefaultLogger
+import com.walker.core.log.LogHelper
 import com.walker.core.log.LogLevel
-import com.walker.core.log.LogUtils
 import com.walker.core.store.sp.SPHelper
 import com.walker.core.store.storage.StorageHelper
 import com.walker.core.ui.loadsir.*
 import com.walker.core.util.ToastUtils
 
-class GlobalApplication:Application() {
+class GlobalApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initConfig()
@@ -39,9 +39,10 @@ class GlobalApplication:Application() {
             .setDefaultCallback(LoadingCallback::class.java)//设置默认状态页
             .commit()
         //Storage
-        StorageHelper.init(this,"DripStone")
+        StorageHelper.init(this, "DripStone")
         //Log
-        LogUtils.init(LogLevel.DEBUG,DefaultLogger(this),null)
+        LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
+            .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
     }
 
 }

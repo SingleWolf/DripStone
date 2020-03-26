@@ -1,6 +1,7 @@
 package com.walker.core.log;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.walker.core.store.sp.SPHelper;
 
@@ -8,7 +9,6 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @Summary 日志打印到文件
  */
 public abstract class BaseLogger {
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     protected Context mContext;
     private String mLogDirPath;
@@ -28,7 +28,7 @@ public abstract class BaseLogger {
     private static final String SP_KEY_CUR_LOG_FILE_FLAG_MAIN = "cur_log_file_flag";
 
     private RandomAccessFile mLogRandomAccessFile;
-    private long MAX_FILE_LENGTH = 5 * 1024 * 1024; //单个文件限制大小
+    private static final long DEFAULT_MAX_FILE_LENGTH = 1 * 1024 * 1024; //单个文件限制大小
     private int CHECK_SIZE_TIMES = 10; //每写入10次，检查一下文件大小是否超出限制
     private String FIRST_FILE_NAME = FIRST_LOG_FILE_NAME_MAIN; //第一个日志文件的名称
     private String SECOND_FILE_NAME = SECOND_LOG_FILE_NAME_MAIN; //第二个日志文件的名称
@@ -47,9 +47,15 @@ public abstract class BaseLogger {
     private void init() {
         mLogDirPath = getLogDirPath();
         mMaxFileSize = getMaxFileSize();
+        if (TextUtils.isEmpty(mLogDirPath)) {
+            mLogDirPath = mContext.getExternalFilesDir("DripLog").getAbsolutePath() + File.separator + "log";
+        }
+        if (mMaxFileSize < DEFAULT_MAX_FILE_LENGTH) {
+            mMaxFileSize = DEFAULT_MAX_FILE_LENGTH;
+        }
     }
 
-    public void start(){
+    public void start() {
         LoggerTaskThread loggerTaskThread = new LoggerTaskThread();
         loggerTaskThread.setName("DripLogger");
         loggerTaskThread.start();
@@ -71,7 +77,7 @@ public abstract class BaseLogger {
         if (context == null) {
             return null;
         }
-        File file = new File(mLogDirPath + File.separator + "log");
+        File file = new File(mLogDirPath);
         if (!file.exists()) {
             file.mkdirs();
         }
@@ -79,13 +85,13 @@ public abstract class BaseLogger {
     }
 
     /**
-     * 删除老的日志文件
+     * 删除日志文件
      */
-    private void tryDeleteOldFile(Context context) {
-//        File oldFile = context.getExternalFilesDir("log");
-//        if (oldFile != null && oldFile.exists()) {
-//            oldFile.deleteOnExit();
-//        }
+    public void tryDeleteLog(Context context) {
+        File oldFile = new File(mLogDirPath);
+        if (oldFile != null && oldFile.exists()) {
+            oldFile.deleteOnExit();
+        }
     }
 
     public void writeDisk(String tag, String message, String level) {
@@ -101,7 +107,7 @@ public abstract class BaseLogger {
             if (mLogRandomAccessFile != null) {
                 byte[] msgByte = msg.getBytes("UTF-8");
                 if (curWriteTime % CHECK_SIZE_TIMES == 0) {
-                    if (mLogRandomAccessFile.length() + msgByte.length > MAX_FILE_LENGTH) {
+                    if (mLogRandomAccessFile.length() + msgByte.length > mMaxFileSize) {
                         //切换文件
                         curLogFileFlag = curLogFileFlag == 0 ? 1 : 0;
                         switchLogRandomAccessFile(curLogFileFlag == 0 ? FIRST_FILE_NAME : SECOND_FILE_NAME);
@@ -140,7 +146,6 @@ public abstract class BaseLogger {
         @Override
         public void run() {
             try {
-                tryDeleteOldFile(mContext);
                 File rootDir = getDirFile(mContext);
                 try {
                     curLogFileFlag = SPHelper.get().getInt(SP_KEY_CUR_LOG_FILE_FLAG, 0);

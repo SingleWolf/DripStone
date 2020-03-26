@@ -32,9 +32,6 @@ public class LogHelper {
 
     public LogHelper setLogger(BaseLogger logger) {
         mLogger = logger;
-        if (mLogger != null) {
-            mLogger.start();
-        }
         return this;
     }
 
@@ -42,6 +39,72 @@ public class LogHelper {
         mExtraLogHandler = extraLogHandler;
         return this;
     }
+
+    public void config(){
+        if (mLogger != null) {
+            mLogger.start();
+        }
+    }
+
+    /**
+     * 打印调试信息
+     *
+     * @param message 信息
+     */
+
+    public void d(String tag, String message) {
+        d(tag, message, false, false);
+    }
+
+
+    /**
+     * 打印重要数据
+     *
+     * @param message 信息
+     */
+
+    public void i(String tag, String message) {
+        i(tag, message, false, false);
+    }
+
+
+    /**
+     * 打印警告信息
+     *
+     * @param message 信息
+     */
+
+    public void w(String tag, String message) {
+        w(tag, message, false, false);
+    }
+
+
+    /**
+     * 打印错误信息
+     *
+     * @param message 信息
+     */
+
+    public void e(String tag, String message) {
+        e(tag, message, false, false);
+    }
+
+    public void d(String tag, String message, boolean isSave) {
+        d(tag, message, isSave, false);
+    }
+
+    public void i(String tag, String message, boolean isSave) {
+        i(tag, message, isSave, false);
+    }
+
+    public void w(String tag, String message, boolean isSave) {
+        w(tag, message, isSave, false);
+    }
+
+    public void e(String tag, String message, boolean isSave) {
+        e(tag, message, isSave, false);
+    }
+
 
     public void d(String tag, String message, boolean isSave, boolean isExtra) {
         if (mMinLevel <= LogLevel.DEBUG) {

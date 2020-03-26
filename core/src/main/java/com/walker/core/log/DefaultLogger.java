@@ -2,6 +2,8 @@ package com.walker.core.log;
 
 import android.content.Context;
 
+import java.io.File;
+
 public class DefaultLogger extends BaseLogger {
 
     public DefaultLogger(Context context) {
@@ -10,11 +12,11 @@ public class DefaultLogger extends BaseLogger {
 
     @Override
     protected String getLogDirPath() {
-        return mContext.getExternalFilesDir("DripStone").getAbsolutePath();
+        return mContext.getExternalFilesDir("DripStone").getAbsolutePath() + File.separator + "log";
     }
 
     @Override
     protected long getMaxFileSize() {
-        return 1*1024;
+        return 5 * 1024 * 1024;
     }
 }

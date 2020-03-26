@@ -19,46 +19,50 @@ public class ToastUtils {
     }
 
     public static void show(String msg) {
-        show(msg,Toast.LENGTH_SHORT);
+        show(msg, Toast.LENGTH_SHORT);
     }
 
     public static void showLong(String msg) {
-        show(msg,Toast.LENGTH_LONG);
+        show(msg, Toast.LENGTH_LONG);
     }
 
     public static void showCenter(String msg) {
-        showCenter(msg,Toast.LENGTH_SHORT);
+        showCenter(msg, Toast.LENGTH_SHORT);
     }
 
     public static void showCenterLong(String msg) {
-        showCenter(msg,Toast.LENGTH_LONG);
+        showCenter(msg, Toast.LENGTH_LONG);
     }
 
     private static void show(String msg, int time) {
         try {
             if (sContext != null && !TextUtils.isEmpty(msg)) {
-                if (sToast != null) {
-                    sToast.cancel();
-                }
-                sToast = Toast.makeText(sContext, "", time);
-                sToast.setText(msg);
-                sToast.show();
+                ExecutorUtils.runTaskOnUiThread(() -> {
+                    if (sToast != null) {
+                        sToast.cancel();
+                    }
+                    sToast = Toast.makeText(sContext, "", time);
+                    sToast.setText(msg);
+                    sToast.show();
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void showCenter(String msg,int time){
+    public static void showCenter(String msg, int time) {
         try {
             if (sContext != null && !TextUtils.isEmpty(msg)) {
-                if (sToast != null) {
-                    sToast.cancel();
-                }
-                sToast = Toast.makeText(sContext, "", time);
-                sToast.setText(msg);
-                sToast.setGravity(Gravity.CENTER, 0, 0);
-                sToast.show();
+                ExecutorUtils.runTaskOnUiThread(() -> {
+                    if (sToast != null) {
+                        sToast.cancel();
+                    }
+                    sToast = Toast.makeText(sContext, "", time);
+                    sToast.setText(msg);
+                    sToast.setGravity(Gravity.CENTER, 0, 0);
+                    sToast.show();
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
