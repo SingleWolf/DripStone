@@ -1,4 +1,4 @@
-package com.walker.ui.summary
+package com.walker.collect.summary
 
 import android.os.Bundle
 import android.util.Log
@@ -6,24 +6,20 @@ import android.view.View
 import androidx.databinding.ObservableList
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.scwang.smartrefresh.header.WaterDropHeader
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter
+import com.walker.collect.R
+import com.walker.collect.databinding.FragmentCollectSummaryBinding
 import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
-import com.walker.ui.R
-import com.walker.ui.databinding.FragmentSummaryBinding
-
 
 @Suppress("DEPRECATION")
 class SummaryFragment :
-    BaseMvvmFragment<FragmentSummaryBinding, SummaryViewModel, BaseCustomViewModel>() {
+    BaseMvvmFragment<FragmentCollectSummaryBinding, SummaryViewModel, BaseCustomViewModel>() {
 
     lateinit var summaryAdapter: SummaryRecyclerViewAdapter
 
     override fun getBindingVariable() = 0
 
-    override fun getLayoutId() = R.layout.fragment_summary
+    override fun getLayoutId() = R.layout.fragment_collect_summary
 
     override fun getViewModel(): SummaryViewModel {
         if (viewModel == null) {
@@ -40,18 +36,6 @@ class SummaryFragment :
         viewDataBinding.listview.layoutManager = LinearLayoutManager(context)
         summaryAdapter = SummaryRecyclerViewAdapter()
         viewDataBinding.listview.adapter = summaryAdapter
-        viewDataBinding.refreshLayout.setRefreshHeader(WaterDropHeader(context))
-        context?.let {
-            BallPulseFooter(it).setSpinnerStyle(
-                SpinnerStyle.Scale
-            )
-        }?.let {
-            viewDataBinding.refreshLayout.setRefreshFooter(
-                it
-            )
-        }
-        viewDataBinding.refreshLayout.setOnRefreshListener { viewModel.tryToRefresh() }
-        viewDataBinding.refreshLayout.setOnLoadMoreListener { viewModel.tryToLoadNextPage() }
         setLoadSir(viewDataBinding.refreshLayout)
         showLoading()
     }
@@ -59,8 +43,6 @@ class SummaryFragment :
     override fun onListItemInserted(sender: ObservableList<BaseCustomViewModel>?) {
         sender?.let {
             summaryAdapter.setData(it)
-            viewDataBinding.refreshLayout.finishLoadMore()
-            viewDataBinding.refreshLayout.finishRefresh()
             showSuccess()
         }
     }
@@ -69,10 +51,8 @@ class SummaryFragment :
         viewModel.tryToRefresh()
     }
 
-    override fun getFragmentTag() = "UISummaryFragment"
+    override fun getFragmentTag() = "CollectSummaryFragment"
 
     override fun loadEnd() {
-        viewDataBinding.refreshLayout.finishLoadMore()
-        viewDataBinding.refreshLayout.finishRefresh()
     }
 }

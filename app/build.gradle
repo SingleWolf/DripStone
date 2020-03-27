@@ -53,7 +53,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation project(':common')
+    implementation project(':network')
     implementation project(':ui')
+    implementation project(':collect')
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
     implementation 'q.rorbin:badgeview:1.1.3'

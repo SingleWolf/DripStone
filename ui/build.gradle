@@ -35,6 +35,9 @@ android {
     dataBinding {
         enabled true
     }
+
+    //给模块设置不同的资源前缀，可以避免重复命名
+    resourcePrefix "ui_"
 }
 
 dependencies {

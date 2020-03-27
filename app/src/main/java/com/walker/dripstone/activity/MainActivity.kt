@@ -13,6 +13,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.walker.common.arouter.RouteServiceManager
+import com.walker.common.arouter.collect.ICollectProvider
+import com.walker.core.log.LogHelper
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
@@ -25,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewDataBinding: ActivityMainBinding
     private var homeFragment = HomeFragment()
     private var demoFragment = DemoFragment()
-    private var collectFragment = CollectFragment()
+    private var collectFragment: Fragment = getCollectFragment()
+
     private var accountFragment = AccountFragment()
     private var fromFragment: Fragment = homeFragment
 
@@ -94,6 +98,21 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun getCollectFragment(): Fragment {
+        var fragment: Fragment
+        val summaryProvider = RouteServiceManager.provide(
+            ICollectProvider::class.java,
+            ICollectProvider.COLLECT_SUMMARY_SERVICE
+        )
+        if (summaryProvider == null) {
+            LogHelper.get().e("getCollectFragment", "summaryProvider is null", true)
+            fragment = CollectFragment()
+        } else {
+            fragment = summaryProvider.getHomeFragment()
+        }
+        return fragment
     }
 
     @SuppressLint("RestrictedApi")

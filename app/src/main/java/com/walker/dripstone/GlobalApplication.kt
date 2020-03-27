@@ -11,6 +11,7 @@ import com.walker.core.store.sp.SPHelper
 import com.walker.core.store.storage.StorageHelper
 import com.walker.core.ui.loadsir.*
 import com.walker.core.util.ToastUtils
+import com.walker.network.retrofit.base.RetrofitNetworkApi
 
 class GlobalApplication : Application() {
     override fun onCreate() {
@@ -25,6 +26,9 @@ class GlobalApplication : Application() {
         CrashHandler.getInstance().init { e -> ToastUtils.showCenter(e.toString()) }
         //SharedPreferences
         SPHelper.init(this)
+        //Log
+        LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
+            .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
         //ARouter
         ARouter.init(this)
         ARouter.openDebug()
@@ -40,9 +44,8 @@ class GlobalApplication : Application() {
             .commit()
         //Storage
         StorageHelper.init(this, "DripStone")
-        //Log
-        LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
-            .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
+       //retrofit
+        RetrofitNetworkApi.init(NetworkRequestInfo(this))
     }
 
 }
