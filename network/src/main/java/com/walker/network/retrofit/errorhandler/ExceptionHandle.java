@@ -128,6 +128,14 @@ public class ExceptionHandle {
     public static class ServerException extends RuntimeException {
         public int code;
         public String message;
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 }
 

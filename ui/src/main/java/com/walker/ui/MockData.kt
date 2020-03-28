@@ -62,9 +62,7 @@ class MockSummaryData private constructor() {
                 }
             }
         }
-        LogHelper.get().d("generateSummary", "listSummary success", true,true)
-
-
+        LogHelper.get().d("generateSummary", "listSummary success", true)
         summaryListBean = SummaryListBean(summaryList, dataPool.size, pageNum)
         return GsonUtils.toJson(summaryListBean)
     }

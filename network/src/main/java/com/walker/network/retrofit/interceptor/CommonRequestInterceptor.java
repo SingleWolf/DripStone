@@ -1,5 +1,6 @@
 package com.walker.network.retrofit.interceptor;
 
+import com.walker.core.log.LogHelper;
 import com.walker.network.retrofit.base.INetworkRequiredInfo;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import okhttp3.Response;
  * @Summary 请求拦截器
  */
 public class CommonRequestInterceptor implements Interceptor {
+    private static final String TAG = "RequestInterceptor";
     private INetworkRequiredInfo requiredInfo;
     public CommonRequestInterceptor(INetworkRequiredInfo requiredInfo){
         this.requiredInfo = requiredInfo;

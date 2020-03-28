@@ -14,11 +14,12 @@ import okhttp3.Response;
  */
 public class CommonResponseInterceptor implements Interceptor {
     private static final String TAG = "ResponseInterceptor";
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         long requestTime = System.currentTimeMillis();
         Response response = chain.proceed(chain.request());
-        LogHelper.get().d(TAG, "requestTime="+ (System.currentTimeMillis() - requestTime));
+        LogHelper.get().d(TAG, "requestUrl =" + response.request().url().toString() + "and requestTime=" + (System.currentTimeMillis() - requestTime),true);
         return response;
     }
 }

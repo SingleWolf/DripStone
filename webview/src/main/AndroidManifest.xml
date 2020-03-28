@@ -1,0 +1,23 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.walker.webview">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application>
+        <service android:name="com.walker.webview.mainprocess.MainProHandleRemoteService" />
+        <service
+            android:name="com.walker.webview.remoteprocessservice.OptimizationService"
+            android:process=":remoteweb" />
+
+        <activity
+            android:name="com.walker.webview.WebviewActivity"
+            android:hardwareAccelerated="true"
+            android:process=":remoteweb"
+            android:theme="@style/WebviewTheme" />
+    </application>
+</manifest>

@@ -5,7 +5,8 @@ import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.walker.collect.fragment.EmptyFragment
+import com.walker.collect.news.newslist.NewsListFragment
+import com.walker.core.log.LogHelper
 import java.util.*
 
 class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
@@ -20,7 +21,8 @@ class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
         val key = "${channels[pos].channelId}_$${channels[pos].channelName}"
         var fragment: Fragment? = fragmentHashMap[key]
         fragment ?: let {
-            fragment = EmptyFragment()
+            fragment =
+                NewsListFragment.newInstance(channels[pos].channelId, channels[pos].channelName)
             fragmentHashMap.put(key, fragment!!)
         }
         return fragment!!
@@ -37,7 +39,7 @@ class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
     }
 
     fun setChannels(channels: ObservableList<Channel>) {
-        this.channels = ObservableArrayList()
+        this.channels.clear()
         this.channels.addAll(channels)
         notifyDataSetChanged()
     }
