@@ -18,7 +18,9 @@ import com.walker.network.retrofit.base.RetrofitNetworkApi
 
 class GlobalApplication : MultiDexApplication() {
 
-    private var activityCount: Int = 0
+    companion object{
+        var activityCount: Int = 0
+    }
 
     override fun onCreate() {
         super.onCreate()

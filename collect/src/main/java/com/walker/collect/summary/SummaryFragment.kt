@@ -6,6 +6,9 @@ import android.view.View
 import androidx.databinding.ObservableList
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scwang.smartrefresh.header.WaterDropHeader
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter
 import com.walker.collect.R
 import com.walker.collect.databinding.FragmentCollectSummaryBinding
 import com.walker.core.base.mvvm.BaseMvvmFragment
@@ -36,6 +39,8 @@ class SummaryFragment :
         viewDataBinding.listview.layoutManager = LinearLayoutManager(context)
         summaryAdapter = SummaryRecyclerViewAdapter()
         viewDataBinding.listview.adapter = summaryAdapter
+        viewDataBinding.refreshLayout.isEnableLoadMore = false
+        viewDataBinding.refreshLayout.isEnableRefresh=false
         setLoadSir(viewDataBinding.refreshLayout)
         showLoading()
     }

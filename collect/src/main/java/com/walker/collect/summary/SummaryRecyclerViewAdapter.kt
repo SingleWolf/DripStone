@@ -1,11 +1,8 @@
 package com.walker.collect.summary
 
-import android.content.Intent
-import android.text.TextUtils
 import android.view.ViewGroup
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
-import com.walker.common.view.titleview.TitleView
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.customview.BaseViewHolder
 
@@ -19,13 +16,7 @@ class SummaryRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val titleView = TitleView(parent.context)
-        titleView.setActionListener { action, view, viewModel ->  if(!TextUtils.isEmpty(viewModel.jumpUri)){
-            Intent().let {
-                it.action=viewModel.jumpUri
-                view.context.startActivity(it)
-            }
-        }}
+        val titleView = SummaryTitleView(parent.context)
         return BaseViewHolder(titleView)
     }
 

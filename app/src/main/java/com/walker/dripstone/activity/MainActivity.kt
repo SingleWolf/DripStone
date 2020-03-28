@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(viewDataBinding.toolbar)
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(false)
             title = getString(R.string.menu_home)
         }
     }

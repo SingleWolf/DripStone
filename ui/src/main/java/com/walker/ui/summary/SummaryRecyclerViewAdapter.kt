@@ -3,7 +3,6 @@ package com.walker.ui.summary
 import android.view.ViewGroup
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
-import com.walker.common.view.titleview.TitleView
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.customview.BaseViewHolder
 
@@ -17,7 +16,7 @@ class SummaryRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val titleView = TitleView(parent.context)
+        val titleView = SummaryTitleView(parent.context)
         return BaseViewHolder(titleView)
     }
 

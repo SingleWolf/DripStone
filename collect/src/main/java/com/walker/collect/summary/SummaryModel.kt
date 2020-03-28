@@ -17,7 +17,7 @@ class SummaryModel :
             val baseViewModels = ArrayList<BaseCustomViewModel>()
             for (source in it.summaryList) {
                 val viewModel = TitleViewViewModel()
-                viewModel.jumpUri = source.uri
+                viewModel.jumpUri = source.key
                 viewModel.title = source.title
                 baseViewModels.add(viewModel)
             }

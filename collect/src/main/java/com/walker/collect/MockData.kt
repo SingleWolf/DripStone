@@ -1,6 +1,7 @@
 package com.walker.collect
 
 import com.walker.collect.news.headline.Channel
+import com.walker.collect.news.headline.NewsSummaryFragment
 import com.walker.collect.summary.Summary
 import com.walker.collect.summary.SummaryListBean
 import com.walker.core.util.GsonUtils
@@ -29,9 +30,9 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
             Summary().run {
-                key = "${++index}"
+                key = NewsSummaryFragment.channel_id
                 title = "新闻头条"
-                uri = "com.walker.dripstone.collect.news_action"
+                uri = ""
                 desc = ""
                 add(this)
             }
