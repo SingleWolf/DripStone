@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.arouter.RouteServiceManager
 import com.walker.common.arouter.collect.ICollectProvider
 import com.walker.core.log.LogHelper
+import com.walker.core.util.ToastUtils
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private var accountFragment = AccountFragment()
     private var fromFragment: Fragment = homeFragment
+    private var backPressTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,5 +179,15 @@ class MainActivity : AppCompatActivity() {
             QBadgeView(this).bindTarget(view)
                 .setGravityOffset((spaceWidth + 50).toFloat(), 13f, false).badgeNumber = showNumber
         }
+    }
+
+    override fun onBackPressed() {
+            val now = System.currentTimeMillis()
+            if (now - backPressTime > 2000) {
+                ToastUtils.showCenter(String.format(getString(R.string.tip_press_again_to_exit),getString(R.string.app_name)))
+                backPressTime = now
+            } else {
+                super.onBackPressed()
+            }
     }
 }

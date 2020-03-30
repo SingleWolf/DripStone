@@ -74,7 +74,6 @@ class GlobalApplication : MultiDexApplication() {
             override fun onActivityStopped(activity: Activity) {
                 LogHelper.get().d("registerActivityLifecycle","${activity::class.java.simpleName} stopped")
                 activityCount--
-                checkIsRunBackground()
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
@@ -86,11 +85,4 @@ class GlobalApplication : MultiDexApplication() {
             }
         })
     }
-
-    private fun checkIsRunBackground() {
-        if (activityCount == 0) {
-            ToastUtils.showCenterLong("${getString(R.string.app_name)}切换到后台运行")
-        }
-    }
-
 }

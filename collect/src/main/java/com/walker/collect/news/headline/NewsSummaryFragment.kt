@@ -37,7 +37,7 @@ class NewsSummaryFragment : Fragment() {
         viewDataBinding.viewpager.adapter = adapter
         viewDataBinding.tablayout.setupWithViewPager(viewDataBinding.viewpager)
         viewDataBinding.viewpager.offscreenPageLimit = 1
-        viewModel.dataList.observe(this, object : Observer<ObservableList<Channel>> {
+        viewModel.dataList.observe(viewLifecycleOwner, object : Observer<ObservableList<Channel>> {
             override fun onChanged(channels: ObservableList<Channel>) {
                 synchronized(this) {
                     adapter.setChannels(channels)
