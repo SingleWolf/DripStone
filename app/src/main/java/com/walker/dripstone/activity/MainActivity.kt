@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +18,7 @@ import com.walker.common.arouter.RouteServiceManager
 import com.walker.common.arouter.collect.ICollectProvider
 import com.walker.core.log.LogHelper
 import com.walker.core.util.ToastUtils
+import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
     private var accountFragment = AccountFragment()
     private var fromFragment: Fragment = homeFragment
     private var backPressTime = 0L
+
+    private val networkState: NetworkState by lazy {
+        NetworkState(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +72,11 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.container, homeFragment, homeFragment.javaClass.simpleName)
         transaction.commit()
         showBadgeView(3, 5)
+        networkState.observe(this, Observer<Boolean> {
+            if (!it) {
+                ToastUtils.show(getString(R.string.tip_net_connect_failed))
+            }
+        })
     }
 
     private fun initToolbar() {
@@ -182,12 +193,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-            val now = System.currentTimeMillis()
-            if (now - backPressTime > 2000) {
-                ToastUtils.showCenter(String.format(getString(R.string.tip_press_again_to_exit),getString(R.string.app_name)))
-                backPressTime = now
-            } else {
-                super.onBackPressed()
-            }
+        val now = System.currentTimeMillis()
+        if (now - backPressTime > 2000) {
+            ToastUtils.showCenter(
+                String.format(
+                    getString(R.string.tip_press_again_to_exit),
+                    getString(R.string.app_name)
+                )
+            )
+            backPressTime = now
+        } else {
+            super.onBackPressed()
+        }
     }
 }

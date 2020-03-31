@@ -9,4 +9,6 @@
 
     <string name="msg_empty">这是空的哦</string>
     <string name="tip_press_again_to_exit">再按一次退出%1$s</string>
+    <string name="tip_net_connect_succeed">网络连接成功</string>
+    <string name="tip_net_connect_failed">网络连接失败</string>
 </resources>

@@ -60,7 +60,7 @@ public class NewsListFragment extends BaseMvvmFragment<FragmentCollectNewsBindin
     }
 
     @Override
-    public void onListItemInserted(ObservableList<BaseCustomViewModel> sender) {
+    public void notifyData(ObservableList<BaseCustomViewModel> sender) {
         mAdapter.setData(sender);
         viewDataBinding.refreshLayout.finishLoadMore();
         viewDataBinding.refreshLayout.finishRefresh();

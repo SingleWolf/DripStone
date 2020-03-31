@@ -7,7 +7,10 @@ import com.walker.common.view.picturetitleview.PictureTitleViewViewModel;
 import com.walker.common.view.titleview.TitleViewViewModel;
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel;
 import com.walker.core.base.mvvm.model.MvvmBaseModel;
-import com.walker.network.retrofit.observer.BaseObserver;
+import com.walker.core.log.LogHelper;
+import com.walker.core.util.GsonUtils;
+import com.walker.network.retrofit.observer.BaseCommonObserver;
+import com.walker.network.retrofit.observer.BaseMvvmObserver;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class NewsListModel extends MvvmBaseModel<NewsListBean, ArrayList<BaseCus
     @Override
     protected void load() {
         JuheNetworkApi.getService(NewsApiInterface.class).getNewsList(NEWS_KEY, mChannelId)
-                .compose(JuheNetworkApi.get().applySchedulers(new BaseObserver<NewsListBean>(this, this)));
+                .compose(JuheNetworkApi.get().applySchedulers(new BaseMvvmObserver<NewsListBean>(this, this)));
     }
 
     @Override

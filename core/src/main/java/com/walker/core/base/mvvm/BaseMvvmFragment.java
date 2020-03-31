@@ -2,7 +2,6 @@ package com.walker.core.base.mvvm;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.kingja.loadsir.core.LoadSir;
 import com.walker.core.R;
 import com.walker.core.base.mvvm.viewmodel.MvvmBaseViewModel;
 import com.walker.core.base.mvvm.viewmodel.ViewStatus;
+import com.walker.core.log.LogHelper;
 import com.walker.core.ui.loadsir.EmptyCallback;
 import com.walker.core.ui.loadsir.ErrorCallback;
 import com.walker.core.ui.loadsir.LoadingCallback;
@@ -41,12 +41,12 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
 
     public abstract VM getViewModel();
 
-    public abstract void onListItemInserted(ObservableList<D> sender);
+    public abstract void notifyData(ObservableList<D> sender);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreate");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreate",true);
         initParameters();
         setRetainInstance(true);
     }
@@ -54,18 +54,18 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreateView");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreateView",true);
         return viewDataBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onViewCreated");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onViewCreated",true);
         viewModel = getViewModel();
         getLifecycle().addObserver(viewModel);
-        viewModel.dataList.observe(this, this);
-        viewModel.viewStatusLiveData.observe(this, this);
+        viewModel.dataList.observe(getViewLifecycleOwner(), this);
+        viewModel.viewStatusLiveData.observe(getViewLifecycleOwner(), this);
         if (getBindingVariable() > 0) {
             viewDataBinding.setVariable(getBindingVariable(), viewModel);
             viewDataBinding.executePendingBindings();
@@ -83,48 +83,48 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onActivityCreated");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onActivityCreated");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(getContext());
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onAttach");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onAttach");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDetach");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDetach");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onStop");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onStop");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onPause");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onPause");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onResume");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onResume");
     }
 
     @Override
     public void onDestroy() {
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroy");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroy");
         super.onDestroy();
     }
 
     @Override
     public void onDestroyView() {
-        Log.d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroyView");
+        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroyView");
         super.onDestroyView();
     }
     public void setLoadSir(View view) {
@@ -160,16 +160,20 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     if (((ObservableArrayList)viewModel.dataList.getValue()).size() == 0) {
                         mLoadService.showCallback(ErrorCallback.class);
                     } else {
-                        ToastUtils.show(viewModel.errorMessage.getValue().toString());
+                        String error = viewModel.errorMessage.getValue().toString();
+                        ToastUtils.show(error);
+                        LogHelper.get().e(getFragmentTag(), error, true);
                     }
                     loadEnd();
                     break;
                 case LOAD_MORE_FAILED:
-                    ToastUtils.show(viewModel.errorMessage.getValue().toString());
+                    String failMsg = viewModel.errorMessage.getValue().toString();
+                    ToastUtils.show(failMsg);
+                    LogHelper.get().e(getFragmentTag(), failMsg, true);
                     break;
             }
         } else if(o instanceof ObservableArrayList) {
-            onListItemInserted((ObservableArrayList<D>)o);
+            notifyData((ObservableArrayList<D>)o);
         }
     }
 

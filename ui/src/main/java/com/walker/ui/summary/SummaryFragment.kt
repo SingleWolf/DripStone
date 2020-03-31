@@ -56,7 +56,7 @@ class SummaryFragment :
         showLoading()
     }
 
-    override fun onListItemInserted(sender: ObservableList<BaseCustomViewModel>?) {
+    override fun notifyData(sender: ObservableList<BaseCustomViewModel>?) {
         sender?.let {
             summaryAdapter.setData(it)
             viewDataBinding.refreshLayout.finishLoadMore()

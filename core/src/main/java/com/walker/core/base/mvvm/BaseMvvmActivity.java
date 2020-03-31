@@ -1,7 +1,6 @@
 package com.walker.core.base.mvvm;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.LayoutRes;
@@ -9,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
 
@@ -18,15 +18,12 @@ import com.kingja.loadsir.core.LoadSir;
 import com.walker.core.R;
 import com.walker.core.base.mvvm.viewmodel.MvvmBaseViewModel;
 import com.walker.core.base.mvvm.viewmodel.ViewStatus;
+import com.walker.core.log.LogHelper;
 import com.walker.core.ui.loadsir.EmptyCallback;
 import com.walker.core.ui.loadsir.ErrorCallback;
 import com.walker.core.ui.loadsir.LoadingCallback;
 import com.walker.core.util.ToastUtils;
 
-/**
- * Created by Allen on 2017/7/20.
- * 保留所有版权，未经允许请不要分享到互联网和其他人
- */
 public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends MvvmBaseViewModel> extends AppCompatActivity implements Observer {
     protected VM viewModel;
     private LoadService mLoadService;
@@ -40,6 +37,8 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
         if (viewModel != null) {
             getLifecycle().addObserver(viewModel);
         }
+        viewModel.dataList.observe(this,this);
+        viewModel.viewStatusLiveData.observe(this, this);
     }
 
     private void initViewModel() {
@@ -57,6 +56,8 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
     }
 
     protected abstract void onRetryBtnClick();
+
+    public abstract void notifyData(ObservableList sender);
 
     protected abstract VM getViewModel();
 
@@ -94,38 +95,44 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
                     if (((ObservableArrayList) viewModel.dataList.getValue()).size() == 0) {
                         mLoadService.showCallback(ErrorCallback.class);
                     } else {
-                        ToastUtils.show(viewModel.errorMessage.getValue().toString());
+                        String error = viewModel.errorMessage.getValue().toString();
+                        ToastUtils.show(error);
+                        LogHelper.get().e(getActivityTag(), error, true);
                     }
                     break;
                 case LOAD_MORE_FAILED:
-                    ToastUtils.show(viewModel.errorMessage.getValue().toString());
+                    String failMsg = viewModel.errorMessage.getValue().toString();
+                    ToastUtils.show(failMsg);
+                    LogHelper.get().e(getActivityTag(), failMsg, true);
                     break;
             }
+        }else if(o instanceof ObservableArrayList) {
+            notifyData((ObservableList) o);
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(getActivityTag(), "Activity:" + this + ": " + "onStop");
+        LogHelper.get().d(getActivityTag(), "onStop");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(getActivityTag(), "Activity:" + this + ": " + "onPause");
+        LogHelper.get().d(getActivityTag(), "onPause");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(getActivityTag(), "Activity:" + this + ": " + "onResume");
+        LogHelper.get().d(getActivityTag(), "onResume");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(getActivityTag(), "Activity:" + this + ": " + "onDestroy");
+        LogHelper.get().d(getActivityTag(), "onDestroy");
     }
 
     protected String getActivityTag() {
