@@ -7,7 +7,6 @@ import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import com.walker.ui.MockSummaryData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -23,6 +22,7 @@ class SummaryModel :
             val baseViewModels = ArrayList<BaseCustomViewModel>()
             for (source in it.summaryList) {
                 val viewModel = TitleViewViewModel()
+                viewModel.key=source.key
                 viewModel.jumpUri = source.uri
                 viewModel.title = source.title
                 baseViewModels.add(viewModel)

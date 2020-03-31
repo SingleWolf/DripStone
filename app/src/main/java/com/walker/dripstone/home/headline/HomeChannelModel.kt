@@ -4,14 +4,16 @@ import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import com.walker.common.arouter.RouteServiceManager
 import com.walker.common.arouter.ui.IUiProvider
+import com.walker.common.fragment.EmptyFragment
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import com.walker.core.util.Utils
-import com.walker.dripstone.fragment.EmptyFragment
 import com.walker.dripstone.home.Channel
 import com.walker.dripstone.home.HomeChannels
 import com.walker.dripstone.home.MockHomeChannels
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     HomeChannels::class.java
@@ -49,7 +51,7 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
                 "}"
 
         fun createFragment(key: String): Fragment {
-            var fragment: Fragment = EmptyFragment()
+            var fragment: Fragment = EmptyFragment.instance()
             if (TextUtils.equals("101", key)) {
                 val summaryProvider = RouteServiceManager.provide(
                     IUiProvider::class.java,

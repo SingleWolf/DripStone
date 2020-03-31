@@ -1,4 +1,4 @@
-package com.walker.collect.activity
+package com.walker.common.activity
 
 import android.app.Activity
 import android.content.Context
@@ -9,14 +9,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
-import com.walker.collect.R
-import com.walker.collect.databinding.ActivityCollectShowBinding
-import com.walker.collect.news.headline.NewsSummaryFragment
+import com.walker.common.R
+import com.walker.common.databinding.ActivityCommonShowBinding
 import com.walker.common.fragment.EmptyFragment
 
 class ShowActivity : AppCompatActivity() {
 
-    private lateinit var viewDataBinding: ActivityCollectShowBinding
+    private lateinit var viewDataBinding: ActivityCommonShowBinding
 
     private lateinit var channelId: String
     private lateinit var channelName: String
@@ -46,11 +45,10 @@ class ShowActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewDataBinding = setContentView(this, R.layout.activity_collect_show)
+        viewDataBinding = setContentView(this, R.layout.activity_common_show)
         channelId = intent.getStringExtra(KEY_PARAM_CHANNEL_ID)
         channelName = intent.getStringExtra(KEY_PARAM_CHANNEL_NAME)
         initToolbar()
-        initFragment()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,15 +70,11 @@ class ShowActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFragment() {
-        var fragment: Fragment
-        if (TextUtils.equals(NewsSummaryFragment.channel_id, channelId)) {
-            fragment = NewsSummaryFragment()
-        } else {
-            fragment = EmptyFragment.instance(channelName)
+    private fun setupFragment(fragment: Fragment) {
+        fragment?.let {
+            val manger = supportFragmentManager
+            val transaction = manger.beginTransaction()
+            transaction.add(R.id.container, fragment, fragment.javaClass.name).commit()
         }
-        val manger = supportFragmentManager
-        val transaction = manger.beginTransaction()
-        transaction.add(R.id.container, fragment, fragment.javaClass.name).commit()
     }
 }

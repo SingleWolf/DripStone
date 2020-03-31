@@ -12,18 +12,18 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter
 import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.ui.R
-import com.walker.ui.databinding.FragmentSummaryBinding
+import com.walker.ui.databinding.FragmentUiSummaryBinding
 
 
 @Suppress("DEPRECATION")
 class SummaryFragment :
-    BaseMvvmFragment<FragmentSummaryBinding, SummaryViewModel, BaseCustomViewModel>() {
+    BaseMvvmFragment<FragmentUiSummaryBinding, SummaryViewModel, BaseCustomViewModel>() {
 
     lateinit var summaryAdapter: SummaryRecyclerViewAdapter
 
     override fun getBindingVariable() = 0
 
-    override fun getLayoutId() = R.layout.fragment_summary
+    override fun getLayoutId() = R.layout.fragment_ui_summary
 
     override fun getViewModel(): SummaryViewModel {
         if (viewModel == null) {

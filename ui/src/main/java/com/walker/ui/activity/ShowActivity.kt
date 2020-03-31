@@ -1,4 +1,4 @@
-package com.walker.collect.activity
+package com.walker.ui.activity
 
 import android.app.Activity
 import android.content.Context
@@ -9,14 +9,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
-import com.walker.collect.R
-import com.walker.collect.databinding.ActivityCollectShowBinding
-import com.walker.collect.news.headline.NewsSummaryFragment
 import com.walker.common.fragment.EmptyFragment
+import com.walker.ui.R
+import com.walker.ui.databinding.ActivityUiShowBinding
 
 class ShowActivity : AppCompatActivity() {
 
-    private lateinit var viewDataBinding: ActivityCollectShowBinding
+    private lateinit var viewDataBinding: ActivityUiShowBinding
 
     private lateinit var channelId: String
     private lateinit var channelName: String
@@ -46,7 +45,7 @@ class ShowActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewDataBinding = setContentView(this, R.layout.activity_collect_show)
+        viewDataBinding = setContentView(this, R.layout.activity_ui_show)
         channelId = intent.getStringExtra(KEY_PARAM_CHANNEL_ID)
         channelName = intent.getStringExtra(KEY_PARAM_CHANNEL_NAME)
         initToolbar()
@@ -73,12 +72,7 @@ class ShowActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        var fragment: Fragment
-        if (TextUtils.equals(NewsSummaryFragment.channel_id, channelId)) {
-            fragment = NewsSummaryFragment()
-        } else {
-            fragment = EmptyFragment.instance(channelName)
-        }
+        var fragment: Fragment=EmptyFragment.instance(channelName)
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
         transaction.add(R.id.container, fragment, fragment.javaClass.name).commit()
