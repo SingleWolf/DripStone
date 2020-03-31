@@ -7,12 +7,12 @@ import com.walker.network.retrofit.errorhandler.ExceptionHandle;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class BaseObserver<T> implements Observer<T> {
+public class BaseMvvmObserver<T> implements Observer<T> {
     
     MvvmBaseModel baseModel;
     MvvmAcquireDataObserver<T> mvvmNetworkObserver;
     
-    public BaseObserver(MvvmBaseModel baseModel, MvvmAcquireDataObserver<T> mvvmNetworkObserver) {
+    public BaseMvvmObserver(MvvmBaseModel baseModel, MvvmAcquireDataObserver<T> mvvmNetworkObserver) {
         this.baseModel = baseModel;
         this.mvvmNetworkObserver = mvvmNetworkObserver;
     }
