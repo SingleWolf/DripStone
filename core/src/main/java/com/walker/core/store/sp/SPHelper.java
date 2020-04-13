@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.tencent.mmkv.MMKV;
+import com.walker.core.log.LogHelper;
+
 public class SPHelper extends BasePreferences {
 
     private static final String CONFIG = "config";
@@ -27,6 +30,8 @@ public class SPHelper extends BasePreferences {
 
     public static void init(Application application) {
         sApplication = application;
+        String rootDir = MMKV.initialize(sApplication);
+        LogHelper.get().d("mmkv",rootDir);
     }
 
 

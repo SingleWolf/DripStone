@@ -48,4 +48,5 @@ dependencies {
     api "com.kingja.loadsir:loadsir:$rootProject.ext.loadsir_version"
 
     implementation 'com.airbnb.android:lottie:2.8.0'
+    implementation 'com.tencent:mmkv-static:1.1.0'
 }
