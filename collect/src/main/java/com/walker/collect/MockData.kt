@@ -1,5 +1,6 @@
 package com.walker.collect
 
+import com.walker.collect.cook.cooklist.CookListActivity
 import com.walker.collect.news.headline.Channel
 import com.walker.collect.news.headline.NewsSummaryFragment
 import com.walker.collect.summary.Summary
@@ -37,8 +38,15 @@ class MockSummaryData private constructor() {
                 add(this)
             }
             Summary().run {
+                key = CookListActivity.CHANNEL_ID
+                title = "菜谱大全"
+                uri = ""
+                desc = ""
+                add(this)
+            }
+            Summary().run {
                 key = "${++index}"
-                title = "开心一笑"
+                title = "开心一刻"
                 uri = ""
                 desc = ""
                 add(this)

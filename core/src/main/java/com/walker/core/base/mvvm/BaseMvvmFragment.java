@@ -170,6 +170,7 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     String failMsg = viewModel.errorMessage.getValue().toString();
                     ToastUtils.show(failMsg);
                     LogHelper.get().e(getFragmentTag(), failMsg, true);
+                    loadEnd();
                     break;
             }
         } else if(o instanceof ObservableArrayList) {

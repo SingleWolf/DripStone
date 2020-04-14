@@ -90,6 +90,7 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
                     break;
                 case NO_MORE_DATA:
                     ToastUtils.show(getString(R.string.no_more_data));
+                    loadEnd();
                     break;
                 case REFRESH_ERROR:
                     if (((ObservableArrayList) viewModel.dataList.getValue()).size() == 0) {
@@ -99,11 +100,13 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
                         ToastUtils.show(error);
                         LogHelper.get().e(getActivityTag(), error, true);
                     }
+                    loadEnd();
                     break;
                 case LOAD_MORE_FAILED:
                     String failMsg = viewModel.errorMessage.getValue().toString();
                     ToastUtils.show(failMsg);
                     LogHelper.get().e(getActivityTag(), failMsg, true);
+                    loadEnd();
                     break;
             }
         }else if(o instanceof ObservableArrayList) {
@@ -134,6 +137,20 @@ public abstract class BaseMvvmActivity<V extends ViewDataBinding, VM extends Mvv
         super.onDestroy();
         LogHelper.get().d(getActivityTag(), "onDestroy");
     }
+
+    protected void showSuccess() {
+        if (mLoadService != null) {
+            mLoadService.showSuccess();
+        }
+    }
+
+    protected void showLoading() {
+        if (mLoadService != null) {
+            mLoadService.showCallback(LoadingCallback.class);
+        }
+    }
+
+    protected abstract void loadEnd();
 
     protected String getActivityTag() {
         return this.getClass().getSimpleName();

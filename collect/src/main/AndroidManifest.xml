@@ -3,5 +3,6 @@
 
     <application>
         <activity android:name=".activity.ShowActivity" />
+        <activity android:name=".cook.cooklist.CookListActivity" />
     </application>
 </manifest>
