@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.arouter.RouteServiceManager
 import com.walker.common.arouter.collect.ICollectProvider
+import com.walker.common.arouter.demo.IDemoProvider
 import com.walker.core.log.LogHelper
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
@@ -25,14 +26,14 @@ import com.walker.dripstone.fragment.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
 import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
+import com.walker.dripstone.links.LinkHelper
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewDataBinding: ActivityMainBinding
     private var homeFragment = HomeFragment()
-    private var demoFragment = DemoFragment()
+    private var demoFragment: Fragment = getDemoFragment()
     private var collectFragment: Fragment = getCollectFragment()
-
     private var accountFragment = AccountFragment()
     private var fromFragment: Fragment = homeFragment
     private var backPressTime = 0L
@@ -77,6 +78,8 @@ class MainActivity : AppCompatActivity() {
                 ToastUtils.show(getString(R.string.tip_net_connect_failed))
             }
         })
+
+        LinkHelper.getInstance().transactLink(this)
     }
 
     private fun initToolbar() {
@@ -111,6 +114,21 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun getDemoFragment(): Fragment {
+        var fragment: Fragment
+        val summaryProvider = RouteServiceManager.provide(
+            IDemoProvider::class.java,
+            IDemoProvider.DEMO_SUMMARY_SERVICE
+        )
+        if (summaryProvider == null) {
+            LogHelper.get().e("getDemoFragment", "summaryProvider is null", true)
+            fragment = DemoFragment()
+        } else {
+            fragment = summaryProvider.getSummaryFragment()
+        }
+        return fragment
     }
 
     private fun getCollectFragment(): Fragment {

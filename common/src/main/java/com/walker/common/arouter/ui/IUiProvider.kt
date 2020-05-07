@@ -9,5 +9,5 @@ interface IUiProvider :IProvider{
         const val UI_SUMMARY_SERVICE= UI_ROUTER+"ui_summary"
     }
 
-    fun getSummaryFragment():Fragment
+    fun getSummaryFragment():Fragment?
 }

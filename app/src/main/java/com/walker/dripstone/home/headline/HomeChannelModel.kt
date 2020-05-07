@@ -3,6 +3,7 @@ package com.walker.dripstone.home.headline
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import com.walker.common.arouter.RouteServiceManager
+import com.walker.common.arouter.study.IStudyProvider
 import com.walker.common.arouter.ui.IUiProvider
 import com.walker.common.fragment.EmptyFragment
 import com.walker.core.base.mvvm.model.MvvmBaseModel
@@ -51,13 +52,24 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
                 "}"
 
         fun createFragment(key: String): Fragment {
-            var fragment: Fragment = EmptyFragment.instance()
+            var fragment: Fragment? = null
             if (TextUtils.equals("101", key)) {
                 val summaryProvider = RouteServiceManager.provide(
                     IUiProvider::class.java,
                     IUiProvider.UI_SUMMARY_SERVICE
                 )
-                fragment = summaryProvider?.getSummaryFragment()!!
+                fragment = summaryProvider?.getSummaryFragment()
+            } else {
+                if (TextUtils.equals("100", key)) {
+                    val summaryProvider = RouteServiceManager.provide(
+                        IStudyProvider::class.java,
+                        IStudyProvider.STUDY_SUMMARY_SERVICE
+                    )
+                    fragment = summaryProvider?.getSummaryFragment()
+                }
+            }
+            if (fragment == null) {
+                fragment = EmptyFragment.instance()
             }
             return fragment
         }
@@ -77,7 +89,7 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
 
     override fun load() {
         runBlocking {
-            val data= withContext(Dispatchers.Default) { mockData() }
+            val data = withContext(Dispatchers.Default) { mockData() }
             takeIf { data != null }?.also {
                 onSuccess(data, false)
             } ?: onFailure(Throwable("数据加载失败"))

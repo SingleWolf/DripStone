@@ -11,6 +11,11 @@ class MockHomeChannels {
             var channelList = mutableListOf<Channel>()
             channelList.let {
                 Channel().run {
+                    channelId="${key}"
+                    channelName="学习"
+                    it.add(this)
+                }
+                Channel().run {
                     channelId="${++key}"
                     channelName="UI"
                     it.add(this)

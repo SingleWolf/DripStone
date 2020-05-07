@@ -9,11 +9,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/collect" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/optimize" />
+            <option value="$PROJECT_DIR$/study" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/webview" />
           </set>

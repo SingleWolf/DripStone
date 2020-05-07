@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation gradleApi()
+    implementation 'com.android.tools.build:gradle:3.5.0'
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

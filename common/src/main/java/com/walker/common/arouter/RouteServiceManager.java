@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.template.IProvider;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.walker.core.log.LogHelper;
 
 public class RouteServiceManager {
 
@@ -22,10 +23,8 @@ public class RouteServiceManager {
                     .build(path)
                     .navigation();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogHelper.get().e(TAG, e.toString());
         }
-
 
         return (T) provider;
     }
@@ -36,8 +35,7 @@ public class RouteServiceManager {
         try {
             provider = ARouter.getInstance().navigation(clz);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogHelper.get().e(TAG, e.toString());
         }
 
         return (T) provider;
