@@ -2,7 +2,7 @@ package com.walker.study
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
-import com.walker.study.annotation.InjectActivity
+import com.walker.study.annotation.InjectFragment
 import com.walker.study.hotfix.HotfixFragment
 import com.walker.study.summary.Summary
 import com.walker.study.summary.SummaryListBean
@@ -32,7 +32,7 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
             Summary().run {
-                key = InjectActivity.KEY_ID
+                key = InjectFragment.KEY_ID
                 title = "注解与反射"
                 uri = ""
                 desc = ""

@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.walker.core.base.mvc.BaseActivity;
 import com.walker.core.util.ToastUtils;
@@ -14,6 +21,10 @@ import com.walker.study.proxy.Cat;
 import com.walker.study.proxy.IAnimal;
 import com.walker.study.proxy.IClimb;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -24,8 +35,15 @@ import java.lang.reflect.Proxy;
  * @Summary 注解、反射练习
  */
 public class InjectActivity extends BaseActivity {
+    private static final int TYPE_CLICK = 1;
+    private static final int TYPE_LONG_CLICK = 2;
 
-    public static final String KEY_ID = "key_demo_inject_activity";
+    @IntDef({TYPE_CLICK, TYPE_LONG_CLICK})
+    @Target({ElementType.FIELD, ElementType.PARAMETER})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface ClickType {
+        //使用注解用作语法检查
+    }
 
     @LazyIntent(value = "name")
     private String mName;
@@ -33,6 +51,9 @@ public class InjectActivity extends BaseActivity {
     private int mAge;
     @LazyIntent(value = "handsome")
     private boolean mHandsome;
+
+    @ClickType
+    private int mCurrentClickType;
 
     static class R2 {
         static class id {
@@ -65,6 +86,7 @@ public class InjectActivity extends BaseActivity {
     }
 
     private void initView() {
+        initToolbar();
         TextView tvContent = findViewById(R.id.tvContent);
         StringBuilder content = new StringBuilder();
         content.append(String.format("Hello !\nI'm %s\nMy age is %d\n", mName, mAge));
@@ -76,6 +98,26 @@ public class InjectActivity extends BaseActivity {
         tvContent.setText(content);
     }
 
+    private void initToolbar() {
+        //Set Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setTitle("注解、反射、动态代理");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_study_inject;
@@ -83,6 +125,7 @@ public class InjectActivity extends BaseActivity {
 
     @OnClick(value = {}, idStr = {R2.id.tvTap1, R2.id.tvTap2})
     public void onclick(View v) {
+        setClickType(TYPE_CLICK);
         switch (InjectUtils.findIdName(v.getId())) {
             case R2.id.tvTap1:
                 ToastUtils.showCenter("This is tap 1");
@@ -97,6 +140,7 @@ public class InjectActivity extends BaseActivity {
 
     @OnLongClick(value = {}, idStr = {R2.id.tvTap1, R2.id.tvTap2})
     public boolean onLongClick(View v) {
+        setClickType(TYPE_LONG_CLICK);
         switch (InjectUtils.findIdName(v.getId())) {
             case R2.id.tvTap1:
                 ToastUtils.showCenter("test proxy");
@@ -111,24 +155,30 @@ public class InjectActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick(value = {},idStr = R2.id.tvTap3)
-    public void click(View v){
+    @OnClick(value = {}, idStr = R2.id.tvTap3)
+    public void click(View v) {
+        setClickType(TYPE_CLICK);
         ToastUtils.showCenter("This is tap 3");
     }
 
+    private void setClickType(@ClickType int clickType) {
+        mCurrentClickType = clickType;
+        Log.i("InjectActivity", "mCurrentClickType is " + mCurrentClickType);
+    }
+
     private void testProxy() {
-        Cat cat=new Cat();
-        Object proxy=Proxy.newProxyInstance(this.getClassLoader(), new Class[]{IAnimal.class, IClimb.class}, new InvocationHandler() {
+        Cat cat = new Cat();
+        Object proxy = Proxy.newProxyInstance(this.getClassLoader(), new Class[]{IAnimal.class, IClimb.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(cat,args);
+                return method.invoke(cat, args);
             }
         });
 
-        IAnimal animal= (IAnimal) proxy;
+        IAnimal animal = (IAnimal) proxy;
         animal.eat();
 
-        IClimb climb= (IClimb) proxy;
+        IClimb climb = (IClimb) proxy;
         climb.climb();
     }
 }

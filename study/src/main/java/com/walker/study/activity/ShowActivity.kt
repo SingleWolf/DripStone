@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import com.walker.common.fragment.EmptyFragment
 import com.walker.study.R
-import com.walker.study.annotation.InjectActivity
+import com.walker.study.annotation.InjectFragment
 import com.walker.study.databinding.ActivityStudyShowBinding
 import com.walker.study.hotfix.HotfixFragment
 
@@ -77,9 +77,8 @@ class ShowActivity : AppCompatActivity() {
         var fragment: Fragment
         if (TextUtils.equals(channelId, HotfixFragment.KEY_ID)) {
             fragment = HotfixFragment.instance()
-        } else if (TextUtils.equals(channelId, InjectActivity.KEY_ID)) {
-            InjectActivity.start(applicationContext,"Walker",27,true)
-            return
+        } else if (TextUtils.equals(channelId, InjectFragment.KEY_ID)) {
+            fragment = InjectFragment.instance()
         } else {
             fragment = EmptyFragment.instance(channelName)
         }
