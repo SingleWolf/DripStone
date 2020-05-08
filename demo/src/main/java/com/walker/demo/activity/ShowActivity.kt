@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.walker.common.fragment.EmptyFragment
 import com.walker.demo.R
 import com.walker.demo.databinding.ActivityDemoShowBinding
+import com.walker.demo.trace.TraceMethodFragment
 
 class ShowActivity : AppCompatActivity() {
 
@@ -72,7 +73,12 @@ class ShowActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        var fragment: Fragment = EmptyFragment.instance(channelName)
+        var fragment: Fragment
+        if (TextUtils.equals(channelId, TraceMethodFragment.KEY_ID)) {
+            fragment = TraceMethodFragment.instance()
+        } else {
+            fragment = EmptyFragment.instance(channelName)
+        }
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
         transaction.add(R.id.container, fragment, fragment.javaClass.name).commit()

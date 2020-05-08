@@ -21,6 +21,7 @@ import com.walker.core.log.LogHelper
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
+import com.walker.dripstone.test.TraceMethodTest
 import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
@@ -80,6 +81,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         LinkHelper.getInstance().transactLink(this)
+
+        TraceMethodTest().tryTest()
     }
 
     private fun initToolbar() {

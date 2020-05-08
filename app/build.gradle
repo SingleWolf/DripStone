@@ -7,6 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 //apply plugin: com.walker.buildsrc.hotfix.HotfixPlugin
+apply plugin: com.walker.buildsrc.trace.TraceMethodPlugin
 
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
@@ -48,6 +49,11 @@ android {
 //    outputPath 'xxx'
 //    applicationName 'com.walker.dripstone.GlobalApplication'
 //}
+
+TraceMethodExt {
+    enable true
+    tracePrefix 'com/walker/'
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
