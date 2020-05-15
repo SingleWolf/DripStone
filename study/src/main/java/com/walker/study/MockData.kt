@@ -6,6 +6,7 @@ import com.walker.study.annotation.InjectFragment
 import com.walker.study.hotfix.HotfixFragment
 import com.walker.study.summary.Summary
 import com.walker.study.summary.SummaryListBean
+import com.walker.study.thread.ThreadFragment
 
 class MockSummaryData private constructor() {
     var dataPool: List<Summary>
@@ -34,6 +35,14 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = InjectFragment.KEY_ID
                 title = "注解与反射"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+            Summary().run {
+                key = ThreadFragment.KEY_ID
+                title = "线程与并发"
                 uri = ""
                 desc = ""
                 add(this)

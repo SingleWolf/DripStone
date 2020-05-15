@@ -14,6 +14,7 @@ import com.walker.study.R
 import com.walker.study.annotation.InjectFragment
 import com.walker.study.databinding.ActivityStudyShowBinding
 import com.walker.study.hotfix.HotfixFragment
+import com.walker.study.thread.ThreadFragment
 
 class ShowActivity : AppCompatActivity() {
 
@@ -74,13 +75,13 @@ class ShowActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        var fragment: Fragment
-        if (TextUtils.equals(channelId, HotfixFragment.KEY_ID)) {
-            fragment = HotfixFragment.instance()
-        } else if (TextUtils.equals(channelId, InjectFragment.KEY_ID)) {
-            fragment = InjectFragment.instance()
-        } else {
-            fragment = EmptyFragment.instance(channelName)
+        var fragment: Fragment = when (channelId) {
+            HotfixFragment.KEY_ID -> HotfixFragment.instance()
+            InjectFragment.KEY_ID -> InjectFragment.instance()
+            ThreadFragment.KEY_ID -> ThreadFragment.instance()
+            else -> {
+                EmptyFragment.instance(channelName)
+            }
         }
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
