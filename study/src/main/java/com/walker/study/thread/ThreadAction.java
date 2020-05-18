@@ -314,4 +314,64 @@ public class ThreadAction {
         orderThread_2.start();
         orderThread_3.start();
     }
+
+    /**
+     * 测试自定义锁（独占锁）
+     */
+    public void testCustomLock() {
+        Lock customLock = new CustomLock();
+        class WorkThread extends Thread {
+            @Override
+            public void run() {
+                customLock.lock();
+                LogHelper.get().i(TAG, Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                customLock.unlock();
+            }
+        }
+
+        for (int i = 0; i < 4; i++) {
+            WorkThread workThread = new WorkThread();
+            workThread.start();
+        }
+    }
+
+    Lock customReenterLock = new CustomReenterLock();
+
+    /**
+     * 测试自定义锁（可重入锁）
+     */
+    public void testCustomReenterLock() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LogHelper.get().i(TAG, Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                reenter(4);
+            }
+        }).start();
+    }
+
+    void reenter(int x) {
+        customReenterLock.lock();
+        try {
+            LogHelper.get().i(TAG, Thread.currentThread().getName() + "递归层次为：" + x);
+            int y = x - 1;
+            if (y == 0) {
+                return;
+            } else {
+                reenter(y);
+            }
+        } finally {
+            customReenterLock.unlock();
+        }
+    }
 }

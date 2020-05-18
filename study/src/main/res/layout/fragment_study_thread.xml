@@ -61,6 +61,22 @@
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
                 android:text="边生产边消费" />
+
+            <Button
+                android:id="@+id/btnCustomLock"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:text="自定义锁(独占锁)" />
+
+            <Button
+                android:id="@+id/btnCustomReenterLock"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:text="自定义锁(可重入锁)" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

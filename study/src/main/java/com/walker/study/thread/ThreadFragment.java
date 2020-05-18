@@ -30,6 +30,8 @@ public class ThreadFragment extends BaseFragment implements View.OnClickListener
         baseView.findViewById(R.id.btnGenDeadLock).setOnClickListener(this);
         baseView.findViewById(R.id.btnSolveDeadLock).setOnClickListener(this);
         baseView.findViewById(R.id.btnOrderRun).setOnClickListener(this);
+        baseView.findViewById(R.id.btnCustomLock).setOnClickListener(this);
+        baseView.findViewById(R.id.btnCustomReenterLock).setOnClickListener(this);
     }
 
     @Override
@@ -52,6 +54,10 @@ public class ThreadFragment extends BaseFragment implements View.OnClickListener
             ThreadAction.getInstance().solveDeadLock();
         } else if (id == R.id.btnOrderRun) {
             ThreadAction.getInstance().orderRun();
+        } else if (id == R.id.btnCustomLock) {
+            ThreadAction.getInstance().testCustomLock();
+        } else if (id == R.id.btnCustomReenterLock) {
+            ThreadAction.getInstance().testCustomReenterLock();
         }
     }
 }
