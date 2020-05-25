@@ -27,7 +27,7 @@ android {
         }
     }
 
-    compileOptions{
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -49,10 +49,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
     api project(':core')
     api 'com.github.bumptech.glide:glide:4.7.1'
     //arouter
     api "com.alibaba:arouter-api:$rootProject.ext.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
+    //PictureSelector
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.6'
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
+
 }

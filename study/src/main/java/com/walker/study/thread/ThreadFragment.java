@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.walker.common.media.photo.PhotoGetterProxy;
 import com.walker.core.base.mvc.BaseFragment;
 import com.walker.study.R;
 
@@ -44,8 +45,10 @@ public class ThreadFragment extends BaseFragment implements View.OnClickListener
         int id = v.getId();
         if (id == R.id.btnStartThread) {
             ThreadAction.getInstance().start();
+            PhotoGetterProxy.get().onAlbum(getActivity(),null,null);
         } else if (id == R.id.btnNotifyWait) {
             NotifyAndWait.getInstance().test();
+            PhotoGetterProxy.get().onCamera(getActivity(),null,null);
         } else if (id == R.id.btnStopThread) {
             ThreadAction.getInstance().stop();
         } else if (id == R.id.btnGenDeadLock) {

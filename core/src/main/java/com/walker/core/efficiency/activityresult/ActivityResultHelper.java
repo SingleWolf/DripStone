@@ -1,9 +1,10 @@
 package com.walker.core.efficiency.activityresult;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * @Author Walker
@@ -15,20 +16,20 @@ public class ActivityResultHelper {
     private Context mContext;
     private RouterFragment mRouterFragment;
 
-    public static ActivityResultHelper init(Activity activity) {
+    public static ActivityResultHelper init(AppCompatActivity activity) {
         return new ActivityResultHelper(activity);
     }
 
-    private ActivityResultHelper(Activity activity) {
+    private ActivityResultHelper(AppCompatActivity activity) {
         mContext = activity;
         mRouterFragment = getRouterFragment(activity);
     }
 
-    private RouterFragment getRouterFragment(Activity activity) {
+    private RouterFragment getRouterFragment(AppCompatActivity activity) {
         RouterFragment routerFragment = findRouterFragment(activity);
         if (routerFragment == null) {
             routerFragment = RouterFragment.newInstance();
-            FragmentManager fragmentManager = activity.getFragmentManager();
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
                     .add(routerFragment, TAG)
@@ -38,8 +39,8 @@ public class ActivityResultHelper {
         return routerFragment;
     }
 
-    private RouterFragment findRouterFragment(Activity activity) {
-        return (RouterFragment) activity.getFragmentManager().findFragmentByTag(TAG);
+    private RouterFragment findRouterFragment(AppCompatActivity activity) {
+        return (RouterFragment) activity.getSupportFragmentManager().findFragmentByTag(TAG);
     }
 
     public void startActivityForResult(Class<?> clazz, Callback callback) {
