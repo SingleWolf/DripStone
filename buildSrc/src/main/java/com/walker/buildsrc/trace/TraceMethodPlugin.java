@@ -1,7 +1,9 @@
 package com.walker.buildsrc.trace;
 
 import com.android.build.gradle.AppExtension;
+import com.android.build.gradle.LibraryExtension;
 import com.android.build.gradle.api.ApplicationVariant;
+import com.android.build.gradle.api.LibraryVariant;
 
 import org.apache.commons.io.IOUtils;
 import org.gradle.api.Action;
@@ -9,6 +11,7 @@ import org.gradle.api.DomainObjectSet;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.internal.DefaultDomainObjectSet;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -49,45 +52,98 @@ public class TraceMethodPlugin implements Plugin<Project> {
                 // 找到系统属性
                 AppExtension appExtension = project.getExtensions().findByType(AppExtension.class);
                 if (appExtension == null) {
-                    System.out.println(String.format("\n\n---------- %s appExtension is null ----------\n\n", project.getName()));
-                    return;
-                }
-                DomainObjectSet<ApplicationVariant> applicationVariants = appExtension.getApplicationVariants();
-                for (ApplicationVariant var : applicationVariants) {
-                    //transformClassesWithDexBuilderForDebug/transformClassesWithDexBuilderForRelease
-                    // 在task将class文件编译成dex文件之前插桩代码
-                    String variantName = var.getName();
-                    String myTaskName = "transformClassesWithDexBuilderFor" + firstCharUpperCase(variantName);
-                    Task task = project.getTasks().findByName(myTaskName);
-                    task.doFirst(new Action<Task>() {
-                        @Override
-                        public void execute(Task task) {
-                            System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
-                            Set<File> files = task.getInputs().getFiles().getFiles();
-                            for (File file : files) {
-                                String filePath = file.getAbsolutePath();
-                                //现在，在这个任务之前，我们打印了所有input的文件名
-                                // 发现，这里有jar包，也有class
-                                // class,我们要利用字节码插桩的方式，在里面植入一段代码.
-                                if (filePath.endsWith(".jar")) {
-                                    //解压之后对jar内部的每一个class插桩，然后写回去
-                                    // 现在来应对jar包，先解压，然后再执行processClass
-                                    try {
-                                        processJar(file);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else if (filePath.endsWith(".class")) {
-                                    //直接对class插桩，然后写回去
-                                    //先写这个
-                                    processClass(variantName, file); //对于class的处理完毕
-                                }
-                            }
-                        }
-                    });
+                    LibraryExtension libraryExtension = project.getExtensions().findByType(LibraryExtension.class);
+                    if (libraryExtension == null) {
+                        System.out.println("\n\n---------- Not found extension ----------\n\n");
+                        return;
+                    } else {
+                        handleLibraryExtension(project, libraryExtension);
+                    }
+                } else {
+                    handleAppExtension(project, appExtension);
                 }
             }
         });
+    }
+
+    private void handleLibraryExtension(Project project, LibraryExtension libraryExtension) {
+//        for (Task task : project.getTasks()) {
+//            task.doLast(new Action<Task>() {
+//                @Override
+//                public void execute(Task task) {
+//                    System.out.println(String.format("\n\n>>>>>>>>>>>>> %s Start <<<<<<<<<<<<<<<\n\n", task.getName()));
+//                }
+//            });
+//        }
+        DefaultDomainObjectSet<com.android.build.gradle.api.LibraryVariant> libraryExtensions = libraryExtension.getLibraryVariants();
+        for (LibraryVariant var : libraryExtensions) {
+            String variantName = var.getName();
+            String myTaskName = "createFullJar" + firstCharUpperCase(variantName);
+            Task task = project.getTasks().findByName(myTaskName);
+                task.doLast(new Action<Task>() {
+                    @Override
+                    public void execute(Task task) {
+                        System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
+                        Set<File> files = task.getInputs().getFiles().getFiles();
+                        for (File file : files) {
+                            String filePath = file.getAbsolutePath();
+                            //现在，在这个任务之前，我们打印了所有input的文件名
+                            // 发现，这里有jar包，也有class
+                            // class,我们要利用字节码插桩的方式，在里面植入一段代码.
+                            if (filePath.endsWith(".jar")) {
+                                //解压之后对jar内部的每一个class插桩，然后写回去
+                                // 现在来应对jar包，先解压，然后再执行processClass
+                                try {
+                                    processJar(file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (filePath.endsWith(".class")) {
+                                //直接对class插桩，然后写回去
+                                //先写这个
+                                processClass(variantName, file); //对于class的处理完毕
+                            }
+                        }
+                    }
+                });
+        }
+    }
+
+    private void handleAppExtension(Project project, AppExtension appExtension) {
+        DomainObjectSet<ApplicationVariant> applicationVariants = appExtension.getApplicationVariants();
+        for (ApplicationVariant var : applicationVariants) {
+            //transformClassesWithDexBuilderForDebug/transformClassesWithDexBuilderForRelease
+            // 在task将class文件编译成dex文件之前插桩代码
+            String variantName = var.getName();
+            String myTaskName = "transformClassesWithDexBuilderFor" + firstCharUpperCase(variantName);
+            Task task = project.getTasks().findByName(myTaskName);
+            task.doFirst(new Action<Task>() {
+                @Override
+                public void execute(Task task) {
+                    System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
+                    Set<File> files = task.getInputs().getFiles().getFiles();
+                    for (File file : files) {
+                        String filePath = file.getAbsolutePath();
+                        //现在，在这个任务之前，我们打印了所有input的文件名
+                        // 发现，这里有jar包，也有class
+                        // class,我们要利用字节码插桩的方式，在里面植入一段代码.
+                        if (filePath.endsWith(".jar")) {
+                            //解压之后对jar内部的每一个class插桩，然后写回去
+                            // 现在来应对jar包，先解压，然后再执行processClass
+                            try {
+                                processJar(file);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else if (filePath.endsWith(".class")) {
+                            //直接对class插桩，然后写回去
+                            //先写这个
+                            processClass(variantName, file); //对于class的处理完毕
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void processJar(File file) throws IOException {

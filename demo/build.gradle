@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply plugin: com.walker.buildsrc.trace.TraceMethodPlugin
+
+
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
     defaultConfig {
@@ -39,6 +42,11 @@ android {
 
     //给模块设置不同的资源前缀，可以避免重复命名
     resourcePrefix "demo_"
+}
+
+TraceMethodExt {
+    enable true
+    tracePrefix 'com/walker/'
 }
 
 dependencies {
