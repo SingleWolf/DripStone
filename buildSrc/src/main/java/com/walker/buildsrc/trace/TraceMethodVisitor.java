@@ -23,7 +23,6 @@ public class TraceMethodVisitor extends AdviceAdapter {
     @Override
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         AnnotationVisitor annotationVisitor = super.visitAnnotation(desc, visible);
-        System.out.println(String.format("\n\n---------- visitAnnotation desc is : %s ----------\n\n", desc));
         if (desc.equals(ANNOTATION_TRACK_METHOD)) {
             needInject = true;
             return new AnnotationVisitor(Opcodes.ASM6, annotationVisitor) {
@@ -32,7 +31,7 @@ public class TraceMethodVisitor extends AdviceAdapter {
                     super.visit(name, value);
                     if (name.equals("tag") && value instanceof String) {
                         tag = (String) value;
-                        System.out.println(String.format("\n\n----------trace method tag : %s ----------\n\n", tag));
+                        System.out.println(String.format("\n\n----------trace method tag : %s  and  desc : %s  ----------\n\n", tag, desc));
                     }
                 }
             };

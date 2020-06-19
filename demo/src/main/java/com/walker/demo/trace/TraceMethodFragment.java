@@ -39,6 +39,8 @@ public class TraceMethodFragment extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             mExecutor.execute(this::test);
         }
+
+        new TraceTest().tryTest();
     }
 
     @Override

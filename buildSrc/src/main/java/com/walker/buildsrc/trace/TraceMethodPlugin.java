@@ -78,34 +78,39 @@ public class TraceMethodPlugin implements Plugin<Project> {
         DefaultDomainObjectSet<com.android.build.gradle.api.LibraryVariant> libraryExtensions = libraryExtension.getLibraryVariants();
         for (LibraryVariant var : libraryExtensions) {
             String variantName = var.getName();
+            //String myTaskName = "compile" + firstCharUpperCase(variantName) + "JavaWithJavac";
             String myTaskName = "createFullJar" + firstCharUpperCase(variantName);
             Task task = project.getTasks().findByName(myTaskName);
-                task.doLast(new Action<Task>() {
-                    @Override
-                    public void execute(Task task) {
-                        System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
-                        Set<File> files = task.getInputs().getFiles().getFiles();
-                        for (File file : files) {
-                            String filePath = file.getAbsolutePath();
-                            //现在，在这个任务之前，我们打印了所有input的文件名
-                            // 发现，这里有jar包，也有class
-                            // class,我们要利用字节码插桩的方式，在里面植入一段代码.
-                            if (filePath.endsWith(".jar")) {
-                                //解压之后对jar内部的每一个class插桩，然后写回去
-                                // 现在来应对jar包，先解压，然后再执行processClass
-                                try {
-                                    processJar(file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else if (filePath.endsWith(".class")) {
-                                //直接对class插桩，然后写回去
-                                //先写这个
-                                processClass(variantName, file); //对于class的处理完毕
+            if (task == null) {
+                System.out.println(String.format("\n\n---------- %s is null ----------\n\n", myTaskName));
+                return;
+            }
+            task.doLast(new Action<Task>() {
+                @Override
+                public void execute(Task task) {
+                    System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
+                    Set<File> files = task.getInputs().getFiles().getFiles();
+                    for (File file : files) {
+                        String filePath = file.getAbsolutePath();
+                        //现在，在这个任务之前，我们打印了所有input的文件名
+                        // 发现，这里有jar包，也有class
+                        // class,我们要利用字节码插桩的方式，在里面植入一段代码.
+                        if (filePath.endsWith(".jar")) {
+                            //解压之后对jar内部的每一个class插桩，然后写回去
+                            // 现在来应对jar包，先解压，然后再执行processClass
+                            try {
+                                processJar(file);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+                        } else if (filePath.endsWith(".class")) {
+                            //直接对class插桩，然后写回去
+                            //先写这个
+                            processClass(variantName, file); //对于class的处理完毕
                         }
                     }
-                });
+                }
+            });
         }
     }
 
@@ -163,7 +168,6 @@ public class TraceMethodPlugin implements Plugin<Project> {
                 byte[] sourceBytes = IOUtils.toByteArray(is);
                 byte[] byteCode = modifyClass(sourceBytes);
                 jos.write(byteCode);
-                System.out.println(">>> traceMethod className:" + className + "\n");
             } else {
                 //输出到临时文件
                 jos.write(IOUtils.toByteArray(is));
@@ -190,7 +194,6 @@ public class TraceMethodPlugin implements Plugin<Project> {
         if (!isTraceClz(className)) {
             return;
         }
-        System.out.println(">>> traceMethod className:" + className + "\n");
         // 能走到这里的，都是需要插桩的,那么，在这个任务执行时，我需要:
         // 使用文件流
         try {
