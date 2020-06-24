@@ -67,25 +67,16 @@ public class TraceMethodPlugin implements Plugin<Project> {
     }
 
     private void handleLibraryExtension(Project project, LibraryExtension libraryExtension) {
-//        for (Task task : project.getTasks()) {
-//            task.doLast(new Action<Task>() {
-//                @Override
-//                public void execute(Task task) {
-//                    System.out.println(String.format("\n\n>>>>>>>>>>>>> %s Start <<<<<<<<<<<<<<<\n\n", task.getName()));
-//                }
-//            });
-//        }
         DefaultDomainObjectSet<com.android.build.gradle.api.LibraryVariant> libraryExtensions = libraryExtension.getLibraryVariants();
         for (LibraryVariant var : libraryExtensions) {
             String variantName = var.getName();
-            //String myTaskName = "compile" + firstCharUpperCase(variantName) + "JavaWithJavac";
             String myTaskName = "createFullJar" + firstCharUpperCase(variantName);
             Task task = project.getTasks().findByName(myTaskName);
             if (task == null) {
                 System.out.println(String.format("\n\n---------- %s is null ----------\n\n", myTaskName));
                 return;
             }
-            task.doLast(new Action<Task>() {
+            task.doFirst(new Action<Task>() {
                 @Override
                 public void execute(Task task) {
                     System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
@@ -164,7 +155,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
             InputStream is = jarFile.getInputStream(jarEntry);
 
             String className = jarEntry.getName();
-            if (className.endsWith(".class") && isTraceClz(className)) {
+            if (className.endsWith(".class")&&isTraceClz(className)) {
                 byte[] sourceBytes = IOUtils.toByteArray(is);
                 byte[] byteCode = modifyClass(sourceBytes);
                 jos.write(byteCode);
@@ -212,7 +203,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
     }
 
     /**
-     * 是否是AndroidSdk的第三方支持包
+     * 是否为目标class
      *
      * @return
      */

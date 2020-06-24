@@ -46,7 +46,7 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreate",true);
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onCreate", true);
         initParameters();
         setRetainInstance(true);
     }
@@ -54,14 +54,14 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onCreateView",true);
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onCreateView", true);
         return viewDataBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onViewCreated",true);
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onViewCreated", true);
         viewModel = getViewModel();
         getLifecycle().addObserver(viewModel);
         viewModel.dataList.observe(getViewLifecycleOwner(), this);
@@ -83,50 +83,51 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onActivityCreated");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onActivityCreated");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(getContext());
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onAttach");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onAttach");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDetach");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onDetach");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onStop");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onStop");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onPause");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onPause");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onResume");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onResume");
     }
 
     @Override
     public void onDestroy() {
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroy");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onDestroy");
         super.onDestroy();
     }
 
     @Override
     public void onDestroyView() {
-        LogHelper.get().d(getFragmentTag(), "Activity:" + getActivity() + " Fragment:"+this + ": " + "onDestroyView");
+        LogHelper.get().d(getFragmentTag(), this.getClass().getName() + ": " + "onDestroyView");
         super.onDestroyView();
     }
+
     public void setLoadSir(View view) {
         // You can change the callback on sub thread directly.
         mLoadService = LoadSir.getDefault().register(view, new Callback.OnReloadListener() {
@@ -157,7 +158,7 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     loadEnd();
                     break;
                 case REFRESH_ERROR:
-                    if (((ObservableArrayList)viewModel.dataList.getValue()).size() == 0) {
+                    if (((ObservableArrayList) viewModel.dataList.getValue()).size() == 0) {
                         mLoadService.showCallback(ErrorCallback.class);
                     } else {
                         String error = viewModel.errorMessage.getValue().toString();
@@ -173,8 +174,8 @@ public abstract class BaseMvvmFragment<V extends ViewDataBinding, VM extends Mvv
                     loadEnd();
                     break;
             }
-        } else if(o instanceof ObservableArrayList) {
-            notifyData((ObservableArrayList<D>)o);
+        } else if (o instanceof ObservableArrayList) {
+            notifyData((ObservableArrayList<D>) o);
         }
     }
 
