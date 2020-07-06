@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.walker.common.fragment.EmptyFragment
 import com.walker.ui.R
 import com.walker.ui.databinding.ActivityUiShowBinding
+import com.walker.ui.group.floatlayout.FloatLayoutFragment
 
 class ShowActivity : AppCompatActivity() {
 
@@ -72,7 +73,10 @@ class ShowActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        var fragment: Fragment=EmptyFragment.instance(channelName)
+        var fragment: Fragment = when (channelId) {
+            FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance()
+            else -> EmptyFragment.instance(channelName)
+        }
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
         transaction.add(R.id.container, fragment, fragment.javaClass.name).commit()

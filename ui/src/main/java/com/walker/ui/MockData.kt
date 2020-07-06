@@ -2,6 +2,7 @@ package com.walker.ui
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
 
@@ -30,17 +31,15 @@ class MockSummaryData private constructor() {
         var index = ORIGINAL_KEY
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
-            repeat(50) {
                 Summary().run {
-                    key = "${++index}"
-                    title = "这是UI的第${index - ORIGINAL_KEY}个条目"
+                    key = FloatLayoutFragment.KEY_ID
+                    title = "流布局FloatLayout"
                     uri = ""
                     desc = ""
                     add(this)
 
                     LogHelper.get().d("generateSummary", title, true)
                 }
-            }
         }
 
         return summaryList
