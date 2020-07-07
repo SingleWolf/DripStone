@@ -68,9 +68,9 @@ class FloatLayout : ViewGroup {
                     lineHeightList.add(lineUsedHeight)
 
                     selfNeedWidth = max(selfNeedWidth, lineUsedWidth + horizontalSpace)
-                    selfNeedHeight += lineUsedHeight + verticalSpace
+                    selfNeedHeight = selfHeight + lineUsedHeight + verticalSpace
 
-                    lineViews= mutableListOf()
+                    lineViews = mutableListOf()
 
                     lineUsedWidth = 0
                     lineUsedHeight = 0
@@ -88,7 +88,7 @@ class FloatLayout : ViewGroup {
                     lineHeightList.add(lineUsedHeight)
 
                     selfNeedWidth = max(selfNeedWidth, lineUsedWidth + horizontalSpace)
-                    selfNeedHeight += lineUsedHeight + verticalSpace
+                    selfNeedHeight = selfNeedWidth + lineUsedHeight + verticalSpace
                 }
             }
         }
@@ -133,7 +133,6 @@ class FloatLayout : ViewGroup {
             }
             curL = paddingLeft
             curT += lineHeight + verticalSpace
-
         }
     }
 }
