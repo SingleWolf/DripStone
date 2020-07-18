@@ -2,6 +2,7 @@ package com.walker.ui
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
@@ -18,8 +19,6 @@ class MockSummaryData private constructor() {
     }
 
     companion object {
-        const val ORIGINAL_KEY = 100
-
         const val PAGE_SIZE = 20
 
         fun get(): MockSummaryData {
@@ -28,18 +27,34 @@ class MockSummaryData private constructor() {
     }
 
     fun generateSummary(): List<Summary> {
-        var index = ORIGINAL_KEY
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
-                Summary().run {
-                    key = FloatLayoutFragment.KEY_ID
-                    title = "流布局FloatLayout"
-                    uri = ""
-                    desc = ""
-                    add(this)
+            Summary().run {
+                key = FloatLayoutFragment.KEY_ID
+                title = "流布局FloatLayout"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
 
-                    LogHelper.get().d("generateSummary", title, true)
-                }
+            Summary().run {
+                key = ColorLayoutFragment.KEY_ID
+                title = "逐渐色布局"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = ""
+                title = "灵动锦鲤"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
         }
 
         return summaryList

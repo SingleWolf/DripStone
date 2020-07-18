@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.walker.common.fragment.EmptyFragment
 import com.walker.ui.R
 import com.walker.ui.databinding.ActivityUiShowBinding
+import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 
 class ShowActivity : AppCompatActivity() {
@@ -75,6 +76,7 @@ class ShowActivity : AppCompatActivity() {
     private fun initFragment() {
         var fragment: Fragment = when (channelId) {
             FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance()
+            ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance()
             else -> EmptyFragment.instance(channelName)
         }
         val manger = supportFragmentManager
