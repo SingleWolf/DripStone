@@ -1,0 +1,23 @@
+package com.walker.ui.group.goodfish
+
+import android.os.Bundle
+import android.view.View
+import com.walker.core.base.mvc.BaseFragment
+import com.walker.ui.R
+import kotlinx.android.synthetic.main.fragment_ui_good_fish.*
+
+class GoodFishFragment : BaseFragment() {
+
+    companion object {
+        const val KEY_ID = "key_ui_good_fish_fragment"
+
+        fun instance() = GoodFishFragment()
+    }
+
+    override fun buildView(baseView: View?, savedInstanceState: Bundle?) {
+        val drawable=GoodFishDrawable()
+        ivGoodFish.setImageDrawable(drawable)
+    }
+
+    override fun getLayoutId() = R.layout.fragment_ui_good_fish
+}

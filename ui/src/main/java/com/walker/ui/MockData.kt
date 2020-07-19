@@ -4,6 +4,7 @@ import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
+import com.walker.ui.group.goodfish.GoodFishFragment
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
 
@@ -48,7 +49,7 @@ class MockSummaryData private constructor() {
             }
 
             Summary().run {
-                key = ""
+                key = GoodFishFragment.KEY_ID
                 title = "灵动锦鲤"
                 uri = ""
                 desc = ""

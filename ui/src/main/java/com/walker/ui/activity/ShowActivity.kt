@@ -14,6 +14,7 @@ import com.walker.ui.R
 import com.walker.ui.databinding.ActivityUiShowBinding
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
+import com.walker.ui.group.goodfish.GoodFishFragment
 
 class ShowActivity : AppCompatActivity() {
 
@@ -77,6 +78,7 @@ class ShowActivity : AppCompatActivity() {
         var fragment: Fragment = when (channelId) {
             FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance()
             ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance()
+            GoodFishFragment.KEY_ID -> GoodFishFragment.instance()
             else -> EmptyFragment.instance(channelName)
         }
         val manger = supportFragmentManager
