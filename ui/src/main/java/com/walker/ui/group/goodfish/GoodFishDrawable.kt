@@ -1,9 +1,7 @@
 package com.walker.ui.group.goodfish
 
-import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.*
-import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.view.animation.LinearInterpolator
 import kotlin.math.cos
@@ -16,19 +14,19 @@ import kotlin.math.sin
  *
  * @Summary 锦鲤绘制
  */
-class GoodFishDrawable : Drawable(), Animatable {
+class GoodFishDrawable : Drawable() {
 
     companion object {
         const val OTHER_ALPHA = 122
-        const val DEFAULT_HEAD_RADIUS = 100F
+        const val DEFAULT_HEAD_RADIUS = 50F
     }
 
     lateinit var paint: Paint
     lateinit var path: Path
     lateinit var corePoint: PointF
-    lateinit var angleAnimator: ObjectAnimator
+    lateinit var swayAngleAnimator: ValueAnimator
 
-    var fishAngle: Double = 0.0
+    var fishAngle: Double = 90.0
     var headRadius: Float = DEFAULT_HEAD_RADIUS
     var bodyLength: Float = headRadius * 3.2F
     var findFinLength: Float = headRadius * 0.9F
@@ -38,6 +36,14 @@ class GoodFishDrawable : Drawable(), Animatable {
     var minCircleRadius: Float = headRadius * 0.168F
     var largeTrapeziumHeight: Float = headRadius * (0.7F + 0.42F)
     var smallTrapeziumHeight: Float = headRadius * (0.42F * (0.4F + 2.7F))
+    /**
+     * 摆动幅度
+     */
+    var swayAngle: Float = 0F
+    /**
+     * 加速系数
+     */
+    var accelerateCoefficient: Float = 1F
 
     init {
         paint = Paint()
@@ -52,23 +58,18 @@ class GoodFishDrawable : Drawable(), Animatable {
 
         corePoint = PointF(4.19F * headRadius, 4.19F * headRadius)
 
-        angleAnimator = ObjectAnimator.ofFloat(this, "fishAngle", 0F, 360F)
-        angleAnimator.run {
-            duration = 30 * 1000L
+        swayAngleAnimator = ValueAnimator.ofFloat(0F, 360F)
+        swayAngleAnimator.run {
+            duration = 120 * 1000L
             interpolator = LinearInterpolator()
+            repeatMode = ValueAnimator.RESTART
             repeatCount = ValueAnimator.INFINITE
+            addUpdateListener {
+                swayAngle = it?.animatedValue as Float
+                invalidateSelf()
+            }
+            start()
         }
-        angleAnimator.start()
-    }
-
-    override fun isRunning() = angleAnimator?.isRunning
-
-    override fun start() {
-        angleAnimator?.start()
-    }
-
-    override fun stop() {
-        angleAnimator?.end()
     }
 
     fun setFishAngle(angle: Float) {
@@ -117,7 +118,8 @@ class GoodFishDrawable : Drawable(), Animatable {
      * 绘制头部
      */
     private fun drawHead(canvas: Canvas): PointF {
-        val headPoint: PointF = calculatePoint(corePoint, bodyLength / 2, fishAngle)
+        val currentAngle = fishAngle + sin(swayAngle * accelerateCoefficient) * 10
+        val headPoint: PointF = calculatePoint(corePoint, bodyLength / 2, currentAngle)
         canvas.drawCircle(headPoint.x, headPoint.y, headRadius, paint)
         return headPoint
     }
@@ -126,28 +128,29 @@ class GoodFishDrawable : Drawable(), Animatable {
      * 绘制鱼鳍
      */
     private fun drawFin(canvas: Canvas, headPoint: PointF) {
+        val currentAngle = fishAngle + sin(swayAngle * accelerateCoefficient) * 10
         //右测
-        val rightFinPoint = calculatePoint(headPoint, findFinLength, fishAngle - 110)
-        makeFins(canvas, rightFinPoint, fishAngle, true)
+        val rightFinPoint = calculatePoint(headPoint, findFinLength, currentAngle - 110)
+        makeFins(canvas, rightFinPoint, currentAngle, true)
         //左侧
-        val leftFinPoint = calculatePoint(headPoint, findFinLength, fishAngle + 110)
-        makeFins(canvas, leftFinPoint, fishAngle, false)
+        val leftFinPoint = calculatePoint(headPoint, findFinLength, currentAngle + 110)
+        makeFins(canvas, leftFinPoint, currentAngle, false)
     }
 
     private fun makeFins(
         canvas: Canvas,
         startPoint: PointF,
-        fishAngle: Double,
+        currentFishAngle: Double,
         isRight: Boolean
     ) {
         val controlAngle = 115.0
         //鱼鳍的终点
-        val endPoint = calculatePoint(startPoint, finLength, fishAngle - 180)
+        val endPoint = calculatePoint(startPoint, finLength, currentFishAngle - 180)
         //控制点
         val calculateAngle = if (isRight) {
-            fishAngle - controlAngle
+            currentFishAngle - controlAngle
         } else {
-            fishAngle + controlAngle
+            currentFishAngle + controlAngle
         }
         val controlPoint = calculatePoint(startPoint, finLength * 1.8F, calculateAngle)
         //绘制
@@ -191,18 +194,23 @@ class GoodFishDrawable : Drawable(), Animatable {
         sCircleRadius: Float,
         isDrawLargeCircle: Boolean
     ): PointF {
-        val smallCirclePoint = calculatePoint(largeCirclePoint, trapeziumHeight, fishAngle - 180)
+        var currentAngle: Double
         if (isDrawLargeCircle) {
+            currentAngle = fishAngle + cos(swayAngle * 2.0F * accelerateCoefficient) * 15
             //绘制大圆
             canvas.drawCircle(largeCirclePoint.x, largeCirclePoint.y, lCircleRadius, paint)
+        } else {
+            currentAngle = fishAngle + sin(swayAngle * 2.0F * accelerateCoefficient) * 30
+
         }
+        val smallCirclePoint = calculatePoint(largeCirclePoint, trapeziumHeight, currentAngle - 180)
         //绘制小圆
         canvas.drawCircle(smallCirclePoint.x, smallCirclePoint.y, sCircleRadius, paint)
         //绘制梯形
-        val tlPoint = calculatePoint(largeCirclePoint, lCircleRadius, fishAngle + 90)
-        val trPoint = calculatePoint(largeCirclePoint, lCircleRadius, fishAngle - 90)
-        val blPoint = calculatePoint(smallCirclePoint, sCircleRadius, fishAngle + 90)
-        val brPoint = calculatePoint(smallCirclePoint, sCircleRadius, fishAngle - 90)
+        val tlPoint = calculatePoint(largeCirclePoint, lCircleRadius, currentAngle + 90)
+        val trPoint = calculatePoint(largeCirclePoint, lCircleRadius, currentAngle - 90)
+        val blPoint = calculatePoint(smallCirclePoint, sCircleRadius, currentAngle + 90)
+        val brPoint = calculatePoint(smallCirclePoint, sCircleRadius, currentAngle - 90)
         path.reset()
         path.moveTo(tlPoint.x, tlPoint.y)
         path.lineTo(trPoint.x, trPoint.y)
@@ -224,8 +232,9 @@ class GoodFishDrawable : Drawable(), Animatable {
     }
 
     private fun makeTriangle(canvas: Canvas, topPoint: PointF, triangleLength: Float) {
-        val leftPoint = calculatePoint(topPoint, triangleLength, fishAngle + 150)
-        val rightPoint = calculatePoint(topPoint, triangleLength, fishAngle - 150)
+        val currentAngle = fishAngle + sin(swayAngle * 2.0F * accelerateCoefficient) * 30
+        val leftPoint = calculatePoint(topPoint, triangleLength, currentAngle + 150)
+        val rightPoint = calculatePoint(topPoint, triangleLength, currentAngle - 150)
         path.reset()
         path.moveTo(topPoint.x, topPoint.y)
         path.lineTo(leftPoint.x, leftPoint.y)
@@ -241,12 +250,13 @@ class GoodFishDrawable : Drawable(), Animatable {
         headPoint: PointF,
         largeCirclePoint: PointF
     ) {
-        val tlPoint = calculatePoint(headPoint, headRadius, fishAngle + 90)
-        val trPoint = calculatePoint(headPoint, headRadius, fishAngle - 90)
-        val blPoint = calculatePoint(largeCirclePoint, largeCircleRadius, fishAngle + 90)
-        val brPoint = calculatePoint(largeCirclePoint, largeCircleRadius, fishAngle - 90)
-        val controlLeftPoint = calculatePoint(headPoint, bodyLength * 0.56F, fishAngle + 130)
-        val controlRightPoint = calculatePoint(headPoint, bodyLength * 0.56F, fishAngle - 130)
+        val currentAngle = fishAngle + sin(swayAngle * accelerateCoefficient) * 10
+        val tlPoint = calculatePoint(headPoint, headRadius, currentAngle + 90)
+        val trPoint = calculatePoint(headPoint, headRadius, currentAngle - 90)
+        val blPoint = calculatePoint(largeCirclePoint, largeCircleRadius, currentAngle + 90)
+        val brPoint = calculatePoint(largeCirclePoint, largeCircleRadius, currentAngle - 90)
+        val controlLeftPoint = calculatePoint(headPoint, bodyLength * 0.56F, currentAngle + 130)
+        val controlRightPoint = calculatePoint(headPoint, bodyLength * 0.56F, currentAngle - 130)
         path.reset()
         path.moveTo(tlPoint.x, tlPoint.y)
         path.quadTo(controlLeftPoint.x, controlLeftPoint.y, blPoint.x, blPoint.y)
