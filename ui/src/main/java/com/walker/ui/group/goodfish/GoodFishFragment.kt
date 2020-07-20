@@ -15,8 +15,6 @@ class GoodFishFragment : BaseFragment() {
     }
 
     override fun buildView(baseView: View?, savedInstanceState: Bundle?) {
-        val drawable=GoodFishDrawable()
-        ivGoodFish.setImageDrawable(drawable)
     }
 
     override fun getLayoutId() = R.layout.fragment_ui_good_fish

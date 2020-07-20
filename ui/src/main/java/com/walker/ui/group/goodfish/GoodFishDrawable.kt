@@ -21,10 +21,11 @@ class GoodFishDrawable : Drawable() {
         const val DEFAULT_HEAD_RADIUS = 50F
     }
 
-    lateinit var paint: Paint
-    lateinit var path: Path
-    lateinit var corePoint: PointF
-    lateinit var swayAngleAnimator: ValueAnimator
+    var paint: Paint = Paint()
+    var path: Path = Path()
+    var corePoint: PointF? = null
+    lateinit var fishHeadPoint: PointF
+    var swayAngleAnimator: ValueAnimator? = null
 
     var fishAngle: Double = 90.0
     var headRadius: Float = DEFAULT_HEAD_RADIUS
@@ -46,7 +47,6 @@ class GoodFishDrawable : Drawable() {
     var accelerateCoefficient: Float = 1F
 
     init {
-        paint = Paint()
         paint.run {
             style = Paint.Style.FILL
             isAntiAlias = true
@@ -54,12 +54,10 @@ class GoodFishDrawable : Drawable() {
             setARGB(OTHER_ALPHA, 244, 92, 71)
         }
 
-        path = Path()
-
         corePoint = PointF(4.19F * headRadius, 4.19F * headRadius)
 
         swayAngleAnimator = ValueAnimator.ofFloat(0F, 2160F)
-        swayAngleAnimator.run {
+        swayAngleAnimator?.run {
             duration = 15 * 1000L
             interpolator = LinearInterpolator()
             repeatMode = ValueAnimator.RESTART
@@ -106,12 +104,11 @@ class GoodFishDrawable : Drawable() {
         return PointF(startPoint.x + deltaX, startPoint.y + deltaY)
     }
 
-
     override fun draw(canvas: Canvas) {
-        val headPoint = drawHead(canvas)
-        drawFin(canvas, headPoint)
+        fishHeadPoint = drawHead(canvas)
+        drawFin(canvas, fishHeadPoint)
         val largeCirclePoint = drawBodyPart(canvas)
-        drawMainBody(canvas, headPoint, largeCirclePoint)
+        drawMainBody(canvas, fishHeadPoint, largeCirclePoint)
     }
 
     /**
@@ -120,7 +117,7 @@ class GoodFishDrawable : Drawable() {
     private fun drawHead(canvas: Canvas): PointF {
         val currentAngle =
             fishAngle + sin(Math.toRadians(swayAngle * 2.0 * accelerateCoefficient)) * 10
-        val headPoint: PointF = calculatePoint(corePoint, bodyLength / 2, currentAngle)
+        val headPoint: PointF = calculatePoint(corePoint!!, bodyLength / 2, currentAngle)
         canvas.drawCircle(headPoint.x, headPoint.y, headRadius, paint)
         return headPoint
     }
@@ -167,7 +164,7 @@ class GoodFishDrawable : Drawable() {
      */
     private fun drawBodyPart(canvas: Canvas): PointF {
         //绘制下体第一部分
-        val largeCirclePoint = calculatePoint(corePoint, bodyLength / 2, fishAngle - 180)
+        val largeCirclePoint = calculatePoint(corePoint!!, bodyLength / 2, fishAngle - 180)
         val midCirclePoint = makeTrapeziumAndCircle(
             canvas,
             largeCirclePoint,
@@ -255,7 +252,8 @@ class GoodFishDrawable : Drawable() {
         headPoint: PointF,
         largeCirclePoint: PointF
     ) {
-        val currentAngle = fishAngle
+        val currentAngle =
+            fishAngle + sin(Math.toRadians(swayAngle * 2.0 * accelerateCoefficient)) * 10
         val tlPoint = calculatePoint(headPoint, headRadius, currentAngle + 90)
         val trPoint = calculatePoint(headPoint, headRadius, currentAngle - 90)
         val blPoint = calculatePoint(largeCirclePoint, largeCircleRadius, currentAngle + 90)
@@ -269,4 +267,5 @@ class GoodFishDrawable : Drawable() {
         path.quadTo(controlRightPoint.x, controlRightPoint.y, trPoint.x, trPoint.y)
         canvas.drawPath(path, paint)
     }
+
 }
