@@ -56,9 +56,9 @@ class GoodFishDrawable : Drawable() {
 
         corePoint = PointF(4.19F * headRadius, 4.19F * headRadius)
 
-        swayAngleAnimator = ValueAnimator.ofFloat(0F, 2160F)
+        swayAngleAnimator = ValueAnimator.ofFloat(0F, 12 * 360F)
         swayAngleAnimator?.run {
-            duration = 15 * 1000L
+            duration = 40 * 1000L
             interpolator = LinearInterpolator()
             repeatMode = ValueAnimator.RESTART
             repeatCount = ValueAnimator.INFINITE
@@ -151,7 +151,11 @@ class GoodFishDrawable : Drawable() {
         } else {
             currentFishAngle + controlAngle
         }
-        val controlPoint = calculatePoint(startPoint, finLength * 1.8F, calculateAngle)
+        //受游动角度影响产生控制点长度的权重
+        val controlLengthWeight =
+            sin(Math.toRadians(swayAngle * 2.0 * accelerateCoefficient)).toFloat()
+        val controlLength = finLength * 1.8F + finLength*0.5F * controlLengthWeight
+        val controlPoint = calculatePoint(startPoint, controlLength, calculateAngle)
         //绘制
         path.reset()
         path.moveTo(startPoint.x, startPoint.y)
@@ -267,5 +271,4 @@ class GoodFishDrawable : Drawable() {
         path.quadTo(controlRightPoint.x, controlRightPoint.y, trPoint.x, trPoint.y)
         canvas.drawPath(path, paint)
     }
-
 }

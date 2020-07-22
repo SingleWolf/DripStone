@@ -31,6 +31,15 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
             Summary().run {
+                key = ""
+                title = "优化PagerView高度"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
                 key = FloatLayoutFragment.KEY_ID
                 title = "流布局FloatLayout"
                 uri = ""
@@ -41,7 +50,7 @@ class MockSummaryData private constructor() {
 
             Summary().run {
                 key = ColorLayoutFragment.KEY_ID
-                title = "逐渐色布局"
+                title = "渐变色布局"
                 uri = ""
                 desc = ""
                 add(this)
@@ -51,6 +60,15 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = GoodFishFragment.KEY_ID
                 title = "灵动锦鲤"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = ""
+                title = "RecyclerView吸顶效果"
                 uri = ""
                 desc = ""
                 add(this)
