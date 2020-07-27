@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.ui.R
-import kotlinx.android.synthetic.main.fragment_ui_good_fish.*
 
 class GoodFishFragment : BaseFragment() {
 

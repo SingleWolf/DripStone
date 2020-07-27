@@ -15,6 +15,7 @@ import com.walker.ui.databinding.ActivityUiShowBinding
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
+import com.walker.ui.group.recyclerview.StarFragment
 
 class ShowActivity : AppCompatActivity() {
 
@@ -79,6 +80,7 @@ class ShowActivity : AppCompatActivity() {
             FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance()
             ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance()
             GoodFishFragment.KEY_ID -> GoodFishFragment.instance()
+            StarFragment.KEY_ID -> StarFragment.instance()
             else -> EmptyFragment.instance(channelName)
         }
         val manger = supportFragmentManager

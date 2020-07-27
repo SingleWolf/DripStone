@@ -1,4 +1,4 @@
-package com.walker.ui.group
+package com.walker.ui.group.viewpager
 
 import android.content.Context
 import android.util.AttributeSet
