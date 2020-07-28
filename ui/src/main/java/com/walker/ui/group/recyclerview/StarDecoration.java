@@ -24,7 +24,7 @@ public class StarDecoration extends RecyclerView.ItemDecoration {
         groupHeaderHeight = dp2px(context, 100);
 
         headPaint = new Paint();
-        headPaint.setColor(Color.BLUE);
+        headPaint.setColor(Color.parseColor("#FF4081"));
 
         textPaint = new Paint();
         textPaint.setTextSize(50);
@@ -83,6 +83,10 @@ public class StarDecoration extends RecyclerView.ItemDecoration {
                 c.drawRect(left, top, right, top + bottom, headPaint);
                 String groupName = adapter.getGroupName(position);
                 textPaint.getTextBounds(groupName, 0, groupName.length(), textRect);
+
+                // 绘制文字的高度不能超出区域
+                c.clipRect(left, top, right, top + bottom);
+
                 c.drawText(groupName, left + 20, top + bottom
                         - groupHeaderHeight / 2 + textRect.height() / 2, textPaint);
             } else {

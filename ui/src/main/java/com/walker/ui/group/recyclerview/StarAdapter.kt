@@ -20,7 +20,7 @@ class StarAdapter(var dataList: MutableList<Star>) :
         holder.tvTitle?.text = dataList[position].name
     }
 
-    override fun getItemCount() = dataList?.size
+    override fun getItemCount() = dataList.size
 
     fun isGroupHeader(position: Int): Boolean {
         return if (position == 0) {
