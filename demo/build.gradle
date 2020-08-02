@@ -67,6 +67,7 @@ dependencies {
 
     implementation project(':common')
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
 
     kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
 }
