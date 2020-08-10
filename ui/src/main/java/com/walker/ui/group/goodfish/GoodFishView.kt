@@ -180,12 +180,12 @@ class GoodFishView : RelativeLayout {
         )
         ivFishXYAnimator = ObjectAnimator.ofFloat(ivFish!!, "x", "y", path)
         ivFishXYAnimator?.run {
-            duration = 2500L
+            duration = 2000L
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     super.onAnimationStart(animation)
                     //加速锦鲤的游动速度
-                    fishDrawable!!.accelerateCoefficient = 2F
+                    fishDrawable!!.accelerateCoefficient = 3F
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
