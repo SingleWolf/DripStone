@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
@@ -49,4 +50,5 @@ dependencies {
 
     annotationProcessor "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
     implementation "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    kapt "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
 }
