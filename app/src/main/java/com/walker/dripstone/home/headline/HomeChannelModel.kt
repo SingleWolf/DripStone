@@ -2,11 +2,11 @@ package com.walker.dripstone.home.headline
 
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
-import com.walker.common.arouter.RouteServiceManager
-import com.walker.common.arouter.study.IStudyProvider
-import com.walker.common.arouter.ui.IUiProvider
 import com.walker.common.fragment.EmptyFragment
+import com.walker.common.router.IStudyRouter
+import com.walker.common.router.IUiRouter
 import com.walker.core.base.mvvm.model.MvvmBaseModel
+import com.walker.core.router.RouterLoader
 import com.walker.core.util.GsonUtils
 import com.walker.core.util.Utils
 import com.walker.dripstone.home.Channel
@@ -54,24 +54,16 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
         fun createFragment(key: String): Fragment {
             var fragment: Fragment? = null
             if (TextUtils.equals("101", key)) {
-                val summaryProvider = RouteServiceManager.provide(
-                    IUiProvider::class.java,
-                    IUiProvider.UI_SUMMARY_SERVICE
-                )
-                fragment = summaryProvider?.getSummaryFragment()
+                val uiRouter = RouterLoader.load(IUiRouter::class.java)
+                fragment = uiRouter?.getSummaryFragment()
             } else {
                 if (TextUtils.equals("100", key)) {
-                    val summaryProvider = RouteServiceManager.provide(
-                        IStudyProvider::class.java,
-                        IStudyProvider.STUDY_SUMMARY_SERVICE
-                    )
+                    val summaryProvider = RouterLoader.load(IStudyRouter::class.java)
                     fragment = summaryProvider?.getSummaryFragment()
                 }
             }
-            if (fragment == null) {
-                fragment = EmptyFragment.instance()
-            }
-            return fragment
+            fragment ?: let { fragment = EmptyFragment.instance() }
+            return fragment!!
         }
     }
 
@@ -84,7 +76,6 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     }
 
     override fun refresh() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun load() {

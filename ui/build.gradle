@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
     defaultConfig {
@@ -10,12 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
         consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
-        }
     }
 
     buildTypes {
@@ -39,7 +33,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
     implementation 'com.google.android.material:material:1.1.0'
@@ -54,5 +47,6 @@ dependencies {
     implementation project(':common')
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
 
-    kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
+    annotationProcessor "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    implementation "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
 }

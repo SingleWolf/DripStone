@@ -14,20 +14,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.walker.common.arouter.RouteServiceManager
-import com.walker.common.arouter.collect.ICollectProvider
-import com.walker.common.arouter.demo.IDemoProvider
-import com.walker.core.log.LogHelper
+import com.walker.common.router.ICollectRouter
+import com.walker.common.router.IDemoRouter
+import com.walker.common.router.IStudyRouter
+import com.walker.core.router.RouterLoader
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
-import com.walker.dripstone.test.TraceMethodTest
 import com.walker.dripstone.databinding.ActivityMainBinding
 import com.walker.dripstone.fragment.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
 import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
 import com.walker.dripstone.links.LinkHelper
+import com.walker.dripstone.test.TraceMethodTest
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : AppCompatActivity() {
@@ -120,33 +120,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getDemoFragment(): Fragment {
-        var fragment: Fragment
-        val summaryProvider = RouteServiceManager.provide(
-            IDemoProvider::class.java,
-            IDemoProvider.DEMO_SUMMARY_SERVICE
-        )
-        if (summaryProvider == null) {
-            LogHelper.get().e("getDemoFragment", "summaryProvider is null", true)
-            fragment = DemoFragment()
-        } else {
-            fragment = summaryProvider.getSummaryFragment()
-        }
-        return fragment
+        var fragment: Fragment?
+        val summaryProvider = RouterLoader.load(IDemoRouter::class.java)
+        fragment = summaryProvider?.getSummaryFragment()
+        fragment ?: let { fragment = DemoFragment() }
+        return fragment!!
     }
 
     private fun getCollectFragment(): Fragment {
-        var fragment: Fragment
-        val summaryProvider = RouteServiceManager.provide(
-            ICollectProvider::class.java,
-            ICollectProvider.COLLECT_SUMMARY_SERVICE
-        )
-        if (summaryProvider == null) {
-            LogHelper.get().e("getCollectFragment", "summaryProvider is null", true)
-            fragment = CollectFragment()
-        } else {
-            fragment = summaryProvider.getHomeFragment()
-        }
-        return fragment
+        var fragment: Fragment?
+        val summaryProvider = RouterLoader.load(ICollectRouter::class.java)
+        fragment = summaryProvider?.getHomeFragment()
+        fragment ?: let { fragment = CollectFragment() }
+        return fragment!!
     }
 
     @SuppressLint("RestrictedApi")
@@ -168,7 +154,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

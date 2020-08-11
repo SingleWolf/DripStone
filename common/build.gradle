@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
     defaultConfig {
@@ -11,12 +11,6 @@ android {
         versionName "1.0"
 
         consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
-        }
     }
 
     buildTypes {
@@ -47,9 +41,6 @@ dependencies {
 
     api project(':core')
     api 'com.github.bumptech.glide:glide:4.7.1'
-    //arouter
-    api "com.alibaba:arouter-api:$rootProject.ext.arouter_api_version"
-    kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
     //PictureSelector
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.6'
     //Glide

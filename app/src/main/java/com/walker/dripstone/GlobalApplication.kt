@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import androidx.multidex.MultiDexApplication
-import com.alibaba.android.arouter.launcher.ARouter
 import com.kingja.loadsir.core.LoadSir
 import com.walker.core.exception.CrashHandler
 import com.walker.core.log.DefaultLogger
@@ -39,10 +38,6 @@ class GlobalApplication : MultiDexApplication() {
         //Log
         LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
             .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
-        //ARouter
-        ARouter.init(this)
-        ARouter.openDebug()
-        ARouter.openLog()
         //LoadSir
         LoadSir.beginBuilder()
             .addCallback(ErrorCallback())//添加各种状态页

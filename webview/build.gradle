@@ -27,4 +27,9 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$rootProject.ext.gson_version"
     implementation "com.kingja.loadsir:loadsir:$rootProject.ext.loadsir_version"
+
+    annotationProcessor "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    implementation "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+
+    implementation project(":common")
 }
