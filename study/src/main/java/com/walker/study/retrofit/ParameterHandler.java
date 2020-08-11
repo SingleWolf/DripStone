@@ -1,4 +1,4 @@
-package com.walker.demo.retrofit;
+package com.walker.study.retrofit;
 
 
 public abstract class ParameterHandler {

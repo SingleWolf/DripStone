@@ -2,6 +2,5 @@
     package="com.walker.ui" >
 
     <application>
-        <activity android:name=".activity.ShowActivity" />
     </application>
 </manifest>

@@ -1,9 +1,9 @@
-package com.walker.demo.retrofit;
+package com.walker.study.retrofit;
 
-import com.walker.demo.retrofit.annotation.Field;
-import com.walker.demo.retrofit.annotation.GET;
-import com.walker.demo.retrofit.annotation.POST;
-import com.walker.demo.retrofit.annotation.Query;
+import com.walker.study.retrofit.annotation.Field;
+import com.walker.study.retrofit.annotation.GET;
+import com.walker.study.retrofit.annotation.POST;
+import com.walker.study.retrofit.annotation.Query;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

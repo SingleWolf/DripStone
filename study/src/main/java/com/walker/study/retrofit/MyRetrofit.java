@@ -1,4 +1,4 @@
-package com.walker.demo.retrofit;
+package com.walker.study.retrofit;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

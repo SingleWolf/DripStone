@@ -11,7 +11,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -42,16 +41,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
     implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraint_layout_verson"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
@@ -59,6 +54,8 @@ dependencies {
 
     implementation project(':common')
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
+
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
     kapt "com.alibaba:arouter-compiler:$rootProject.ext.arouter_compiler_version"
 }

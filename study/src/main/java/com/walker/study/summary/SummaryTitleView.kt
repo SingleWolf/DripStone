@@ -2,11 +2,25 @@ package com.walker.study.summary
 
 import android.content.Context
 import android.view.View
+import androidx.fragment.app.Fragment
+import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
-import com.walker.study.activity.ShowActivity
+import com.walker.study.annotation.InjectFragment
+import com.walker.study.hotfix.HotfixFragment
+import com.walker.study.thread.ThreadFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
-        ShowActivity.start(context, viewModel.key, viewModel.title)
+        ShowActivity.start(context, viewModel.key, viewModel.title, ::genInstance)
+    }
+
+    fun genInstance(channelId: String): Fragment? {
+        var fragment: Fragment? = when (channelId) {
+            HotfixFragment.KEY_ID -> HotfixFragment.instance()
+            InjectFragment.KEY_ID -> InjectFragment.instance()
+            ThreadFragment.KEY_ID -> ThreadFragment.instance()
+            else -> null
+        }
+        return fragment
     }
 }

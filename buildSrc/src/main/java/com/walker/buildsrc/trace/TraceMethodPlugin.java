@@ -79,7 +79,6 @@ public class TraceMethodPlugin implements Plugin<Project> {
             task.doFirst(new Action<Task>() {
                 @Override
                 public void execute(Task task) {
-                    System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
                     Set<File> files = task.getInputs().getFiles().getFiles();
                     for (File file : files) {
                         String filePath = file.getAbsolutePath();
@@ -116,7 +115,6 @@ public class TraceMethodPlugin implements Plugin<Project> {
             task.doFirst(new Action<Task>() {
                 @Override
                 public void execute(Task task) {
-                    System.out.println(String.format("\n\n---------- %s Start ----------\n\n", task.getName()));
                     Set<File> files = task.getInputs().getFiles().getFiles();
                     for (File file : files) {
                         String filePath = file.getAbsolutePath();

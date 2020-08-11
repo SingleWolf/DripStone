@@ -31,7 +31,6 @@ public class TraceMethodVisitor extends AdviceAdapter {
                     super.visit(name, value);
                     if (name.equals("tag") && value instanceof String) {
                         tag = (String) value;
-                        System.out.println(String.format("\n\n----------trace method tag : %s  and  desc : %s  ----------\n\n", tag, desc));
                     }
                 }
             };
@@ -53,7 +52,6 @@ public class TraceMethodVisitor extends AdviceAdapter {
 
     private void handleMethodEnter() {
         if (needInject && tag != null) {
-            System.out.println(String.format("\n\n---------- %s handleMethodEnter tag : %s ----------\n\n", methodName, tag));
             methodVisitor.visitMethodInsn(INVOKESTATIC, METHOD_EVENT_MANAGER,
                     "getInstance", "()L" + METHOD_EVENT_MANAGER + ";", false);
             methodVisitor.visitLdcInsn(tag);
@@ -65,7 +63,6 @@ public class TraceMethodVisitor extends AdviceAdapter {
 
     private void handleMethodExit() {
         if (needInject && tag != null) {
-            System.out.println(String.format("\n\n---------- %s handleMethodExit tag : %s ----------\n\n", methodName, tag));
             methodVisitor.visitMethodInsn(INVOKESTATIC, METHOD_EVENT_MANAGER,
                     "getInstance", "()L" + METHOD_EVENT_MANAGER + ";", false);
             methodVisitor.visitLdcInsn(tag);

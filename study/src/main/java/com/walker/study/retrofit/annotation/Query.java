@@ -1,4 +1,4 @@
-package com.walker.demo.retrofit.annotation;
+package com.walker.study.retrofit.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
