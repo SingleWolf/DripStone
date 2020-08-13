@@ -10,5 +10,7 @@ import java.util.List;
 public interface PhotoCallback<T extends PhotoData> {
     void onSuccess(List<T> result);
 
+    void onError(String msg);
+
     void onCancel(String msg);
 }

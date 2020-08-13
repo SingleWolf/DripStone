@@ -16,13 +16,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.router.ICollectRouter
 import com.walker.common.router.IDemoRouter
-import com.walker.common.router.IStudyRouter
 import com.walker.core.router.RouterLoader
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.ActivityMainBinding
-import com.walker.dripstone.fragment.AccountFragment
+import com.walker.dripstone.setting.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
 import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
@@ -64,6 +63,11 @@ class MainActivity : AppCompatActivity() {
             //Set bottom menu selected item text in toolbar
             val actionBar = supportActionBar
             actionBar?.title = item.title
+            if (item.itemId == R.id.menu_account) {
+                actionBar?.hide()
+            } else {
+                actionBar?.show()
+            }
             switchFragment(fromFragment, fragCategory)
             fromFragment = fragCategory!!
             true
