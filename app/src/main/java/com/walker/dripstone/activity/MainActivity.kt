@@ -21,11 +21,11 @@ import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.ActivityMainBinding
-import com.walker.dripstone.setting.AccountFragment
 import com.walker.dripstone.fragment.CollectFragment
 import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
 import com.walker.dripstone.links.LinkHelper
+import com.walker.dripstone.setting.AccountFragment
 import com.walker.dripstone.test.TraceMethodTest
 import q.rorbin.badgeview.QBadgeView
 

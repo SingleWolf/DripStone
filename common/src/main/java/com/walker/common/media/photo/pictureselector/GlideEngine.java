@@ -1,4 +1,4 @@
-package com.walker.common.media.photo;
+package com.walker.common.media.photo.pictureselector;
 
 import android.content.Context;
 import android.graphics.Bitmap;

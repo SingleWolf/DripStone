@@ -1,7 +1,7 @@
-package com.walker.common.media.photo;
+package com.walker.common.media.photo.pictureselector;
 
 import android.app.Activity;
-import android.content.Context;
+import android.os.Build;
 
 import androidx.fragment.app.Fragment;
 
@@ -10,7 +10,10 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.walker.core.util.ToastUtils;
+import com.walker.common.media.photo.IPhotoGetter;
+import com.walker.common.media.photo.PhotoCallback;
+import com.walker.common.media.photo.PhotoConfig;
+import com.walker.common.media.photo.PhotoData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +97,7 @@ class PictureSelectorMrg implements IPhotoGetter {
             pictureSelectorModel.isEnableCrop(isCrop);
             int maxNum = config.getMaxNum();
             pictureSelectorModel.maxSelectNum(maxNum);
-            int minNum=config.getMinNum();
+            int minNum = config.getMinNum();
             pictureSelectorModel.minSelectNum(minNum);
         }
         pictureSelectorModel.imageEngine(GlideEngine.createGlideEngine())
@@ -123,7 +126,11 @@ class PictureSelectorMrg implements IPhotoGetter {
         List<PhotoData> dataList = new ArrayList<>();
         for (LocalMedia data : result) {
             PhotoData d = new PhotoData();
-            d.setFilePath(data.getAndroidQToPath());
+            if (28 < Build.VERSION.SDK_INT) {
+                d.setFilePath(data.getAndroidQToPath());
+            } else {
+                d.setFilePath(data.getCutPath());
+            }
             dataList.add(d);
         }
         callback.onSuccess(dataList);
