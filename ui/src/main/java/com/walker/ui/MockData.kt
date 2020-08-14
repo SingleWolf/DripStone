@@ -5,6 +5,7 @@ import com.walker.core.util.GsonUtils
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
+import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.StarFragment
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
@@ -70,6 +71,15 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = StarFragment.KEY_ID
                 title = "RecyclerView吸顶效果"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = PhotoViewFragment.KEY_ID
+                title = "图片查看"
                 uri = ""
                 desc = ""
                 add(this)

@@ -18,7 +18,6 @@ public class PhotoGetterHelper implements IPhotoGetter {
     private IPhotoGetter photoGetter;
 
     private PhotoGetterHelper() {
-        photoGetter = new PictureSelectorMrg();
     }
 
     public static final PhotoGetterHelper get() {
@@ -32,23 +31,30 @@ public class PhotoGetterHelper implements IPhotoGetter {
         return sInstance;
     }
 
+    private IPhotoGetter getProxy() {
+        if (photoGetter == null) {
+            photoGetter = new PictureSelectorMrg();
+        }
+        return photoGetter;
+    }
+
     @Override
     public void onCamera(Activity context, PhotoConfig config, PhotoCallback callback) {
-        photoGetter.onCamera(context, config, callback);
+        getProxy().onCamera(context, config, callback);
     }
 
     @Override
     public void onCamera(Fragment context, PhotoConfig config, PhotoCallback callback) {
-        photoGetter.onCamera(context, config, callback);
+        getProxy().onCamera(context, config, callback);
     }
 
     @Override
     public void onAlbum(Activity context, PhotoConfig config, PhotoCallback callback) {
-        photoGetter.onAlbum(context, config, callback);
+        getProxy().onAlbum(context, config, callback);
     }
 
     @Override
     public void onAlbum(Fragment context, PhotoConfig config, PhotoCallback callback) {
-        photoGetter.onAlbum(context, config, callback);
+        getProxy().onAlbum(context, config, callback);
     }
 }

@@ -90,7 +90,7 @@ public class InjectUtils {
                 method.invoke(activity, v);
             } catch (IllegalArgumentException e) {
                 try {
-                    method.invoke(activity, null);
+                    method.invoke(activity, new Object[]{});
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

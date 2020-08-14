@@ -99,7 +99,7 @@ public class PictureSelectorMrg implements IPhotoGetter {
             pictureSelectorModel.maxSelectNum(maxNum);
             int minNum = config.getMinNum();
             pictureSelectorModel.minSelectNum(minNum);
-            boolean isCamera=config.isCamera();
+            boolean isCamera = config.isCamera();
             pictureSelectorModel.isCamera(isCamera);
         }
         pictureSelectorModel.imageEngine(GlideEngine.createGlideEngine())
@@ -127,11 +127,18 @@ public class PictureSelectorMrg implements IPhotoGetter {
         }
         List<PhotoData> dataList = new ArrayList<>();
         for (LocalMedia data : result) {
+            if (data == null) {
+                continue;
+            }
             PhotoData d = new PhotoData();
             if (28 < Build.VERSION.SDK_INT) {
                 d.setFilePath(data.getAndroidQToPath());
             } else {
-                d.setFilePath(data.getCutPath());
+                if (data.isCut()) {
+                    d.setFilePath(data.getCutPath());
+                } else {
+                    d.setFilePath(data.getPath());
+                }
             }
             dataList.add(d);
         }

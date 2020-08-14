@@ -8,6 +8,7 @@ import com.walker.common.view.titleview.TitleView
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
+import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.StarFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
@@ -21,6 +22,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance()
             GoodFishFragment.KEY_ID -> GoodFishFragment.instance()
             StarFragment.KEY_ID -> StarFragment.instance()
+            PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance()
             else -> null
         }
         return fragment

@@ -6,5 +6,6 @@
 
     <application>
         <activity android:name=".activity.ShowActivity" />
+        <activity android:name=".activity.ImagePreviewActivity" />
     </application>
 </manifest>

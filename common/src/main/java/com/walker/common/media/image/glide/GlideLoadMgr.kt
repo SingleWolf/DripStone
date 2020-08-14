@@ -6,7 +6,6 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.walker.common.media.image.IImageLoad
@@ -62,10 +61,10 @@ class GlideLoadMgr : IImageLoad {
                 glideRequest.error(errorImage)
             }
             if (isCircle) {
-
+                glideRequest.transform(CircleTransformation())
             }
         }
-        glideRequest.transition(withCrossFade()).into(GlideImageViewTarget(view))
+        glideRequest.into(GlideImageViewTarget(view))
     }
 
     private inner class GlideImageViewTarget internal constructor(view: ImageView) :

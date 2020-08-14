@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.walker.common.activity.ImagePreviewActivity
+import com.walker.common.media.image.ImageConfig
 import com.walker.common.media.image.ImageLoadHelper
 import com.walker.common.media.photo.PhotoCallback
 import com.walker.common.media.photo.PhotoConfig
@@ -18,6 +20,8 @@ import com.walker.dripstone.databinding.FragmentSettingBinding
 
 class AccountFragment : Fragment() {
     private lateinit var mBinding: FragmentSettingBinding
+    private var imageFilePath: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +33,7 @@ class AccountFragment : Fragment() {
             container,
             false
         )
+        ImageLoadHelper.loadRes(mBinding.ivTest, R.drawable.error, null)
         mBinding.ivAccount.setOnClickListener {
             var config = PhotoConfig()
             config.isCutCrop = true
@@ -58,20 +63,23 @@ class AccountFragment : Fragment() {
         }
 
         mBinding.ivTest.setOnClickListener {
+           imageFilePath?.let {
+               ImagePreviewActivity.start(context!!,it)
+           }
+        }
+        mBinding.ivTest.setOnLongClickListener {
             var config = PhotoConfig()
             config.isCutCrop = false
-
             PhotoGetterHelper.get()
                 .onAlbum(this@AccountFragment, config, object : PhotoCallback<PhotoData> {
 
                     override fun onSuccess(result: MutableList<PhotoData>?) {
                         result?.let {
                             val data = it[0]
-//                            val bitmap = ImageUtils.getBitmap(data.filePath)
-//                            bitmap?.run {
-//                                mBinding.ivTest.setImageBitmap(this)
-//                            }
-                            ImageLoadHelper.loadFile(mBinding.ivTest, data.filePath, null)
+                            val loadConfig = ImageConfig()
+                            loadConfig.isCircle = true
+                            imageFilePath=data.filePath
+                            ImageLoadHelper.loadFile(mBinding.ivTest, data.filePath, loadConfig)
                         }
                     }
 
@@ -84,6 +92,7 @@ class AccountFragment : Fragment() {
                     }
 
                 })
+            true
         }
         return mBinding.root
     }

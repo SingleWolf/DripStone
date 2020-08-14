@@ -9,4 +9,10 @@ import androidx.annotation.DrawableRes
  *
  * @Summary 图片参数
  */
-data class ImageConfig(@DrawableRes val placeholder: Int, @DrawableRes val errorImage: Int, val isCircle: Boolean)
+class ImageConfig {
+    @DrawableRes
+    var placeholder: Int = 0
+    @DrawableRes
+    var errorImage: Int = 0
+    var isCircle: Boolean = false
+}
