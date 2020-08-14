@@ -1,7 +1,7 @@
 package com.walker.common.media.image
 
-import android.view.View
-import com.walker.common.media.image.glide.GlideMgr
+import android.widget.ImageView
+import com.walker.common.media.image.glide.GlideLoadMgr
 
 /**
  * @Author Walker
@@ -12,18 +12,28 @@ import com.walker.common.media.image.glide.GlideMgr
  */
 object ImageLoadHelper : IImageLoad {
 
-    private val imageLoader: IImageLoad=GlideMgr()
+    private val imageLoader: IImageLoad = GlideLoadMgr()
 
-    override fun loadUrl(view: View, url: String, config: ImageConfig?) {
-        imageLoader?.loadUrl(view,url,config)
+    override fun loadUrl(view: ImageView, url: String, config: ImageConfig?) {
+        imageLoader?.loadUrl(view, url, config)
     }
 
-    override fun loadFile(view: View, path: String, config: ImageConfig?) {
-        imageLoader?.loadFile(view,path,config)
+    override fun loadUrl(
+        view: ImageView,
+        url: String,
+        config: ImageConfig?,
+        loadListener: OnImageLoadListener?
+    ) {
+        imageLoader?.loadUrl(view, url, config, loadListener)
     }
 
-    override fun loadRes(view: View, resId: Int, config: ImageConfig?) {
-        imageLoader?.loadRes(view,resId,config)
+
+    override fun loadFile(view: ImageView, path: String, config: ImageConfig?) {
+        imageLoader?.loadFile(view, path, config)
+    }
+
+    override fun loadRes(view: ImageView, resId: Int, config: ImageConfig?) {
+        imageLoader?.loadRes(view, resId, config)
     }
 
 }

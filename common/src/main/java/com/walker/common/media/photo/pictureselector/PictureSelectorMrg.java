@@ -23,7 +23,7 @@ import java.util.List;
  * @Date 2020-05-19 16:06
  * @Summary 基于PictureSelector封装图片获取功能
  */
-class PictureSelectorMrg implements IPhotoGetter {
+public class PictureSelectorMrg implements IPhotoGetter {
 
     @Override
     public void onCamera(Activity context, PhotoConfig config, PhotoCallback callback) {
@@ -85,9 +85,9 @@ class PictureSelectorMrg implements IPhotoGetter {
         }
         PictureSelectionModel pictureSelectorModel = null;
         if (context instanceof Activity) {
-            pictureSelectorModel = PictureSelector.create((Activity) context).openGallery(PictureMimeType.ofAll());
+            pictureSelectorModel = PictureSelector.create((Activity) context).openGallery(PictureMimeType.ofImage());
         } else if (context instanceof Fragment) {
-            pictureSelectorModel = PictureSelector.create((Fragment) context).openGallery(PictureMimeType.ofAll());
+            pictureSelectorModel = PictureSelector.create((Fragment) context).openGallery(PictureMimeType.ofImage());
         }
         if (pictureSelectorModel == null) {
             return;
@@ -99,6 +99,8 @@ class PictureSelectorMrg implements IPhotoGetter {
             pictureSelectorModel.maxSelectNum(maxNum);
             int minNum = config.getMinNum();
             pictureSelectorModel.minSelectNum(minNum);
+            boolean isCamera=config.isCamera();
+            pictureSelectorModel.isCamera(isCamera);
         }
         pictureSelectorModel.imageEngine(GlideEngine.createGlideEngine())
                 .forResult(new OnResultCallbackListener<LocalMedia>() {

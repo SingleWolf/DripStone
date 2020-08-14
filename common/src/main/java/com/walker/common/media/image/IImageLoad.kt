@@ -1,6 +1,6 @@
 package com.walker.common.media.image
 
-import android.view.View
+import android.widget.ImageView
 import androidx.annotation.DrawableRes
 
 /**
@@ -11,7 +11,8 @@ import androidx.annotation.DrawableRes
  * @Summary 定义图片加载行为
  */
 interface IImageLoad {
-    fun loadUrl(view: View, url: String, config: ImageConfig?)
-    fun loadFile(view: View, path: String, config: ImageConfig?)
-    fun loadRes(view: View, @DrawableRes resId: Int, config: ImageConfig?)
+    fun loadUrl(view: ImageView, url: String, config: ImageConfig?)
+    fun loadUrl(view: ImageView, url: String, config: ImageConfig?,loadListener: OnImageLoadListener?)
+    fun loadFile(view: ImageView, path: String, config: ImageConfig?)
+    fun loadRes(view: ImageView, @DrawableRes resId: Int, config: ImageConfig?)
 }

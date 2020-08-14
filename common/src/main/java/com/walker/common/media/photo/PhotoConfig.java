@@ -10,6 +10,7 @@ public class PhotoConfig {
     private int maxNum = DEFAULT_MAX_NUM;
     private int minNum;
     private boolean cutCrop;
+    private boolean camera;
 
     public int getMaxNum() {
         return maxNum;
@@ -33,5 +34,13 @@ public class PhotoConfig {
 
     public void setCutCrop(boolean cutCrop) {
         this.cutCrop = cutCrop;
+    }
+
+    public boolean isCamera() {
+        return camera;
+    }
+
+    public void setCamera(boolean camera) {
+        this.camera = camera;
     }
 }

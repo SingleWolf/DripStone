@@ -1,16 +1,17 @@
 package com.walker.dripstone.setting
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.walker.common.media.image.ImageLoadHelper
 import com.walker.common.media.photo.PhotoCallback
 import com.walker.common.media.photo.PhotoConfig
 import com.walker.common.media.photo.PhotoData
 import com.walker.common.media.photo.PhotoGetterHelper
+import com.walker.core.util.ImageUtils
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.FragmentSettingBinding
@@ -30,7 +31,7 @@ class AccountFragment : Fragment() {
         )
         mBinding.ivAccount.setOnClickListener {
             var config = PhotoConfig()
-            config.isCutCrop=true
+            config.isCutCrop = true
 
             PhotoGetterHelper.get()
                 .onCamera(this@AccountFragment, config, object : PhotoCallback<PhotoData> {
@@ -38,7 +39,7 @@ class AccountFragment : Fragment() {
                     override fun onSuccess(result: MutableList<PhotoData>?) {
                         result?.let {
                             val data = it[0]
-                            val bitmap = BitmapFactory.decodeFile(data.filePath)
+                            val bitmap = ImageUtils.getBitmap(data.filePath)
                             bitmap?.run {
                                 mBinding.ivAccount.setImageBitmap(this)
                             }
@@ -58,7 +59,7 @@ class AccountFragment : Fragment() {
 
         mBinding.ivTest.setOnClickListener {
             var config = PhotoConfig()
-            config.isCutCrop=true
+            config.isCutCrop = false
 
             PhotoGetterHelper.get()
                 .onAlbum(this@AccountFragment, config, object : PhotoCallback<PhotoData> {
@@ -66,10 +67,11 @@ class AccountFragment : Fragment() {
                     override fun onSuccess(result: MutableList<PhotoData>?) {
                         result?.let {
                             val data = it[0]
-                            val bitmap = BitmapFactory.decodeFile(data.filePath)
-                            bitmap?.run {
-                                mBinding.ivTest.setImageBitmap(this)
-                            }
+//                            val bitmap = ImageUtils.getBitmap(data.filePath)
+//                            bitmap?.run {
+//                                mBinding.ivTest.setImageBitmap(this)
+//                            }
+                            ImageLoadHelper.loadFile(mBinding.ivTest, data.filePath, null)
                         }
                     }
 

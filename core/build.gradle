@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
     implementation 'androidx.core:core-ktx:1.0.2'
@@ -45,4 +44,6 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:2.8.0'
     implementation 'com.tencent:mmkv-static:1.1.0'
+    //AndroidUtilCode
+    implementation 'com.blankj:utilcodex:1.29.0'
 }

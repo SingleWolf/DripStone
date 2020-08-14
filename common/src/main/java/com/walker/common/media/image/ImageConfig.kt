@@ -1,4 +1,7 @@
 package com.walker.common.media.image
+
+import androidx.annotation.DrawableRes
+
 /**
  * @Author Walker
  *
@@ -6,5 +9,4 @@ package com.walker.common.media.image
  *
  * @Summary 图片参数
  */
-class ImageConfig {
-}
+data class ImageConfig(@DrawableRes val placeholder: Int, @DrawableRes val errorImage: Int, val isCircle: Boolean)
