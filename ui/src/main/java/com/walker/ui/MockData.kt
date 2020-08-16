@@ -78,8 +78,17 @@ class MockSummaryData private constructor() {
             }
 
             Summary().run {
+                key = ""
+                title = "嵌套滑动机制"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
                 key = PhotoViewFragment.KEY_ID
-                title = "图片查看"
+                title = "PhotoView图片查看"
                 uri = ""
                 desc = ""
                 add(this)

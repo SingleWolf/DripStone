@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.router.ICollectRouter
 import com.walker.common.router.IDemoRouter
 import com.walker.core.router.RouterLoader
+import com.walker.core.util.SteepStatusBarUtils
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
 import com.walker.dripstone.R
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initSteepStatusBar()
         initToolbar()
         // Disable shift method require for to prevent shifting icon . When you select any icon then remain all icon shift
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -65,8 +67,10 @@ class MainActivity : AppCompatActivity() {
             actionBar?.title = item.title
             if (item.itemId == R.id.menu_account) {
                 actionBar?.hide()
+                viewDataBinding.viewSpace.visibility = View.GONE
             } else {
                 actionBar?.show()
+                viewDataBinding.viewSpace.visibility = View.VISIBLE
             }
             switchFragment(fromFragment, fragCategory)
             fromFragment = fragCategory!!
@@ -87,6 +91,10 @@ class MainActivity : AppCompatActivity() {
         LinkHelper.getInstance().transactLink(this)
 
         TraceMethodTest().tryTest()
+    }
+
+    private fun initSteepStatusBar() {
+        SteepStatusBarUtils.setTranslucentTheme(this)
     }
 
     private fun initToolbar() {

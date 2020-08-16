@@ -33,7 +33,6 @@ class AccountFragment : Fragment() {
             container,
             false
         )
-        ImageLoadHelper.loadRes(mBinding.ivTest, R.drawable.error, null)
         mBinding.ivAccount.setOnClickListener {
             var config = PhotoConfig()
             config.isCutCrop = true
@@ -63,9 +62,9 @@ class AccountFragment : Fragment() {
         }
 
         mBinding.ivTest.setOnClickListener {
-           imageFilePath?.let {
-               ImagePreviewActivity.start(context!!,it)
-           }
+            imageFilePath?.let {
+                ImagePreviewActivity.start(context!!, it)
+            }
         }
         mBinding.ivTest.setOnLongClickListener {
             var config = PhotoConfig()
@@ -78,7 +77,7 @@ class AccountFragment : Fragment() {
                             val data = it[0]
                             val loadConfig = ImageConfig()
                             loadConfig.isCircle = true
-                            imageFilePath=data.filePath
+                            imageFilePath = data.filePath
                             ImageLoadHelper.loadFile(mBinding.ivTest, data.filePath, loadConfig)
                         }
                     }

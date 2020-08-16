@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:design="http://schemas.android.com/apk/res-auto"
@@ -12,6 +13,12 @@
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:elevation="0dp">
+
+            <View
+                android:id="@+id/viewSpace"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:background="@color/colorPrimary" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
