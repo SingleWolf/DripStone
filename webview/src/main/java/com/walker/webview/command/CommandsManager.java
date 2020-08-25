@@ -8,6 +8,7 @@ import com.walker.webview.utils.WebConstants;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 public class CommandsManager {
     private static final String TAG = "CommandsManager";
@@ -21,6 +22,12 @@ public class CommandsManager {
 
     public CommandsManager() {
         commands = new HashMap<>();
+        Iterable<Command> commandsIterable = ServiceLoader.load(Command.class);
+        for (Command command : commandsIterable) {
+            if (command != null && !commands.containsValue(command)) {
+                commands.put(command.name(), command);
+            }
+        }
     }
 
     public void registerCommand(Command command) {

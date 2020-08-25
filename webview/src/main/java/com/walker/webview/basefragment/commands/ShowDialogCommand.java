@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.auto.service.AutoService;
 import com.walker.webview.command.Command;
 import com.walker.webview.command.ResultBack;
 import com.walker.webview.utils.WebConstants;
@@ -14,6 +15,7 @@ import com.walker.webview.utils.WebUtils;
 import java.util.List;
 import java.util.Map;
 
+@AutoService({Command.class})
 public class ShowDialogCommand implements Command {
     @Override
     public String name() {

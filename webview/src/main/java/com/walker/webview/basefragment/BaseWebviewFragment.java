@@ -21,9 +21,6 @@ import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.walker.webview.R;
-import com.walker.webview.basefragment.commands.ShowDialogCommand;
-import com.walker.webview.basefragment.commands.ToastCommand;
-import com.walker.webview.command.CommandsManager;
 import com.walker.webview.remotewebview.BaseWebView;
 import com.walker.webview.remotewebview.callback.WebViewCallBack;
 import com.walker.webview.utils.LoadingCallback;
@@ -39,6 +36,7 @@ public abstract class BaseWebviewFragment extends BaseFragment implements WebVie
 
     public String webUrl;
     LoadService loadService;
+
     @LayoutRes
     protected abstract int getLayoutRes();
 
@@ -48,13 +46,10 @@ public abstract class BaseWebviewFragment extends BaseFragment implements WebVie
         Bundle bundle = getArguments();
         if (bundle != null) {
             webUrl = bundle.getString(WebConstants.INTENT_TAG_URL);
-            if(bundle.containsKey(ACCOUNT_INFO_HEADERS)){
+            if (bundle.containsKey(ACCOUNT_INFO_HEADERS)) {
                 accountInfoHeaders = (HashMap<String, String>) bundle.getSerializable(ACCOUNT_INFO_HEADERS);
             }
         }
-
-        CommandsManager.getInstance().registerCommand(new ToastCommand());
-        CommandsManager.getInstance().registerCommand(new ShowDialogCommand());
     }
 
     @Nullable
@@ -62,7 +57,7 @@ public abstract class BaseWebviewFragment extends BaseFragment implements WebVie
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutRes(), container, false);
         webView = view.findViewById(R.id.web_view);
-        if(accountInfoHeaders != null) {
+        if (accountInfoHeaders != null) {
             webView.setHeaders(accountInfoHeaders);
         }
         LoadSir.beginBuilder()
@@ -185,7 +180,7 @@ public abstract class BaseWebviewFragment extends BaseFragment implements WebVie
         //如果通过下面的方式，则弹出的选择框有:相机、相册(Android9.0,Android8.0)
         //如果是小米Android6.0系统上，依然是：相机、相册、文件管理
         //如果安装了其他的相机(百度魔拍)、文件管理程序(ES文件管理器)，也有可能会弹出
-        Intent selectionIntent = new Intent(Intent.ACTION_PICK,null);
+        Intent selectionIntent = new Intent(Intent.ACTION_PICK, null);
         selectionIntent.setType("image/*");
         //------------------------------------
 
