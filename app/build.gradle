@@ -51,6 +51,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraint_layout_verson"
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.startup:startup-runtime:1.0.0-alpha01'
 
     implementation "androidx.multidex:multidex:2.0.0"
     implementation project(':common')

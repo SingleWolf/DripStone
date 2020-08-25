@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.walker.dripstone">
 
     <application
@@ -10,6 +11,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.walker.dripstone.initializer.LogInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.walker.dripstone.initializer.ToastInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.walker.dripstone.initializer.LoadSirInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.walker.dripstone.initializer.CrashInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="com.walker.dripstone.initializer.StorageInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
         <activity
             android:name=".activity.SplashActivity"
             android:launchMode="singleTask"
@@ -33,7 +58,6 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
     </application>
 </manifest>
