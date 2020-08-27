@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Html Test</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="format-detection" content="telephone = no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style type="text/css">
+         .item {
+         padding: 20px;
+         max-width: 600px;
+         margin: 0 auto;
+         text-align: center;
+         background-color: #999999;
+         margin-top: 20px;
+         }
+
+
+    </style>
+    <script>
+        function showToast(){
+            console.log("showToast.");
+            webviewjs.takeNativeAction("showToast", {message: "this is a message from html."});
+        }
+        function showDialog(){
+            console.log("showDialog.");
+            webviewjs.takeNativeAction("showDialog", {title:"showDialog",content: "this is a dialog from html.",buttons:[{title:"OK"},{title:"Cancel"}]});
+        }
+        function login(){
+            console.log("login.");
+            webviewjs.takeNativeActionWithCallback("login", {}, function(res) {
+                 var element = document.createElement("div");
+                 element.appendChild(document.createTextNode("userName: "+res.accountName));
+                 document.getElementById('login_id').appendChild(element);
+            });
+        }
+    </script>
+    <script src="js/webview.js" charset="utf-8"></script>
+</head>
+<body style="height: 100%;">
+<h2 class="_2zeTMs" title="Html Test">Html Test</h2>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="showToast()">调用: showToast</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="showDialog()">调用: showDialog
+</div>
+<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="login()">登录并且返回结果
+</div>
+
+</body>
+</html>

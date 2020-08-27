@@ -14,67 +14,75 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <Button
+            <TextView
                 android:id="@+id/btnStartThread"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="开启线程" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnStopThread"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="中断线程" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnGenDeadLock"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="产生死锁" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnSolveDeadLock"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="解决死锁问题" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnOrderRun"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="线程有序执行" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnNotifyWait"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="边生产边消费" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnCustomLock"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="自定义锁(独占锁)" />
 
-            <Button
+            <TextView
                 android:id="@+id/btnCustomReenterLock"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_react_theme_r10"
                 android:gravity="center"
                 android:text="自定义锁(可重入锁)" />
         </LinearLayout>

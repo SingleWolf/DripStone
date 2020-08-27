@@ -12,6 +12,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 import com.google.gson.Gson;
+import com.walker.core.util.GsonUtils;
 import com.walker.webview.remotewebview.callback.WebViewCallBack;
 import com.walker.webview.remotewebview.commanddispatcher.CommandDispatcher;
 import com.walker.webview.remotewebview.settings.WebviewDefaultSetting;
@@ -51,7 +52,7 @@ public class BaseWebView extends WebView implements WebviewClient.WebviewTouch {
     protected void init(Context context) {
         this.context = context;
         WebviewDefaultSetting.getInstance().toSetting(this);
-        addJavascriptInterface(this, "webview");
+        addJavascriptInterface(this, "walkerJs");
         CommandDispatcher.getInstance().initAidlConnect(getContext());
     }
 
@@ -69,17 +70,20 @@ public class BaseWebView extends WebView implements WebviewClient.WebviewTouch {
     }
 
     @JavascriptInterface
-    public void post(final String cmd, final String param) {
+    public void takeNativeAction(String request) {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
                 // For test only.
+                Map<String, String> data = GsonUtils.fromLocalJson(request, Map.class);
+                String cmd = data.get("name");
                 if ("fc".equalsIgnoreCase(cmd)) {
                     String fcString = null;
                     fcString.length();
                 }
                 try {
                     if (webViewCallBack != null) {
+                        String param = data.get("param");
                         CommandDispatcher.getInstance().exec(context, cmd, param, BaseWebView.this);
                     }
                 } catch (Exception e) {

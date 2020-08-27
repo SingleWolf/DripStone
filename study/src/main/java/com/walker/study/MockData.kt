@@ -7,6 +7,7 @@ import com.walker.study.hotfix.HotfixFragment
 import com.walker.study.summary.Summary
 import com.walker.study.summary.SummaryListBean
 import com.walker.study.thread.ThreadFragment
+import com.walker.study.webview.WebviewUseFragment
 
 class MockSummaryData private constructor() {
     var dataPool: List<Summary>
@@ -51,6 +52,14 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = HotfixFragment.KEY_ID
                 title = "dex插桩实现热修复"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+            Summary().run {
+                key = WebviewUseFragment.KEY_ID
+                title = "跨进程Webview"
                 uri = ""
                 desc = ""
                 add(this)

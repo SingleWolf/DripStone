@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/tvLocalDemo"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="跳转本地demo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWebPage"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="跳转远程网页"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLocalDemo" />
+
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="tvLocalDemo,tvWebPage" />
+
+    <TextView
+        android:id="@+id/tvOther"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="其他"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvWebPage"
+        app:layout_constraintLeft_toRightOf="@+id/barrier" />
+</androidx.constraintlayout.widget.ConstraintLayout>

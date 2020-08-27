@@ -12,19 +12,21 @@
         android:text="This is hotfix and now is not start"
         android:textSize="18dp" />
 
-    <Button
+    <TextView
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
         android:gravity="center"
         android:text="开启热修复" />
 
-    <Button
+    <TextView
         android:id="@+id/btnStop"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
         android:gravity="center"
         android:text="关闭热修复" />
 </LinearLayout>

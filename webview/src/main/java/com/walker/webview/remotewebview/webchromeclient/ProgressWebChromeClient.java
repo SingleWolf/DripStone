@@ -44,9 +44,12 @@ public class ProgressWebChromeClient extends WebChromeClient {
         super.onReceivedTitle(view, title);
         if(view instanceof ProgressWebView) {
             if (!TextUtils.isEmpty(title)) {
+                HashMap<String,String> request=new HashMap<>();
+                request.put("name",Command.COMMAND_UPDATE_TITLE);
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put(COMMAND_UPDATE_TITLE_PARAMS_TITLE, title);
-                ((BaseWebView) view).post(Command.COMMAND_UPDATE_TITLE, new Gson().toJson(params));
+                request.put("param",new Gson().toJson(params));
+                ((BaseWebView) view).takeNativeAction(new Gson().toJson(request));
             }
         }
     }

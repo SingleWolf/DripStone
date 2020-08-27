@@ -8,5 +8,5 @@ import android.content.Context
  * @Summary Webview路由提供
  */
 interface IWebviewRouter {
-    fun startActivity(context: Context, url: String, title: String)
+    fun startActivity(context: Context, title: String, url: String)
 }
