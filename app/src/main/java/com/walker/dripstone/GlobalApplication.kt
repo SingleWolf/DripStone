@@ -9,6 +9,7 @@ import com.walker.core.log.LogHelper
 import com.walker.core.store.sp.SPHelper
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
+import com.walker.platform.push.PushHelper
 
 class GlobalApplication : MultiDexApplication() {
 
@@ -29,6 +30,8 @@ class GlobalApplication : MultiDexApplication() {
         SPHelper.init(this)
         //retrofit
         RetrofitNetworkApi.init(NetworkRequestInfo(this))
+
+        PushHelper.init(this)
     }
 
     private fun registerActivityLifecycle() {

@@ -5,7 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$rootProject.ext.gradle_ersion"
@@ -17,7 +17,9 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven{url "https://jitpack.io"}
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven{  url "https://jitpack.io"}
     }
 }
 

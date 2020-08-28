@@ -61,6 +61,7 @@ dependencies {
     implementation project(':collect')
     implementation project(':demo')
     implementation project(':study')
+    implementation project(':platform')
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
     implementation 'q.rorbin:badgeview:1.1.3'
