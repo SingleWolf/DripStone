@@ -57,15 +57,15 @@ public class CommandDispatcher {
         }).start();
     }
 
-    public void exec(Context context, String cmd, String params, final WebView webView) {
-        Log.i("CommandDispatcher", "command: " + cmd + " params: " + params);
+    public void exec(Context context, String cmd, String params, String callbackName, final WebView webView) {
+        Log.i("CommandDispatcher", "command: " + cmd + " callbackName:" + callbackName + " params: " + params);
         try {
             if (CommandsManager.getInstance().isWebviewProcessCommand(cmd)) {
                 Map mapParams = gson.fromJson(params, Map.class);
                 CommandsManager.getInstance().execWebviewProcessCommand(context, cmd, mapParams, new ResultBack() {
                     @Override
-                    public void onResult(int status, String action, Object result) {
-                        handleCallback(status, action, gson.toJson(result), webView);
+                    public void onResult(int status, String actionName, Object result) {
+                        handleCallback(status, actionName, callbackName, gson.toJson(result), webView);
                     }
                 });
             } else {
@@ -73,7 +73,7 @@ public class CommandDispatcher {
                     webAidlInterface.handleWebAction(cmd, params, new ICallbackFromMainToWeb.Stub() {
                         @Override
                         public void onResult(int responseCode, String actionName, String response) {
-                            handleCallback(responseCode, actionName, response, webView);
+                            handleCallback(responseCode, actionName, callbackName, response, webView);
                         }
                     });
                 }
@@ -83,18 +83,18 @@ public class CommandDispatcher {
         }
     }
 
-    private void handleCallback(final int responseCode, final String actionName, final String response,
+    private void handleCallback(final int responseCode, final String actionName, String callbackName, final String response,
                                 final WebView webView) {
         Log.d("CommandDispatcher", String.format("Callback result: action= %s, result= %s", actionName, response));
         MainLooper.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Map params = new Gson().fromJson(response, Map.class);
-                if (params.get(WebConstants.NATIVE2WEB_CALLBACK) != null && !TextUtils.isEmpty(params.get(WebConstants.NATIVE2WEB_CALLBACK).toString())) {
+//                Map params = new Gson().fromJson(response, Map.class);
+//                if (params.get(WebConstants.NATIVE2WEB_CALLBACK) != null && !TextUtils.isEmpty(params.get(WebConstants.NATIVE2WEB_CALLBACK).toString())) {
                     if (webView instanceof BaseWebView) {
-                        ((BaseWebView) webView).handleCallback(response);
+                        ((BaseWebView) webView).handleCallback(callbackName, response);
                     }
-                }
+//                }
             }
         });
     }

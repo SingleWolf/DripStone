@@ -16,9 +16,8 @@
          background-color: #999999;
          margin-top: 20px;
          }
-
-
     </style>
+    <script src="js/webview.js" charset="utf-8"></script>
     <script>
         function showToast(){
             console.log("showToast.");
@@ -32,20 +31,17 @@
             console.log("login.");
             webviewjs.takeNativeActionWithCallback("login", {}, function(res) {
                  var element = document.createElement("div");
-                 element.appendChild(document.createTextNode("userName: "+res.accountName));
+                 element.appendChild(document.createTextNode("userName: "+res));
                  document.getElementById('login_id').appendChild(element);
             });
         }
+
     </script>
-    <script src="js/webview.js" charset="utf-8"></script>
 </head>
 <body style="height: 100%;">
 <h2 class="_2zeTMs" title="Html Test">Html Test</h2>
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="showToast()">调用: showToast</div>
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="showDialog()">调用: showDialog
-</div>
-<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="login()">登录并且返回结果
-</div>
-
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="showToast()">调用: showToast()</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="showDialog()">调用: showDialog()</div>
+<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="login()">登录并且返回结果</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.walker.webview.basefragment.commands;
+package com.walker.webview.commands;
 
 import android.content.Context;
 import android.widget.Toast;

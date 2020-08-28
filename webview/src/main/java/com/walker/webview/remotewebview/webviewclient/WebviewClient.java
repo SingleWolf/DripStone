@@ -29,7 +29,7 @@ import static com.walker.webview.remotewebview.BaseWebView.CONTENT_SCHEME;
 
 public class WebviewClient extends WebViewClient {
 
-    private static final String TAG = "XXWebviewCallBack";
+    private static final String TAG = "WebviewCallBack";
     public static final String SCHEME_SMS = "sms:";
     private WebViewCallBack webViewCallBack;
     private WebView webView;
@@ -59,7 +59,7 @@ public class WebviewClient extends WebViewClient {
      */
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Log.e(TAG, "shouldOverrideUrlLoading url: " + url);
+        Log.d(TAG, "shouldOverrideUrlLoading url: " + url);
         // 当前链接的重定向, 通过是否发生过点击行为来判断
         if (!mWebviewTouch.isTouchByUser()) {
             return super.shouldOverrideUrlLoading(view, url);
@@ -79,7 +79,7 @@ public class WebviewClient extends WebViewClient {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        Log.e(TAG, "shouldOverrideUrlLoading url: "+ request.getUrl());
+        Log.d(TAG, "shouldOverrideUrlLoading url: "+ request.getUrl());
         // 当前链接的重定向
         if (!mWebviewTouch.isTouchByUser()) {
             return super.shouldOverrideUrlLoading(view, request);
@@ -118,7 +118,7 @@ public class WebviewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        Log.e(TAG, "onPageFinished url:" + url);
+        Log.d(TAG, "onPageFinished url:" + url);
         if (!TextUtils.isEmpty(url) && url.startsWith(CONTENT_SCHEME)) {
             isReady = true;
         }
@@ -129,7 +129,7 @@ public class WebviewClient extends WebViewClient {
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        Log.e(TAG, "onPageStarted url: " + url);
+        Log.d(TAG, "onPageStarted url: " + url);
         if (webViewCallBack != null) {
             webViewCallBack.pageStarted(url);
         }

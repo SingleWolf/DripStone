@@ -4,12 +4,12 @@ webviewjs.os.isIOS = /iOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
 webviewjs.os.isAndroid = !webviewjs.os.isIOS;
 webviewjs.callbacks = {}
 
-webviewjs.callback = function (callbackname, response) {
+webviewjs.callback = function(callbackname, response) {
+   console.log("[callback] callbackname=");
    var callbackobject = webviewjs.callbacks[callbackname];
-   console.log("xxxx"+callbackname);
    if (callbackobject !== undefined){
        if(callbackobject.callback != undefined){
-          console.log("xxxxxx"+response);
+          console.log("[callback] response="+response);
             var ret = callbackobject.callback(response);
            if(ret === false){
                return
@@ -17,6 +17,10 @@ webviewjs.callback = function (callbackname, response) {
            delete webviewjs.callbacks[callbackname];
        }
    }
+}
+
+webviewjs.dispatchEvent = function(response){
+    console.log("[dispatchEvent] response="+JSON.stringify(response));
 }
 
 webviewjs.takeNativeAction = function(commandname, parameters){
@@ -38,7 +42,7 @@ webviewjs.takeNativeActionWithCallback = function(commandname, parameters, callb
     var request = {};
     request.name = commandname;
     request.param = JSON.stringify(parameters);
-    request.param.callbackname = callbackname;
+    request.callbackname = callbackname;
     if(window.webviewjs.os.isAndroid){
         window.walkerJs.takeNativeAction(JSON.stringify(request));
     } else {

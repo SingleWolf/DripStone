@@ -74,17 +74,14 @@ public class BaseWebView extends WebView implements WebviewClient.WebviewTouch {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                // For test only.
-                Map<String, String> data = GsonUtils.fromLocalJson(request, Map.class);
-                String cmd = data.get("name");
-                if ("fc".equalsIgnoreCase(cmd)) {
-                    String fcString = null;
-                    fcString.length();
-                }
                 try {
                     if (webViewCallBack != null) {
+                        Map<String, String> data = GsonUtils.fromLocalJson(request, Map.class);
+                        String cmd = data.get("name");
                         String param = data.get("param");
-                        CommandDispatcher.getInstance().exec(context, cmd, param, BaseWebView.this);
+                        String callbackName = data.get("callbackname");
+                        Log.d(TAG, "=============takeNativeAction: " + request);
+                        CommandDispatcher.getInstance().exec(context, cmd, param, callbackName, BaseWebView.this);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -100,20 +97,21 @@ public class BaseWebView extends WebView implements WebviewClient.WebviewTouch {
         } else {
             super.loadUrl(url, mHeaders);
         }
-        Log.e(TAG, "DWebView load url: " + url);
+        Log.d(TAG, "DWebView load url: " + url);
         resetAllStateInternal(url);
     }
 
     @Override
     public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
         super.loadUrl(url, additionalHttpHeaders);
-        Log.e(TAG, "DWebView load url: " + url);
+        Log.d(TAG, "DWebView load url: " + url);
         resetAllStateInternal(url);
     }
 
-    public void handleCallback(String response) {
+    public void handleCallback(String callbackName, String response) {
+        Log.d(TAG, String.format("handleCallback(response=%s)", callbackName, response));
         if (!TextUtils.isEmpty(response)) {
-            String trigger = "javascript:" + "dj.callback" + "(" + response + ")";
+            String trigger = "javascript:" + "webviewjs.callback('" + callbackName + "','" + response + "')";
             evaluateJavascript(trigger, null);
         }
     }
@@ -126,7 +124,7 @@ public class BaseWebView extends WebView implements WebviewClient.WebviewTouch {
     public void dispatchEvent(String name) {
         Map<String, String> param = new HashMap<>(1);
         param.put("name", name);
-        loadJS("dj.dispatchEvent", param);
+        loadJS("webviewjs.dispatchEvent", param);
     }
 
     private boolean mTouchByUser;

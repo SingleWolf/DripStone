@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.webkit.ConsoleMessage;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.Gson;
+import com.walker.core.log.LogHelper;
 import com.walker.webview.command.Command;
 import com.walker.webview.remotewebview.BaseWebView;
 import com.walker.webview.remotewebview.ProgressWebView;
@@ -42,13 +44,13 @@ public class ProgressWebChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-        if(view instanceof ProgressWebView) {
+        if (view instanceof ProgressWebView) {
             if (!TextUtils.isEmpty(title)) {
-                HashMap<String,String> request=new HashMap<>();
-                request.put("name",Command.COMMAND_UPDATE_TITLE);
+                HashMap<String, String> request = new HashMap<>();
+                request.put("name", Command.COMMAND_UPDATE_TITLE);
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put(COMMAND_UPDATE_TITLE_PARAMS_TITLE, title);
-                request.put("param",new Gson().toJson(params));
+                request.put("param", new Gson().toJson(params));
                 ((BaseWebView) view).takeNativeAction(new Gson().toJson(request));
             }
         }
@@ -86,6 +88,13 @@ public class ProgressWebChromeClient extends WebChromeClient {
         return true;
     }
 
+    @Override
+    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+        if (consoleMessage != null) {
+            LogHelper.get().i("ConsoleMessage", String.format("[line:%d]-[sourceId:%s] : %s", consoleMessage.lineNumber(), consoleMessage.sourceId(), consoleMessage.message()));
+        }
+        return super.onConsoleMessage(consoleMessage);
+    }
 
     //For Android5.0+
     @Override
@@ -114,7 +123,7 @@ public class ProgressWebChromeClient extends WebChromeClient {
                 takePictureIntent = null;
             }
         }
-        ((BaseWebView)webView).getWebViewCallBack().onShowFileChooser(takePictureIntent, mFilePathCallback);
+        ((BaseWebView) webView).getWebViewCallBack().onShowFileChooser(takePictureIntent, mFilePathCallback);
         return true;
     }
 
