@@ -16,8 +16,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 
@@ -25,13 +26,13 @@ import javax.annotation.Nonnull;
  * Class used to read from TrafficStats periodically, in order to determine a ConnectionClass.
  */
 public class DeviceBandwidthSampler {
-
+    private static final String TAG="NetSpeedHelper";
     /**
      * The DownloadBandwidthManager that keeps track of the moving average and ConnectionClass.
      */
     private final ConnectionClassManager mConnectionClassManager;
 
-    private AtomicInteger mSamplingCounter;
+    private AtomicBoolean mSamplingCounter;
 
     private SamplingHandler mHandler;
     private HandlerThread mThread;
@@ -58,7 +59,7 @@ public class DeviceBandwidthSampler {
     private DeviceBandwidthSampler(
             ConnectionClassManager connectionClassManager) {
         mConnectionClassManager = connectionClassManager;
-        mSamplingCounter = new AtomicInteger();
+        mSamplingCounter = new AtomicBoolean(false);
         mThread = new HandlerThread("ParseThread");
         mThread.start();
         mHandler = new SamplingHandler(mThread.getLooper());
@@ -68,7 +69,9 @@ public class DeviceBandwidthSampler {
      * Method call to start sampling for download bandwidth.
      */
     public void startSampling() {
-        if (mSamplingCounter.getAndIncrement() == 0) {
+        if (!mSamplingCounter.get()) {
+            Log.d(TAG,"start()");
+            mSamplingCounter.compareAndSet(false,true);
             mHandler.startSamplingThread();
             mLastTimeReading = SystemClock.elapsedRealtime();
         }
@@ -79,7 +82,9 @@ public class DeviceBandwidthSampler {
      * ConnectionClass until another timer is started.
      */
     public void stopSampling() {
-        if (mSamplingCounter.decrementAndGet() == 0) {
+        if (mSamplingCounter.get()) {
+            Log.d(TAG,"stop()");
+            mSamplingCounter.compareAndSet(true,false);
             mHandler.stopSamplingThread();
             addFinalSample();
         }
@@ -92,6 +97,7 @@ public class DeviceBandwidthSampler {
     protected void addSample() {
         long newBytes = TrafficStats.getTotalRxBytes();
         long byteDiff = newBytes - sPreviousBytes;
+        Log.d(TAG, "计算处理网络速度:" + "newBytes=" + newBytes + " byteDiff=" + byteDiff);
         if (sPreviousBytes >= 0) {
             synchronized (this) {
                 long curTimeReading = SystemClock.elapsedRealtime();
@@ -116,7 +122,7 @@ public class DeviceBandwidthSampler {
      * @return True if there are still threads which are sampling, false otherwise.
      */
     public boolean isSampling() {
-        return (mSamplingCounter.get() != 0);
+        return (mSamplingCounter.get());
     }
 
     private class SamplingHandler extends Handler {

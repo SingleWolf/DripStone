@@ -32,7 +32,7 @@ public class NetSpeedMonitorImpl implements INetSpeedMonitor {
             return;
         }
         mDeviceBandwidthSampler.startSampling();
-        mIsStarting.compareAndSet(false,true);
+        mIsStarting.compareAndSet(false, true);
     }
 
     @Override
@@ -55,6 +55,7 @@ public class NetSpeedMonitorImpl implements INetSpeedMonitor {
             implements ConnectionClassManager.ConnectionClassStateChangeListener {
         @Override
         public void onBandwidthStateChange(ConnectionQuality bandwidthState) {
+            mConnectionClassManager.reset();
             if (mObserver != null && bandwidthState != null) {
                 mObserver.onNetChanged(genNetSpeed(bandwidthState));
             }

@@ -34,7 +34,6 @@ public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
     public void start() {
         if (mNetSpeedMonitor != null) {
             mNetSpeedMonitor.start();
-            Log.d(TAG,"start()");
         }
     }
 
@@ -42,7 +41,6 @@ public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
     public void stop() {
         if (mNetSpeedMonitor != null) {
             mNetSpeedMonitor.stop();
-            Log.d(TAG,"stop()");
         }
     }
 
