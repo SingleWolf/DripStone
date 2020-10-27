@@ -1,8 +1,8 @@
 package com.walker.dripstone.home.headline
 
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import com.walker.common.fragment.EmptyFragment
+import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.common.router.IUiRouter
 import com.walker.core.base.mvvm.model.MvvmBaseModel
@@ -53,13 +53,18 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
 
         fun createFragment(key: String): Fragment {
             var fragment: Fragment? = null
-            if (TextUtils.equals("101", key)) {
-                val uiRouter = RouterLoader.load(IUiRouter::class.java)
-                fragment = uiRouter?.getSummaryFragment()
-            } else {
-                if (TextUtils.equals("100", key)) {
-                    val summaryProvider = RouterLoader.load(IStudyRouter::class.java)
-                    fragment = summaryProvider?.getSummaryFragment()
+            when (key) {
+                "100"->{
+                    val studyProvider = RouterLoader.load(IStudyRouter::class.java)
+                    fragment = studyProvider?.getSummaryFragment()
+                }
+                "101" -> {
+                    val uiRouter = RouterLoader.load(IUiRouter::class.java)
+                    fragment = uiRouter?.getSummaryFragment()
+                }
+                "102"->{
+                    val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
+                    fragment = optimizeProvider?.getSummaryFragment()
                 }
             }
             fragment ?: let { fragment = EmptyFragment.instance() }

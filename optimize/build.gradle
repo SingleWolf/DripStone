@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
     defaultConfig {
@@ -8,7 +10,6 @@ android {
         targetSdkVersion rootProject.ext.target_sdk_version
         versionCode 1
         versionName "1.0"
-
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -19,11 +20,36 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    //给模块设置不同的资源前缀，可以避免重复命名
+    resourcePrefix "optimize_"
 }
 
 dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
+    implementation 'com.google.android.material:material:1.1.0'
+
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraint_layout_verson"
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidx_version"
+
+    implementation project(':common')
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
+
+    annotationProcessor "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    implementation "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    kapt "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
+    implementation 'com.google.code.findbugs:jsr305:2.0.1'
 }

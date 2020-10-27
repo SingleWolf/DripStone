@@ -58,6 +58,7 @@ dependencies {
     implementation project(':network')
     implementation project(':webview')
     implementation project(':ui')
+    implementation project(':optimize')
     implementation project(':collect')
     implementation project(':demo')
     implementation project(':study')
