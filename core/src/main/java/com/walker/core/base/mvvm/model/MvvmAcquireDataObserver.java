@@ -7,5 +7,6 @@ package com.walker.core.base.mvvm.model;
  */
 public interface MvvmAcquireDataObserver<F> {
     void onSuccess(F t, boolean isFromCache);
+
     void onFailure(Throwable e);
 }

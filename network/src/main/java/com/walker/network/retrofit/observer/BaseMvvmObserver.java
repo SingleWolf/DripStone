@@ -8,20 +8,23 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class BaseMvvmObserver<T> implements Observer<T> {
-    
+
     MvvmBaseModel baseModel;
     MvvmAcquireDataObserver<T> mvvmNetworkObserver;
-    
+
     public BaseMvvmObserver(MvvmBaseModel baseModel, MvvmAcquireDataObserver<T> mvvmNetworkObserver) {
         this.baseModel = baseModel;
         this.mvvmNetworkObserver = mvvmNetworkObserver;
     }
+
     @Override
     public void onError(Throwable e) {
-        if(e instanceof ExceptionHandle.ResponseThrowable){
+        if (e instanceof ExceptionHandle.ResponseThrowable) {
             mvvmNetworkObserver.onFailure(e);
         } else {
-            mvvmNetworkObserver.onFailure(new ExceptionHandle.ResponseThrowable(e, ExceptionHandle.ERROR.UNKNOWN));
+            ExceptionHandle.ResponseThrowable responseThrowable = new ExceptionHandle.ResponseThrowable(e, ExceptionHandle.ERROR.UNKNOWN);
+            responseThrowable.message = "error";
+            mvvmNetworkObserver.onFailure(responseThrowable);
         }
     }
 
@@ -32,7 +35,7 @@ public class BaseMvvmObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
-        if(baseModel != null){
+        if (baseModel != null) {
             baseModel.addDisposable(d);
         }
     }

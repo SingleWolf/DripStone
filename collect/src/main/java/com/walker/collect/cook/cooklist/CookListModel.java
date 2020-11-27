@@ -4,8 +4,6 @@ import com.walker.collect.api.JuheNetworkApi2;
 import com.walker.common.view.waterfallview.WaterFallViewViewModel;
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel;
 import com.walker.core.base.mvvm.model.MvvmBaseModel;
-import com.walker.core.log.LogHelper;
-import com.walker.core.util.GsonUtils;
 import com.walker.network.retrofit.errorhandler.ExceptionHandle;
 import com.walker.network.retrofit.observer.BaseMvvmObserver;
 
@@ -919,7 +917,11 @@ public class CookListModel extends MvvmBaseModel<CookListBean, ArrayList<BaseCus
 
     @Override
     public void onFailure(Throwable e) {
-        e.printStackTrace();
-        loadFail(e.getMessage());
+        String error = "error-1";
+        if (e instanceof ExceptionHandle.ResponseThrowable) {
+            error = ((ExceptionHandle.ResponseThrowable) e).message;
+        }
+        loadFail(error);
     }
+
 }
