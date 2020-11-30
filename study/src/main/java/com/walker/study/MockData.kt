@@ -4,6 +4,7 @@ import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.study.annotation.InjectFragment
 import com.walker.study.hotfix.HotfixFragment
+import com.walker.study.plugin.HookPluginFragment
 import com.walker.study.summary.Summary
 import com.walker.study.summary.SummaryListBean
 import com.walker.study.thread.ThreadFragment
@@ -52,6 +53,14 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = HotfixFragment.KEY_ID
                 title = "dex插桩实现热修复"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+            Summary().run {
+                key = HookPluginFragment.KEY_ID
+                title = "Hook和插件化"
                 uri = ""
                 desc = ""
                 add(this)

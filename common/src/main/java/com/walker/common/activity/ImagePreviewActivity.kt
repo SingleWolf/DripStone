@@ -42,7 +42,7 @@ class ImagePreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_image_preview)
         initToolbar()
-        filePath = intent.getStringExtra(KEY_PARAM_FILE_PATH)
+        filePath = intent.getStringExtra(KEY_PARAM_FILE_PATH).toString()
         filePath?.let {
             val imageBitmap = ImageUtils.getBitmap(it)
             imageBitmap?.run {

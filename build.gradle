@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$rootProject.ext.gradle_ersion"
+        classpath "com.android.tools.build:gradle:${rootProject.ext.gradle_ersion}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.ext.kotlin_version"
     }
 }

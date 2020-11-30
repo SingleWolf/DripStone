@@ -5,7 +5,9 @@ import android.app.Application
 import android.os.Bundle
 import androidx.multidex.MultiDexApplication
 import androidx.startup.AppInitializer
+import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
+import com.walker.core.router.RouterLoader
 import com.walker.core.store.sp.SPHelper
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
@@ -13,14 +15,21 @@ import com.walker.platform.push.PushHelper
 
 class GlobalApplication : MultiDexApplication() {
 
-    companion object{
+    companion object {
         var activityCount: Int = 0
     }
 
     override fun onCreate() {
         super.onCreate()
+        initPlugin()
         initConfig()
         registerActivityLifecycle()
+    }
+
+    private fun initPlugin() {
+        val appPath = "${this.externalCacheDir?.absolutePath}/pluginTest-debug.apk"
+        val studyProvider = RouterLoader.load(IStudyRouter::class.java)
+        studyProvider?.loadClass(this, appPath)
     }
 
     private fun initConfig() {
@@ -39,7 +48,10 @@ class GlobalApplication : MultiDexApplication() {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
             override fun onActivityStarted(activity: Activity) {
-                LogHelper.get().d("registerActivityLifecycle","${activity::class.java.simpleName} started")
+                LogHelper.get().d(
+                    "registerActivityLifecycle",
+                    "${activity::class.java.simpleName} started"
+                )
                 activityCount++
             }
 
@@ -48,7 +60,10 @@ class GlobalApplication : MultiDexApplication() {
             override fun onActivityPaused(activity: Activity) {}
 
             override fun onActivityStopped(activity: Activity) {
-                LogHelper.get().d("registerActivityLifecycle","${activity::class.java.simpleName} stopped")
+                LogHelper.get().d(
+                    "registerActivityLifecycle",
+                    "${activity::class.java.simpleName} stopped"
+                )
                 activityCount--
             }
 

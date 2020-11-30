@@ -54,8 +54,8 @@ class ShowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_show)
-        channelId = intent.getStringExtra(KEY_PARAM_CHANNEL_ID)
-        channelName = intent.getStringExtra(KEY_PARAM_CHANNEL_NAME)
+        channelId = intent.getStringExtra(KEY_PARAM_CHANNEL_ID)!!
+        channelName = intent.getStringExtra(KEY_PARAM_CHANNEL_NAME)!!
         initToolbar()
         initFragment()
     }

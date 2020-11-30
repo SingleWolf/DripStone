@@ -1,5 +1,6 @@
 package com.walker.common.router
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 
 /**
@@ -11,4 +12,6 @@ import androidx.fragment.app.Fragment
  */
 interface IStudyRouter {
     fun getSummaryFragment(): Fragment?
+
+    fun loadClass(context: Context, loadPath: String)
 }
