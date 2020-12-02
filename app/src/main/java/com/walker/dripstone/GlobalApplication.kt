@@ -3,8 +3,8 @@ package com.walker.dripstone
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import androidx.multidex.MultiDexApplication
 import androidx.startup.AppInitializer
+import com.walker.common.BaseApplication
 import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
@@ -13,7 +13,7 @@ import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 import com.walker.platform.push.PushHelper
 
-class GlobalApplication : MultiDexApplication() {
+class GlobalApplication : BaseApplication() {
 
     companion object {
         var activityCount: Int = 0
@@ -21,15 +21,15 @@ class GlobalApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        initPlugin()
         initConfig()
+        initPlugin()
         registerActivityLifecycle()
     }
 
     private fun initPlugin() {
-        val appPath = "${this.externalCacheDir?.absolutePath}/pluginTest-debug.apk"
+        pluginLoadPath = "${this.externalCacheDir?.absolutePath}/pluginTest-debug.apk"
         val studyProvider = RouterLoader.load(IStudyRouter::class.java)
-        studyProvider?.loadClass(this, appPath)
+        studyProvider?.loadClass(this, pluginLoadPath)
     }
 
     private fun initConfig() {

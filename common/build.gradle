@@ -38,6 +38,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.multidex:multidex:2.0.0"
 
     api project(':core')
     //PictureSelector

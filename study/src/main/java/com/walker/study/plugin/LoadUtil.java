@@ -1,6 +1,7 @@
 package com.walker.study.plugin;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.reflect.Array;
@@ -23,8 +24,13 @@ public class LoadUtil {
         loadClass(context, mLoadPath);
     }
 
-    public static void loadClass(Context context, String loadPath) {
+    public static synchronized void loadClass(Context context, String loadPath) {
         mLoadPath = loadPath;
+        if (TextUtils.isEmpty(mLoadPath)) {
+            Log.d(TAG, "路径为空");
+            return;
+        }
+        Log.d(TAG, mLoadPath + "路径开始加载...");
         /**
          * 宿主dexElements = 宿主dexElements + 插件dexElements
          *
@@ -78,7 +84,6 @@ public class LoadUtil {
             // 赋值
             // hostDexElements = newDexElements
             dexElementsField.set(hostPathList, newDexElements);
-
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }

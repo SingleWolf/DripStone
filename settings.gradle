@@ -1,2 +1,2 @@
-include ':app', ':core', ':ui', ':optimize', ':common', ':network', ':collect', ':webview', ':demo', ':study',':platform'
+include ':app', ':core', ':ui', ':optimize', ':common', ':network', ':collect', ':webview', ':demo', ':study',':platform',':pluginTest'
 rootProject.name='DripStone'

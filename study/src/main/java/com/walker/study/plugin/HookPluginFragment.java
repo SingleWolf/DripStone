@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.walker.common.BaseApplication;
 import com.walker.core.base.mvc.BaseFragment;
 import com.walker.core.log.LogHelper;
 import com.walker.study.R;
@@ -82,6 +83,7 @@ public class HookPluginFragment extends BaseFragment {
             intent.setComponent(new ComponentName("com.example.plugintest",
                     "com.example.plugintest.DemoActivity"));
             intent.putExtra(HookUtil.KEY_HOOK_TAG, true);
+            intent.putExtra("load_path", BaseApplication.pluginLoadPath);
             getHoldContext().startActivity(intent);
         } catch (Exception e) {
             LogHelper.get().e("PluginTest", e.getMessage());
