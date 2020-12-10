@@ -111,6 +111,16 @@ public class PhotoView extends View {
         return result;
     }
 
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        return isEnlarge;
+    }
+
+    @Override
+    public boolean canScrollVertically(int direction) {
+        return isEnlarge;
+    }
+
     class PhotoGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         // up 触发，单击或者双击的第一次会触发 --- up时，如果不是双击的第二次点击，不是长按，则触发

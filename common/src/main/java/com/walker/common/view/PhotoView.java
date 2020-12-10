@@ -262,12 +262,14 @@ public class PhotoView extends View {
             }
             // 缩放因子
             currentScale = initScale * detector.getScaleFactor();
+            checkScale();
             invalidate();
             return false;
         }
 
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
+            checkScale();
             initScale = currentScale;
             return true;
         }
@@ -275,6 +277,15 @@ public class PhotoView extends View {
         @Override
         public void onScaleEnd(ScaleGestureDetector detector) {
 
+        }
+    }
+
+    private void checkScale() {
+        if (4 < currentScale) {
+            currentScale = 4f;
+        }
+        if (currentScale < 0.1) {
+            currentScale = 0.1f;
         }
     }
 

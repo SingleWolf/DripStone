@@ -5,15 +5,19 @@ apply plugin: 'kotlin-android-extensions'
 //apply plugin: com.walker.buildsrc.hotfix.HotfixPlugin
 apply plugin: com.walker.buildsrc.trace.TraceMethodPlugin
 
+def androidID = rootProject.ext.androidID
+
 android {
-    compileSdkVersion rootProject.ext.compile_sdk_version
+    compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.walker.dripstone"
-        minSdkVersion rootProject.ext.min_sdk_version
-        targetSdkVersion rootProject.ext.target_sdk_version
-        versionCode 1
-        versionName "1.0"
+        applicationId appID.app
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+        // 组件化 和 集成化
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
     }
 
     buildTypes {
@@ -55,14 +59,16 @@ dependencies {
 
     implementation project(':common')
     implementation project(':network')
-    implementation project(':webview')
-    implementation project(':ui')
-    implementation project(':optimize')
-    implementation project(':collect')
-    implementation project(':demo')
-    implementation project(':study')
     implementation project(':platform')
-
+    if (isRelease) {
+        // 依附app壳
+        implementation project(':webview')
+        implementation project(':ui')
+        implementation project(':optimize')
+        implementation project(':collect')
+        implementation project(':demo')
+        implementation project(':study')
+    }
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
     implementation 'q.rorbin:badgeview:1.1.3'
 }

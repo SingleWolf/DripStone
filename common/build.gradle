@@ -2,14 +2,16 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def androidID = rootProject.ext.androidID
 android {
-    compileSdkVersion rootProject.ext.compile_sdk_version
+    compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
-        minSdkVersion rootProject.ext.min_sdk_version
-        targetSdkVersion rootProject.ext.target_sdk_version
-        versionCode 1
-        versionName "1.0"
-
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+        // 组件化 和 集成化
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -34,11 +36,8 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation "androidx.multidex:multidex:2.0.0"
+    //循环搞定依赖
+    dependenciesID.each {k,v -> implementation v}
 
     api project(':core')
     //PictureSelector

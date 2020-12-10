@@ -1,18 +1,16 @@
 apply plugin: 'com.android.application'
 
+def androidID = rootProject.ext.androidID
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.0"
-
+    compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
-        applicationId 'com.example.plugintest'
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+        // 组件化 和 集成化
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {

@@ -3,16 +3,18 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def androidID = rootProject.ext.androidID
 android {
-    compileSdkVersion rootProject.ext.compile_sdk_version
+    compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
-        minSdkVersion rootProject.ext.min_sdk_version
-        targetSdkVersion rootProject.ext.target_sdk_version
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+        // 组件化 和 集成化
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
     }
-
     buildTypes {
         release {
             minifyEnabled false
