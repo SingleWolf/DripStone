@@ -2,13 +2,16 @@ package com.walker.study.annotation;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.walker.common.activity.ShowActivity;
 import com.walker.core.base.mvc.BaseFragment;
 import com.walker.study.R;
+import com.walker.study.retrofit.test.MyRetrofitFragment;
+
+import kotlin.jvm.functions.Function1;
 
 public class InjectFragment extends BaseFragment {
 
@@ -28,6 +31,18 @@ public class InjectFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 InjectActivity.start(getHoldContext(), "Walker", 27, true);
+            }
+        });
+
+        baseView.findViewById(R.id.btnRetrofit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowActivity.Companion.start(getContext(), "my_retrofit", "手撕Retrofit", new Function1<String, Fragment>() {
+                    @Override
+                    public Fragment invoke(String s) {
+                        return MyRetrofitFragment.instance();
+                    }
+                });
             }
         });
     }
