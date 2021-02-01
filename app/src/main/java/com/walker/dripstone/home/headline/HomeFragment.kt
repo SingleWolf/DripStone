@@ -9,6 +9,7 @@ import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.walker.dripstone.R
 import com.walker.dripstone.databinding.FragmentHomeBinding
 import com.walker.dripstone.home.Channel
@@ -28,11 +29,18 @@ class HomeFragment : Fragment() {
             container,
             false
         )
-        adapter = HeadlineFragmentAdapter(childFragmentManager)
-        viewDataBinding.tablayout.tabMode = TabLayout.MODE_AUTO
+        //viewpager2
+        adapter = HeadlineFragmentAdapter(childFragmentManager, lifecycle)
         viewDataBinding.viewpager.adapter = adapter
-        viewDataBinding.tablayout.setupWithViewPager(viewDataBinding.viewpager)
         viewDataBinding.viewpager.offscreenPageLimit = 1
+        //tablayout
+        viewDataBinding.tablayout.tabMode = TabLayout.MODE_AUTO
+        var tabLayoutMediator = TabLayoutMediator(
+            viewDataBinding.tablayout,
+            viewDataBinding.viewpager,
+            TabLayoutMediator.TabConfigurationStrategy { tab, position -> tab?.text = adapter.getChannelName(position) })
+        tabLayoutMediator.attach()
+
         viewModel.dataList.observe(viewLifecycleOwner, object : Observer<ObservableList<Channel>> {
             override fun onChanged(channels: ObservableList<Channel>) {
                 synchronized(this) {

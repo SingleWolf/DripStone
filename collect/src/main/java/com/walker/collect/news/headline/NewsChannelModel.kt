@@ -4,7 +4,8 @@ import com.walker.collect.MockNewsData
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NewsChannelModel : MvvmBaseModel<NewsChannels, ArrayList<Channel>>(
@@ -24,11 +25,13 @@ class NewsChannelModel : MvvmBaseModel<NewsChannels, ArrayList<Channel>>(
     }
 
     override fun load() {
-        runBlocking {
-            val data = withContext(Dispatchers.Default) { mockData() }
-            takeIf { data != null }?.also {
-                onSuccess(data, false)
-            } ?: onFailure(Throwable("数据加载失败"))
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                val data = mockData()
+                takeIf { data != null }?.also {
+                    onSuccess(data, false)
+                } ?: onFailure(Throwable("数据加载失败"))
+            }
         }
     }
 

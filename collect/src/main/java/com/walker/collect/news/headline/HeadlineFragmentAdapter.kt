@@ -4,20 +4,25 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.walker.collect.news.newslist.NewsListFragment
-import com.walker.core.log.LogHelper
 import java.util.*
 
-class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
+class HeadlineFragmentAdapter(
+    fm: FragmentManager,
+    lifecycle: Lifecycle
+) : FragmentStateAdapter(
     fm,
-    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    lifecycle
 ) {
 
     private var channels: ObservableList<Channel> = ObservableArrayList()
     private val fragmentHashMap = HashMap<String, Fragment>()
 
-    override fun getItem(pos: Int): Fragment {
+    override fun getItemCount() = channels.size
+
+    override fun createFragment(pos: Int): Fragment {
         val key = "${channels[pos].channelId}_$${channels[pos].channelName}"
         var fragment: Fragment? = fragmentHashMap[key]
         fragment ?: let {
@@ -28,19 +33,15 @@ class HeadlineFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(
         return fragment!!
     }
 
-    override fun getCount() = if (channels != null) {
-        channels.size
-    } else {
-        0
-    }
-
-    override fun getPageTitle(pos: Int): CharSequence? {
-        return channels[pos].channelName
-    }
-
     fun setChannels(channels: ObservableList<Channel>) {
-        this.channels.clear()
+        this.channels = ObservableArrayList()
         this.channels.addAll(channels)
         notifyDataSetChanged()
+    }
+
+    fun getChannelName(position: Int): String? {
+        return if (position >= channels.size) {
+            ""
+        } else channels[position].channelName
     }
 }

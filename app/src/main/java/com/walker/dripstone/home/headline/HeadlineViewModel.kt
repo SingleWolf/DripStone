@@ -1,12 +1,17 @@
 package com.walker.dripstone.home.headline
 
+import android.os.Looper
 import com.walker.core.base.mvvm.viewmodel.MvvmBaseViewModel
 import com.walker.dripstone.home.Channel
 
-class HeadlineViewModel:MvvmBaseViewModel<HomeChannelModel,Channel>{
-    constructor() : super(){
+class HeadlineViewModel : MvvmBaseViewModel<HomeChannelModel, Channel> {
+    constructor() : super() {
         model = HomeChannelModel()
         model.register(this)
-        model.getCachedDataAndLoad()
+        //使用IdleHandler进行懒加载
+        Looper.myQueue().addIdleHandler {
+            model.getCachedDataAndLoad()
+            false
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.walker.network.retrofit.interceptor;
 
-import com.walker.core.log.LogHelper;
 import com.walker.network.retrofit.base.INetworkRequiredInfo;
 
 import java.io.IOException;
