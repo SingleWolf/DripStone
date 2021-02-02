@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="clickHandler"
+            type="com.walker.optimize.group.caton.CatonFragment.ClickHandler" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvBlockCanary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:onClick="@{()->clickHandler.onBlockCanaryTapped()}"
+            android:text="开启BlockCanary监测" />
+
+        <TextView
+            android:id="@+id/tvChoreographer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:onClick="@{()->clickHandler.onChoreographerTapped()}"
+            android:text="开启Choreographer监测" />
+    </LinearLayout>
+</layout>

@@ -1,7 +1,6 @@
-package com.walker.demo.trace;
+package com.walker.optimize.group.trace;
 
 public class TraceTest {
-
     public TraceTest() {
         MethodEventManager.getInstance().registerMethodObserver("trace_test", new TimeObserver());
     }

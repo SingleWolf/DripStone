@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply plugin: com.walker.buildsrc.trace.TraceMethodPlugin
+
 def androidID = rootProject.ext.androidID
 android {
     compileSdkVersion androidID.compileSdkVersion
@@ -33,6 +35,11 @@ android {
 
     //给模块设置不同的资源前缀，可以避免重复命名
     resourcePrefix "optimize_"
+}
+
+TraceMethodExt {
+    enable true
+    tracePrefix 'com/walker/'
 }
 
 dependencies {

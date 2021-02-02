@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="clickHandler"
+            type="com.walker.optimize.group.anr.AnrFragment.ClickHandler" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:onClick="@{clickHandler::onWatchDog}"
+            android:text="开启WatchDog监测" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:onClick="@{clickHandler::onFileObserver}"
+            android:text="开启FileObserver监测" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:onClick="@{clickHandler::onMockANR}"
+            android:text="模拟触发ANR" />
+    </LinearLayout>
+</layout>

@@ -2,7 +2,10 @@ package com.walker.optimize
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.optimize.group.anr.AnrFragment
+import com.walker.optimize.group.caton.CatonFragment
 import com.walker.optimize.group.network.NetSpeedFragment
+import com.walker.optimize.group.trace.TraceMethodFragment
 import com.walker.optimize.summary.Summary
 import com.walker.optimize.summary.SummaryListBean
 
@@ -29,12 +32,39 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
             Summary().run {
+                key = TraceMethodFragment.KEY_ID
+                title = "TraceMethod"
+                uri = ""
+                desc = ""
+                add(this)
+            }
+            Summary().run {
                 key = NetSpeedFragment.KEY_ID
                 title = "实时监测网速"
                 uri = ""
                 desc = ""
                 add(this)
-                LogHelper.get().d("generateSummary", title, true)
+            }
+            Summary().run {
+                key = CatonFragment.KEY_ID
+                title = "卡顿模拟与监测"
+                uri = ""
+                desc = ""
+                add(this)
+            }
+            Summary().run {
+                key = "key_optimize_oom"
+                title = "OOM模拟与监测"
+                uri = ""
+                desc = ""
+                add(this)
+            }
+            Summary().run {
+                key = AnrFragment.KEY_ID
+                title = "ANR模拟与监测"
+                uri = ""
+                desc = ""
+                add(this)
             }
         }
 
