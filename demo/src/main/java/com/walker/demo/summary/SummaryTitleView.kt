@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
-import com.walker.demo.trace.TraceMethodFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -14,7 +13,6 @@ class SummaryTitleView(context: Context) : TitleView(context) {
 
     fun genInstance(channelId: String): Fragment? {
         val fragment: Fragment? = when (channelId) {
-            TraceMethodFragment.KEY_ID -> TraceMethodFragment.instance()
             else -> null
         }
         return fragment

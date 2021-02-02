@@ -3,8 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 //apply plugin: com.walker.buildsrc.hotfix.HotfixPlugin
-apply plugin: com.walker.buildsrc.trace.TraceMethodPlugin
-
 def androidID = rootProject.ext.androidID
 
 android {
@@ -42,11 +40,6 @@ android {
 //    outputPath 'xxx'
 //    applicationName 'com.walker.dripstone.GlobalApplication'
 //}
-
-TraceMethodExt {
-    enable true
-    tracePrefix 'com/walker/'
-}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"

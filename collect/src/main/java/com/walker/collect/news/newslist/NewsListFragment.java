@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.walker.collect.R;
 import com.walker.collect.databinding.FragmentCollectNewsBinding;
+import com.walker.common.view.RecycleViewDivider;
 import com.walker.core.base.mvvm.BaseMvvmFragment;
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel;
 import com.walker.core.log.LogHelper;
@@ -80,6 +81,7 @@ public class NewsListFragment extends BaseMvvmFragment<FragmentCollectNewsBindin
         super.onViewCreated(view, savedInstanceState);
         viewDataBinding.listview.setHasFixedSize(true);
         viewDataBinding.listview.setLayoutManager(new LinearLayoutManager(getContext()));
+        viewDataBinding.listview.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.HORIZONTAL));
         mAdapter = new NewsListRecyclerViewAdapter();
         viewDataBinding.listview.setAdapter(mAdapter);
         viewDataBinding.refreshLayout.setRefreshHeader(new WaterDropHeader(getContext()));

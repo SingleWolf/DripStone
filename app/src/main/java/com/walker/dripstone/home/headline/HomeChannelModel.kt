@@ -5,6 +5,7 @@ import com.walker.common.fragment.EmptyFragment
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.common.router.IUiRouter
+import com.walker.common.view.RecycleViewDivider
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.router.RouterLoader
 import com.walker.core.util.GsonUtils
@@ -12,9 +13,8 @@ import com.walker.core.util.Utils
 import com.walker.dripstone.home.Channel
 import com.walker.dripstone.home.HomeChannels
 import com.walker.dripstone.home.MockHomeChannels
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import com.walker.dripstone.home.headline.HomeChannelModel.Companion.DEFAULT_CHANNEL_DATA
+import kotlinx.coroutines.*
 
 class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     HomeChannels::class.java
@@ -54,7 +54,7 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
         fun createFragment(key: String): Fragment {
             var fragment: Fragment? = null
             when (key) {
-                "100"->{
+                "100" -> {
                     val studyProvider = RouterLoader.load(IStudyRouter::class.java)
                     fragment = studyProvider?.getSummaryFragment()
                 }
@@ -62,7 +62,7 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
                     val uiRouter = RouterLoader.load(IUiRouter::class.java)
                     fragment = uiRouter?.getSummaryFragment()
                 }
-                "102"->{
+                "102" -> {
                     val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
                     fragment = optimizeProvider?.getSummaryFragment()
                 }
@@ -84,11 +84,13 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     }
 
     override fun load() {
-        runBlocking {
-            val data = withContext(Dispatchers.Default) { mockData() }
-            takeIf { data != null }?.also {
-                onSuccess(data, false)
-            } ?: onFailure(Throwable("数据加载失败"))
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                val data = mockData()
+                takeIf { data != null }?.also {
+                    onSuccess(data, false)
+                } ?: onFailure(Throwable("数据加载失败"))
+            }
         }
     }
 

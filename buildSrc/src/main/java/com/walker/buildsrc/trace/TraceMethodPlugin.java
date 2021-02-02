@@ -54,7 +54,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
                 if (appExtension == null) {
                     LibraryExtension libraryExtension = project.getExtensions().findByType(LibraryExtension.class);
                     if (libraryExtension == null) {
-                        System.out.println("\n\n---------- Not found extension ----------\n\n");
+                        System.out.println("\n\n---------- TraceMethodPlugin not found extension ----------\n\n");
                         return;
                     } else {
                         handleLibraryExtension(project, libraryExtension);
@@ -67,13 +67,14 @@ public class TraceMethodPlugin implements Plugin<Project> {
     }
 
     private void handleLibraryExtension(Project project, LibraryExtension libraryExtension) {
+        System.out.println("\n\n---------- TraceMethodPlugin from library ----------\n\n");
         DefaultDomainObjectSet<com.android.build.gradle.api.LibraryVariant> libraryExtensions = libraryExtension.getLibraryVariants();
         for (LibraryVariant var : libraryExtensions) {
             String variantName = var.getName();
             String myTaskName = "createFullJar" + firstCharUpperCase(variantName);
             Task task = project.getTasks().findByName(myTaskName);
             if (task == null) {
-                System.out.println(String.format("\n\n---------- %s is null ----------\n\n", myTaskName));
+                System.out.println(String.format("\n\n---------- TraceMethodPlugin %s is null ----------\n\n", myTaskName));
                 return;
             }
             task.doFirst(new Action<Task>() {
@@ -105,6 +106,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
     }
 
     private void handleAppExtension(Project project, AppExtension appExtension) {
+        System.out.println("\n\n---------- TraceMethodPlugin from app ----------\n\n");
         DomainObjectSet<ApplicationVariant> applicationVariants = appExtension.getApplicationVariants();
         for (ApplicationVariant var : applicationVariants) {
             //transformClassesWithDexBuilderForDebug/transformClassesWithDexBuilderForRelease

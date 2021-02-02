@@ -14,8 +14,7 @@
         <import type="androidx.databinding.ObservableField" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,9 +34,9 @@
                 android:id="@+id/feedCover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                tools:src="@drawable/custom"
-                app:imageUrl="@{viewModel.coverImageUrl}"/>
+                android:scaleType="fitCenter"
+                app:imageUrl="@{viewModel.coverImageUrl}"
+                tools:src="@android:drawable/list_selector_background" />
 
             <TextView
                 android:id="@+id/feedLabel"
@@ -51,9 +50,9 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{viewModel.label}"
-                tools:text="Hello World"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="Hello World" />
 
             <TextView
                 android:id="@+id/feedContent"

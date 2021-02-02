@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.header.WaterDropHeader
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter
+import com.walker.common.view.RecycleViewDivider
 import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.demo.R
@@ -35,6 +36,12 @@ class SummaryFragment :
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.listview.setHasFixedSize(true)
         viewDataBinding.listview.layoutManager = LinearLayoutManager(context)
+        viewDataBinding.listview.addItemDecoration(
+            RecycleViewDivider(
+                context,
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
         summaryAdapter = SummaryRecyclerViewAdapter()
         viewDataBinding.listview.adapter = summaryAdapter
         viewDataBinding.refreshLayout.setRefreshHeader(WaterDropHeader(context))

@@ -6,8 +6,8 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.AdviceAdapter;
 
 public class TraceMethodVisitor extends AdviceAdapter {
-    private static final String ANNOTATION_TRACK_METHOD = "Lcom/walker/demo/trace/TraceMethod;";
-    private static final String METHOD_EVENT_MANAGER = "com/walker/demo/trace/MethodEventManager";
+    private static final String ANNOTATION_TRACK_METHOD = "Lcom/walker/optimize/group/trace/TraceMethod;";
+    private static final String METHOD_EVENT_MANAGER = "com/walker/optimize/group/trace/MethodEventManager";
     private final MethodVisitor methodVisitor;
     private final String methodName;
 
@@ -58,6 +58,7 @@ public class TraceMethodVisitor extends AdviceAdapter {
             methodVisitor.visitLdcInsn(methodName);
             methodVisitor.visitMethodInsn(INVOKEVIRTUAL, METHOD_EVENT_MANAGER,
                     "notifyMethodEnter", "(Ljava/lang/String;Ljava/lang/String;)V", false);
+            System.out.println(String.format("\n\n---------- TraceMethodPlugin handleMethodEnter %s  ----------\n\n", methodName));
         }
     }
 
@@ -69,6 +70,7 @@ public class TraceMethodVisitor extends AdviceAdapter {
             methodVisitor.visitLdcInsn(methodName);
             methodVisitor.visitMethodInsn(INVOKEVIRTUAL, METHOD_EVENT_MANAGER,
                     "notifyMethodExit", "(Ljava/lang/String;Ljava/lang/String;)V", false);
+            System.out.println(String.format("\n\n---------- TraceMethodPlugin handleMethodExit %s  ----------\n\n", methodName));
         }
     }
 }

@@ -27,7 +27,6 @@ import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
 import com.walker.dripstone.links.LinkHelper
 import com.walker.dripstone.setting.AccountFragment
-import com.walker.dripstone.test.TraceMethodTest
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : AppCompatActivity() {
@@ -89,8 +88,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         LinkHelper.getInstance().transactLink(this)
-
-        TraceMethodTest().tryTest()
     }
 
     private fun initSteepStatusBar() {

@@ -4,7 +4,6 @@ import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
-import com.walker.demo.trace.TraceMethodFragment
 
 class MockSummaryData private constructor() {
     var dataPool: List<Summary>
@@ -31,12 +30,11 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         var keyIndex: Int = ORIGINAL_KEY
         Summary().run {
-            key = TraceMethodFragment.KEY_ID
-            title = "TraceMethod"
+            key = "${++keyIndex}"
+            title = "demo1"
             uri = ""
             desc = ""
             summaryList.add(this)
-            LogHelper.get().d("generateSummary", title, true)
         }
 
         Summary().run {
@@ -45,7 +43,6 @@ class MockSummaryData private constructor() {
             uri = ""
             desc = ""
             summaryList.add(this)
-            LogHelper.get().d("generateSummary", title, true)
         }
 
         return summaryList

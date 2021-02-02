@@ -3,6 +3,8 @@ package com.walker.dripstone
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
 import com.walker.common.router.IStudyRouter
@@ -20,6 +22,7 @@ class GlobalApplication : BaseApplication() {
     }
 
     override fun onCreate() {
+        //setupStrictMode()
         super.onCreate()
         initConfig()
         initPlugin()
@@ -75,5 +78,28 @@ class GlobalApplication : BaseApplication() {
 
             }
         })
+    }
+
+    private fun setupStrictMode() {
+        if (BuildConfig.DEBUG) {
+            //线程检测策略
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads() //读、写操作
+                    .detectDiskWrites()
+                    .detectNetwork() // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects() //Sqlite对象泄露
+                    .detectLeakedClosableObjects() //未关闭的Closable对象泄露
+                    .penaltyLog() //违规打印日志
+                    .penaltyDeath() //违规崩溃
+                    .build()
+            )
+        }
     }
 }

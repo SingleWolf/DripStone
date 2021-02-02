@@ -11,6 +11,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter
 import com.walker.collect.R
 import com.walker.collect.databinding.FragmentCollectSummaryBinding
+import com.walker.common.view.RecycleViewDivider
 import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 
@@ -37,6 +38,12 @@ class SummaryFragment :
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.listview.setHasFixedSize(true)
         viewDataBinding.listview.layoutManager = LinearLayoutManager(context)
+        viewDataBinding.listview.addItemDecoration(
+            RecycleViewDivider(
+                context,
+                LinearLayoutManager.HORIZONTAL
+            )
+        )
         summaryAdapter = SummaryRecyclerViewAdapter()
         viewDataBinding.listview.adapter = summaryAdapter
         viewDataBinding.refreshLayout.isEnableLoadMore = false
