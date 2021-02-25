@@ -38,8 +38,6 @@ class GlobalApplication : BaseApplication() {
     private fun initConfig() {
         //延迟初始化
         AppInitializer.getInstance(this).initializeComponent(CrashInitializer::class.java)
-        //SharedPreferences
-        SPHelper.init(this)
         //retrofit
         RetrofitNetworkApi.init(NetworkRequestInfo(this))
 
@@ -53,7 +51,7 @@ class GlobalApplication : BaseApplication() {
             override fun onActivityStarted(activity: Activity) {
                 LogHelper.get().d(
                     "registerActivityLifecycle",
-                    "${activity::class.java.simpleName} started"
+                    "${activity::class.java.simpleName} started", true
                 )
                 activityCount++
             }
@@ -65,7 +63,7 @@ class GlobalApplication : BaseApplication() {
             override fun onActivityStopped(activity: Activity) {
                 LogHelper.get().d(
                     "registerActivityLifecycle",
-                    "${activity::class.java.simpleName} stopped"
+                    "${activity::class.java.simpleName} stopped", true
                 )
                 activityCount--
             }

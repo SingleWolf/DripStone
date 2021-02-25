@@ -18,6 +18,9 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
+                android:name="com.walker.dripstone.initializer.StorageInitializer"
+                android:value="androidx.startup" />
+            <meta-data
                 android:name="com.walker.dripstone.initializer.LogInitializer"
                 android:value="androidx.startup" />
             <meta-data
@@ -30,9 +33,6 @@
                 android:name="com.walker.dripstone.initializer.CrashInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
-            <meta-data
-                android:name="com.walker.dripstone.initializer.StorageInitializer"
-                android:value="androidx.startup" />
         </provider>
 
         <activity

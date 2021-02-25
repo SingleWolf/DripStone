@@ -28,10 +28,10 @@ public class SPHelper extends BasePreferences {
         return sInstance;
     }
 
-    public static void init(Application application) {
+    public static void init(Context application) {
         sApplication = application;
         String rootDir = MMKV.initialize(sApplication);
-        LogHelper.get().d("mmkv",rootDir);
+        LogHelper.get().d("mmkv", rootDir);
     }
 
 

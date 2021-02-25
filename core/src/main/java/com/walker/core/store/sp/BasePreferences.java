@@ -1,6 +1,5 @@
 package com.walker.core.store.sp;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,7 +12,7 @@ import com.walker.core.util.Utils;
 import java.util.Map;
 
 abstract class BasePreferences {
-    protected static Application sApplication;
+    protected static Context sApplication;
 
     protected SharedPreferences mPreference;
 

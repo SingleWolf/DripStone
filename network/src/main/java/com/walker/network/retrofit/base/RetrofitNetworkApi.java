@@ -1,5 +1,6 @@
 package com.walker.network.retrofit.base;
 
+import com.walker.network.dsn.OkHttpDns;
 import com.walker.network.retrofit.environment.IEnvironment;
 import com.walker.network.retrofit.errorhandler.HttpErrorHandler;
 import com.walker.network.retrofit.interceptor.CommonRequestInterceptor;
@@ -64,6 +65,7 @@ public abstract class RetrofitNetworkApi implements IEnvironment {
     private OkHttpClient getOkHttpClient() {
         if (mOkHttpClient == null) {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+            okHttpClientBuilder.dns(OkHttpDns.getInstance(mNetworkRequiredInfo.getApplicationContext()));
             if (getInterceptor() != null) {
                 okHttpClientBuilder.addInterceptor(getInterceptor());
             }
