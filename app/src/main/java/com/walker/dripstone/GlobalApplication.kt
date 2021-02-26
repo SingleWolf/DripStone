@@ -3,8 +3,11 @@ package com.walker.dripstone
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.util.Log
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
 import com.walker.common.router.IStudyRouter

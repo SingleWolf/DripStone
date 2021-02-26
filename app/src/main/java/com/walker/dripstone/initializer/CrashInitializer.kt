@@ -8,7 +8,7 @@ import com.walker.core.log.LogHelper
 class CrashInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         CrashHandler.getInstance()
-            .init { e -> LogHelper.get().e("UncaughtException", e.toString(), true) }
+            .init(context) { e -> LogHelper.get().e("UncaughtException", e.toString(), true) }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
