@@ -16,6 +16,10 @@ android {
         // 组件化 和 集成化
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
+
+        ndk {
+            abiFilter "armeabi-v7a"
+        }
     }
     buildTypes {
         release {

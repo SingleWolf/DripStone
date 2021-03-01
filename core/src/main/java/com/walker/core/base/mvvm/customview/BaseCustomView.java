@@ -6,12 +6,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-public abstract class BaseCustomView<T extends ViewDataBinding, S extends BaseCustomViewModel> extends LinearLayout implements ICustomView<S>, View.OnClickListener {
+public abstract class BaseCustomView<T extends ViewDataBinding, S extends BaseCustomViewModel> extends RelativeLayout implements ICustomView<S>, View.OnClickListener {
 
     private T dataBinding;
     private S viewModel;
@@ -87,11 +88,11 @@ public abstract class BaseCustomView<T extends ViewDataBinding, S extends BaseCu
     public void onClick(View v) {
     }
 
-    protected T getDataBinding(){
+    protected T getDataBinding() {
         return dataBinding;
     }
 
-    protected S getViewModel(){
+    protected S getViewModel() {
         return viewModel;
     }
 

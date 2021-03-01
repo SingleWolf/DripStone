@@ -4,6 +4,7 @@ import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.optimize.group.anr.AnrFragment
 import com.walker.optimize.group.caton.CatonFragment
+import com.walker.optimize.group.crash.CrashFragment
 import com.walker.optimize.group.network.NetSpeedFragment
 import com.walker.optimize.group.trace.TraceMethodFragment
 import com.walker.optimize.summary.Summary
@@ -62,6 +63,13 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = AnrFragment.KEY_ID
                 title = "ANR模拟与监测"
+                uri = ""
+                desc = ""
+                add(this)
+            }
+            Summary().run {
+                key = CrashFragment.KEY_ID
+                title = "Crash模拟与监测"
                 uri = ""
                 desc = ""
                 add(this)

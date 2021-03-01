@@ -3,20 +3,15 @@ package com.walker.dripstone
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
-import android.util.Log
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
 import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
-import com.walker.core.store.sp.SPHelper
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
-import com.walker.platform.push.PushHelper
 
 class GlobalApplication : BaseApplication() {
 
@@ -43,8 +38,6 @@ class GlobalApplication : BaseApplication() {
         AppInitializer.getInstance(this).initializeComponent(CrashInitializer::class.java)
         //retrofit
         RetrofitNetworkApi.init(NetworkRequestInfo(this))
-
-        PushHelper.init(this)
     }
 
     private fun registerActivityLifecycle() {
