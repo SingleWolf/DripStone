@@ -5,7 +5,6 @@ import com.walker.common.fragment.EmptyFragment
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.common.router.IUiRouter
-import com.walker.common.view.RecycleViewDivider
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.router.RouterLoader
 import com.walker.core.util.GsonUtils
@@ -13,12 +12,12 @@ import com.walker.core.util.Utils
 import com.walker.dripstone.home.Channel
 import com.walker.dripstone.home.HomeChannels
 import com.walker.dripstone.home.MockHomeChannels
-import com.walker.dripstone.home.headline.HomeChannelModel.Companion.DEFAULT_CHANNEL_DATA
 import kotlinx.coroutines.*
 
-class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
-    HomeChannels::class.java
-) {
+class HomeChannelModel(private val viewModelScope: CoroutineScope) :
+    MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
+        HomeChannels::class.java
+    ) {
 
     companion object {
         const val DEFAULT_CHANNEL_DATA = "{\n" +
@@ -84,7 +83,7 @@ class HomeChannelModel : MvvmBaseModel<HomeChannels, ArrayList<Channel>>(
     }
 
     override fun load() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             withContext(Dispatchers.Main) {
                 val data = mockData()
                 takeIf { data != null }?.also {

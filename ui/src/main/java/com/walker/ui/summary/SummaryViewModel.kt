@@ -1,11 +1,12 @@
 package com.walker.ui.summary
 
+import androidx.lifecycle.viewModelScope
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.viewmodel.MvvmBaseViewModel
 
 class SummaryViewModel : MvvmBaseViewModel<SummaryModel, ArrayList<BaseCustomViewModel>> {
     constructor() : super() {
-        model = SummaryModel()
+        model = SummaryModel(viewModelScope)
         model.register(this)
         model.getCachedDataAndLoad()
     }

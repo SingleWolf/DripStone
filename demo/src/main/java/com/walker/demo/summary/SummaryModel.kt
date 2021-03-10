@@ -6,11 +6,9 @@ import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import com.walker.demo.MockSummaryData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
-class SummaryModel :
+class SummaryModel(private val viewModelScope: CoroutineScope) :
     MvvmBaseModel<SummaryListBean, ArrayList<BaseCustomViewModel>>(
         SummaryListBean::class.java,
         true,
@@ -22,7 +20,7 @@ class SummaryModel :
             val baseViewModels = ArrayList<BaseCustomViewModel>()
             for (source in it.summaryList) {
                 val viewModel = TitleViewViewModel()
-                viewModel.key=source.key
+                viewModel.key = source.key
                 viewModel.jumpUri = source.uri
                 viewModel.title = source.title
                 baseViewModels.add(viewModel)
@@ -47,12 +45,13 @@ class SummaryModel :
     }
 
     override fun load() {
-        runBlocking {
+        viewModelScope.launch {
             val data = withContext(Dispatchers.Default) { mockData() }
             takeIf { data != null }?.also {
                 onSuccess(data, false)
             } ?: onFailure(Throwable("数据加载失败"))
         }
+
     }
 
     suspend fun mockData(): SummaryListBean? {
@@ -66,7 +65,7 @@ class SummaryModel :
             }
             jsonData = MockSummaryData.get().listSummary(pageNum)
             data = GsonUtils.fromLocalJson(jsonData, SummaryListBean::class.java)
-            Log.i("mockData",jsonData)
+            Log.i("mockData", jsonData)
         }
         return data
     }

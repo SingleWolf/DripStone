@@ -5,20 +5,22 @@ import com.walker.common.view.titleview.TitleViewViewModel
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SummaryModel :
+class SummaryModel(private val viewModelScope: CoroutineScope) :
     MvvmBaseModel<SummaryListBean, ArrayList<BaseCustomViewModel>>(
-        SummaryListBean::class.java) {
+        SummaryListBean::class.java
+    ) {
     override fun onSuccess(data: SummaryListBean?, isFromCache: Boolean) {
         data?.let {
             val baseViewModels = ArrayList<BaseCustomViewModel>()
             for (source in it.summaryList) {
                 val viewModel = TitleViewViewModel()
                 viewModel.jumpUri = source.key
-                viewModel.key=source.key
+                viewModel.key = source.key
                 viewModel.title = source.title
                 baseViewModels.add(viewModel)
             }
@@ -42,7 +44,7 @@ class SummaryModel :
     }
 
     override fun load() {
-        runBlocking {
+        viewModelScope.launch {
             val data = withContext(Dispatchers.Default) { mockData() }
             takeIf { data != null }?.also {
                 onSuccess(data, false)

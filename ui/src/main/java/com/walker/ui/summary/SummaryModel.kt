@@ -1,16 +1,15 @@
 package com.walker.ui.summary
 
 import android.util.Log
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.walker.common.view.titleview.TitleViewViewModel
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.core.base.mvvm.model.MvvmBaseModel
 import com.walker.core.util.GsonUtils
 import com.walker.ui.MockSummaryData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
-class SummaryModel :
+class SummaryModel(private val viewModelScope: CoroutineScope) :
     MvvmBaseModel<SummaryListBean, ArrayList<BaseCustomViewModel>>(
         SummaryListBean::class.java,
         true,
@@ -47,7 +46,7 @@ class SummaryModel :
     }
 
     override fun load() {
-        runBlocking {
+        viewModelScope.launch {
             val data = withContext(Dispatchers.Default) { mockData() }
             takeIf { data != null }?.also {
                 onSuccess(data, false)
