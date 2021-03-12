@@ -6,14 +6,18 @@ import android.view.View
 import androidx.databinding.ObservableList
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.scwang.smartrefresh.header.WaterDropHeader
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter
+import com.walker.common.BaseApplication
 import com.walker.common.view.RecycleViewDivider
 import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.study.R
 import com.walker.study.databinding.FragmentStudySummaryBinding
+import com.walker.study.plugin.PluginCopyWorker
 
 
 @Suppress("DEPRECATION")
@@ -61,6 +65,9 @@ class SummaryFragment :
         viewDataBinding.refreshLayout.setOnLoadMoreListener { viewModel.tryToLoadNextPage() }
         setLoadSir(viewDataBinding.refreshLayout)
         showLoading()
+
+        val request = OneTimeWorkRequest.Builder(PluginCopyWorker::class.java).build()
+        WorkManager.getInstance(BaseApplication.context!!).enqueue(request)
     }
 
     override fun notifyData(sender: ObservableList<BaseCustomViewModel>?) {

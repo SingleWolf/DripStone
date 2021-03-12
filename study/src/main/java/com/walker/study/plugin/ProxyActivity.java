@@ -18,6 +18,6 @@ public class ProxyActivity extends BaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_study_show;
+        return R.layout.activity_study_proxy;
     }
 }

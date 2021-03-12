@@ -7,9 +7,7 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
-import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
-import com.walker.core.router.RouterLoader
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 
@@ -28,9 +26,7 @@ class GlobalApplication : BaseApplication() {
     }
 
     private fun initPlugin() {
-        pluginLoadPath = "${this.externalCacheDir?.absolutePath}/pluginTest-debug.apk"
-        val studyProvider = RouterLoader.load(IStudyRouter::class.java)
-        studyProvider?.loadClass(this, pluginLoadPath)
+        pluginLoadPath = "${this.externalCacheDir?.absolutePath}/plugin/pluginTest-debug.apk"
     }
 
     private fun initConfig() {

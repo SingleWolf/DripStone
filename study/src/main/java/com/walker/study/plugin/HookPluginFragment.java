@@ -9,12 +9,24 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 import com.walker.common.BaseApplication;
 import com.walker.core.base.mvc.BaseFragment;
 import com.walker.core.log.LogHelper;
+import com.walker.core.ui.loadsir.LoadingCallback;
+import com.walker.core.util.ToastUtils;
 import com.walker.study.R;
 
 import java.lang.reflect.Method;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @Author Walker
@@ -24,6 +36,8 @@ import java.lang.reflect.Method;
 public class HookPluginFragment extends BaseFragment {
 
     public static final String KEY_ID = "key_study_hook_plugin_fragment";
+    private static boolean sPluginLoaded = false;
+    private LoadService mLoadService;
 
     public static Fragment instance() {
         return new HookPluginFragment();
@@ -32,13 +46,17 @@ public class HookPluginFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        HookUtil.setProxyConfig(context.getPackageName(), ProxyActivity.class.getName());
-        HookUtil.hookAMS();
-        HookUtil.hookHandler();
+        if (!sPluginLoaded) {
+            HookUtil.setProxyConfig(context.getPackageName(), ProxyActivity.class.getName());
+            HookUtil.hookAMS();
+            HookUtil.hookHandler();
+        }
     }
 
     @Override
     protected void buildView(View baseView, Bundle savedInstanceState) {
+        mLoadService = LoadSir.getDefault().register(baseView);
+        mLoadService.showSuccess();
         baseView.findViewById(R.id.btnHookActivity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,22 +89,66 @@ public class HookPluginFragment extends BaseFragment {
     }
 
     private void onStartPlugin() {
+        Observable.just(sPluginLoaded).map(new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(@NonNull Boolean isLoaded) throws Exception {
+                if (!isLoaded) {
+                    loadingPlugin();
+                    Thread.sleep(3 * 1000);
+                }
+                return true;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        mLoadService.showCallback(LoadingCallback.class);
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Boolean isStart) {
+                        if (isStart) {
+                            mLoadService.showSuccess();
+                            startPlugin();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        LogHelper.get().e("PluginTest", e.getMessage());
+                        ToastUtils.showCenter(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void startPlugin() {
         try {
             Class<?> clazz = Class.forName("com.example.plugintest.DemoTest");
             Method print = clazz.getMethod("onTest");
             print.invoke(null);
-        } catch (Exception e) {
-            Log.e("PluginTest", e.toString());
-        }
-        try {
+
             Intent intent = new Intent();
             intent.setComponent(new ComponentName("com.example.plugintest",
                     "com.example.plugintest.DemoActivity"));
             intent.putExtra(HookUtil.KEY_HOOK_TAG, true);
             intent.putExtra("load_path", BaseApplication.pluginLoadPath);
             getHoldContext().startActivity(intent);
+            LogHelper.get().i("PluginTest", "###  startPlugin ###");
         } catch (Exception e) {
             LogHelper.get().e("PluginTest", e.getMessage());
+        }
+    }
+
+    private void loadingPlugin() {
+        if (!sPluginLoaded) {
+            LoadUtil.loadClass(BaseApplication.context, BaseApplication.pluginLoadPath);
+            sPluginLoaded = true;
+            LogHelper.get().d("PluginTest", "load plugin successful !");
         }
     }
 }
