@@ -2,6 +2,7 @@ package com.walker.demo
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
 
@@ -30,8 +31,8 @@ class MockSummaryData private constructor() {
         var summaryList = mutableListOf<Summary>()
         var keyIndex: Int = ORIGINAL_KEY
         Summary().run {
-            key = "${++keyIndex}"
-            title = "demo1"
+            key = RepoFragment.KEY_ID
+            title = "Paging3"
             uri = ""
             desc = ""
             summaryList.add(this)

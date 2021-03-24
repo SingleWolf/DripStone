@@ -20,6 +20,8 @@ ext {
     glide_version = '4.11.0'
     //autoservice
     autoservice_version = '1.0-rc7'
+    //retrofit
+    retrofit_version = '2.9.0'
 
     // 正式环境 和 测试环境
     isRelease = true
