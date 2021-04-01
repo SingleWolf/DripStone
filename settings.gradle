@@ -1,2 +1,3 @@
+include ':usercenter'
 include ':app', ':core', ':ui', ':optimize', ':optimize-crash', ':common', ':network', ':collect', ':webview', ':demo', ':study', ':platform', ':pluginTest'
 rootProject.name = 'DripStone'

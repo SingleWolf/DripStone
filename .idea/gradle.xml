@@ -6,6 +6,7 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
+        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
@@ -24,6 +25,7 @@
             <option value="$PROJECT_DIR$/pluginTest" />
             <option value="$PROJECT_DIR$/study" />
             <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/usercenter" />
             <option value="$PROJECT_DIR$/webview" />
           </set>
         </option>

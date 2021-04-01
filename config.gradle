@@ -1,6 +1,6 @@
 ext {
     //android
-    gradle_ersion = '4.0.1'
+    gradle_ersion = '4.1.1'
     androidx_version = '1.2.0'
     constraint_layout_verson = '2.0.4'
     workVersion = '2.1.0'
@@ -50,7 +50,8 @@ ext {
             demo    : "com.walker.demo",
             webview : "com.walker.webview",
             collect : "com.walker.collect",
-            optimize: "com.walker.optimize"
+            optimize: "com.walker.optimize",
+            usercenter: "com.walker.usercenter"
     ]
 
     // MAP  key  value
