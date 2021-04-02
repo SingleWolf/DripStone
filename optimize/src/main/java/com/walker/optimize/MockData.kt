@@ -6,6 +6,7 @@ import com.walker.optimize.group.anr.AnrFragment
 import com.walker.optimize.group.caton.CatonFragment
 import com.walker.optimize.group.crash.CrashFragment
 import com.walker.optimize.group.network.NetSpeedFragment
+import com.walker.optimize.group.oom.OOMFragment
 import com.walker.optimize.group.trace.TraceMethodFragment
 import com.walker.optimize.summary.Summary
 import com.walker.optimize.summary.SummaryListBean
@@ -54,7 +55,7 @@ class MockSummaryData private constructor() {
                 add(this)
             }
             Summary().run {
-                key = "key_optimize_oom"
+                key = OOMFragment.KEY_ID
                 title = "OOM模拟与监测"
                 uri = ""
                 desc = ""

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvGenDumpFile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="生成DumpFile" />
+
+        <TextView
+            android:id="@+id/tvGetAppMemorySize"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="获取设备对app的内存限制" />
+
+        <TextView
+            android:id="@+id/tvGetStatisticsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="获取OOM相关的统计信息" />
+
+        <TextView
+            android:id="@+id/tvMockIncreaseJavaHeap"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="模拟增加Java堆内存" />
+
+        <TextView
+            android:id="@+id/tvMockGC"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="模拟GC和释放堆内存" />
+
+        <TextView
+            android:id="@+id/tvMockIncreaseThread"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="模拟增加线程数量" />
+
+        <TextView
+            android:id="@+id/tvMockIncreaseFD"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="模拟增加文件具柄数" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

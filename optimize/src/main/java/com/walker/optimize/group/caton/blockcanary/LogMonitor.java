@@ -2,6 +2,7 @@ package com.walker.optimize.group.caton.blockcanary;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Printer;
 
 import com.walker.core.log.LogHelper;
@@ -28,6 +29,7 @@ public class LogMonitor implements Printer {
 
     @Override
     public void println(String x) {
+        Log.d("LogMonitor",x);
         //从if到else会执行 dispatchMessage，如果执行耗时超过阈值，输出卡顿信息
         if (!mPrintingStarted) {
             //记录开始时间

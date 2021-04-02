@@ -9,4 +9,6 @@ import androidx.fragment.app.Fragment
  */
 interface IOptimizeRouter {
     fun getSummaryFragment(): Fragment?
+
+    fun initBlockCanary()
 }

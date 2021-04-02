@@ -9,6 +9,7 @@ import com.walker.optimize.group.anr.AnrFragment
 import com.walker.optimize.group.caton.CatonFragment
 import com.walker.optimize.group.crash.CrashFragment
 import com.walker.optimize.group.network.NetSpeedFragment
+import com.walker.optimize.group.oom.OOMFragment
 import com.walker.optimize.group.trace.TraceMethodFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
@@ -32,6 +33,9 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             }
             CrashFragment.KEY_ID -> {
                 CrashFragment.instance();
+            }
+            OOMFragment.KEY_ID -> {
+                OOMFragment.instance();
             }
             else -> null
         }

@@ -37,7 +37,7 @@ android {
 
 dependencies {
     //循环搞定依赖
-    dependenciesID.each {k,v -> implementation v}
+    dependenciesID.each { k, v -> implementation v }
 
     api project(':core')
     //PictureSelector
@@ -48,4 +48,6 @@ dependencies {
     api "com.github.bumptech.glide:annotations:$rootProject.ext.glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide_version"
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    //悬浮框
+    api 'com.github.princekin-f:EasyFloat:2.0.1'
 }

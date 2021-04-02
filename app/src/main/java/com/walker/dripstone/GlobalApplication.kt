@@ -7,22 +7,25 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
+import com.walker.common.router.IOptimizeRouter
 import com.walker.core.log.LogHelper
+import com.walker.core.router.RouterLoader
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 
 class GlobalApplication : BaseApplication() {
-
-    companion object {
-        var activityCount: Int = 0
-    }
-
     override fun onCreate() {
         //setupStrictMode()
         super.onCreate()
         initConfig()
         initPlugin()
         registerActivityLifecycle()
+        initOptimize()
+    }
+
+    private fun initOptimize() {
+        val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
+        optimizeProvider?.initBlockCanary()
     }
 
     private fun initPlugin() {
