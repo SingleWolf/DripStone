@@ -4,6 +4,7 @@ import android.system.Os.socket
 import android.system.OsConstants.AF_INET
 import android.system.OsConstants.SOCK_DGRAM
 import android.util.Log
+import java.lang.Thread.sleep
 
 class OOMTest {
     private var mHeap = arrayListOf<ByteArray>()
@@ -78,6 +79,9 @@ class OOMTest {
     fun testGCAndDeallocate() {
         mHeap.clear()
         mHeap = arrayListOf()
-        System.gc()
+        //System.gc(）仅仅是通知系统在合适时间进行一次垃圾回收。并不能保证一定执行
+        Runtime.getRuntime().gc()
+        sleep(100)
+        System.runFinalization()
     }
 }
