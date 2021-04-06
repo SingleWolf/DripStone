@@ -1,15 +1,15 @@
 package com.walker.optimize.group.oom
 
-import android.os.Process
-import java.io.BufferedReader
-import java.io.FileReader
+import android.system.Os.socket
+import android.system.OsConstants.AF_INET
+import android.system.OsConstants.SOCK_DGRAM
+import android.util.Log
 
 class OOMTest {
     private var mHeap = arrayListOf<ByteArray>()
+
     private val increaseFDRunnable = Runnable {
-        for (i in 0 until 40 * 1000) {
-            readFD()
-        }
+        readFD()
     }
     private val emptyRunnable = Runnable {
         try {
@@ -20,11 +20,15 @@ class OOMTest {
     }
 
     fun readFD() {
-        try {
-            BufferedReader(FileReader("/proc/" + Process.myPid() + "/status"))
-            Thread.sleep(Long.MAX_VALUE)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                for (i in 0 until 10 * 1024) {
+                    var iSock = socket(AF_INET, SOCK_DGRAM, 0)
+                    Log.d("OOMTest", "iSock is ${iSock.valid()}")
+                }
+            } catch (e: Exception) {
+                Log.e("OOMTest", e.toString())
+            }
         }
     }
 
