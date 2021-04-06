@@ -39,6 +39,17 @@
             android:text="获取OOM相关的统计信息" />
 
         <TextView
+            android:id="@+id/tvMockJavaObjLeak"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_react_theme_r10"
+            android:gravity="center"
+            android:text="模拟java对象内存泄漏" />
+
+
+        <TextView
             android:id="@+id/tvMockIncreaseJavaHeap"
             android:layout_width="match_parent"
             android:layout_height="50dp"

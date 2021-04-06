@@ -1,11 +1,9 @@
 package com.walker.dripstone.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.walker.common.BaseApplication
 import com.walker.core.log.LogHelper
 import com.walker.dripstone.links.LinkHelper
 
@@ -20,8 +18,6 @@ class SplashActivity : AppCompatActivity() {
                 return
             }
         }
-
-        BaseApplication.setMainPageBlock(::gotoMainPage)
 
         transactLinks()
         Intent(this, MainActivity::class.java).let {
@@ -42,10 +38,5 @@ class SplashActivity : AppCompatActivity() {
         super.onStop()
         LogHelper.get().d("SplashActivity", "onStop", true)
         finish()
-    }
-
-    fun gotoMainPage(activity: Activity) {
-        val intent = Intent(activity, SplashActivity::class.java)
-        activity.startActivity(intent)
     }
 }

@@ -23,7 +23,6 @@ import com.walker.optimize.R
 class OOMFragment : Fragment() {
     private var floatWindowIsShow = false
     private var tvShowInfo: TextView? = null
-    private val oomTest by lazy { OOMTest() }
 
     companion object {
         const val TAG = "OOMFragment"
@@ -48,6 +47,9 @@ class OOMFragment : Fragment() {
 
         val tvGetStatisticsInfo: TextView = view.findViewById(R.id.tvGetStatisticsInfo)
         tvGetStatisticsInfo.setOnClickListener { onGetStatisticsInfoTapped() }
+
+        val tvMockJavaObjLeak: TextView = view.findViewById(R.id.tvMockJavaObjLeak)
+        tvMockJavaObjLeak.setOnClickListener { onMockJavaObjLeakTapped() }
 
         val tvMockIncreaseJavaHeap: TextView = view.findViewById(R.id.tvMockIncreaseJavaHeap)
         tvMockIncreaseJavaHeap.setOnClickListener { onMockIncreaseJavaHeapTapped() }
@@ -96,20 +98,24 @@ class OOMFragment : Fragment() {
         tvShowInfo?.append("${DateTimeUtils.getNormalDate()}\t\t\t${info}")
     }
 
+    private fun onMockJavaObjLeakTapped() {
+        OOMTest.get().testLeakObject(activity!!)
+    }
+
     fun onMockIncreaseJavaHeapTapped() {
-        oomTest.testAllocateJavaHeap(50 * 1024 * 1024)
+        OOMTest.get().testAllocateJavaHeap(50 * 1024 * 1024)
     }
 
     fun onMockGCJavaHeapTapped() {
-        oomTest.testGCAndDeallocate()
+        OOMTest.get().testGCAndDeallocate()
     }
 
     fun onMockIncreaseThreadTapped() {
-        oomTest.testIncreaseThread(500)
+        OOMTest.get().testIncreaseThread(500)
     }
 
     fun onMockIncreaseFDTapped() {
-        oomTest.testIncreaseFD(100)
+        OOMTest.get().testIncreaseFD(100)
     }
 
     fun startFloatWindow() {

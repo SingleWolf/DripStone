@@ -2,6 +2,7 @@ package com.walker.dripstone
 
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
@@ -10,8 +11,10 @@ import com.walker.common.BaseApplication
 import com.walker.common.router.IOptimizeRouter
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
+import com.walker.dripstone.activity.SplashActivity
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
+import leakcanary.LeakCanary
 
 class GlobalApplication : BaseApplication() {
     override fun onCreate() {
@@ -26,6 +29,9 @@ class GlobalApplication : BaseApplication() {
     private fun initOptimize() {
         val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
         optimizeProvider?.initBlockCanary()
+
+        LeakCanary.config = LeakCanary.config.copy(onHeapAnalyzedListener = LeakUploader())
+
     }
 
     private fun initPlugin() {
@@ -37,6 +43,7 @@ class GlobalApplication : BaseApplication() {
         AppInitializer.getInstance(this).initializeComponent(CrashInitializer::class.java)
         //retrofit
         RetrofitNetworkApi.init(NetworkRequestInfo(this))
+        setMainPageBlock(::gotoMainPage)
     }
 
     private fun registerActivityLifecycle() {
@@ -94,5 +101,10 @@ class GlobalApplication : BaseApplication() {
                     .build()
             )
         }
+    }
+
+    fun gotoMainPage(activity: Activity) {
+        val intent = Intent(activity, SplashActivity::class.java)
+        activity.startActivity(intent)
     }
 }
