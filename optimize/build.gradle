@@ -65,4 +65,6 @@ dependencies {
     implementation "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
     kapt "com.google.auto.service:auto-service:$rootProject.ext.autoservice_version"
     implementation 'com.google.code.findbugs:jsr305:2.0.1'
+    //epic
+    implementation 'me.weishu:epic:0.11.0'
 }

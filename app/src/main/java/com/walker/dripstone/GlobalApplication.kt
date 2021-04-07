@@ -29,7 +29,7 @@ class GlobalApplication : BaseApplication() {
     private fun initOptimize() {
         val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
         optimizeProvider?.initBlockCanary()
-
+        optimizeProvider?.transactEpicHooks()
         LeakCanary.config = LeakCanary.config.copy(onHeapAnalyzedListener = LeakUploader())
 
     }

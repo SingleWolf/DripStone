@@ -11,4 +11,6 @@ interface IOptimizeRouter {
     fun getSummaryFragment(): Fragment?
 
     fun initBlockCanary()
+
+    fun transactEpicHooks()
 }
