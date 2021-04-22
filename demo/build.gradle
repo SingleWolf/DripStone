@@ -23,12 +23,32 @@ android {
         // 组件化 和 集成化
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
+
+        externalNativeBuild {
+            cmake {
+                // cppFlags "" // 默认五大平台
+                // 指定CPU架构，Cmake的本地库， 例如：VoiceChange ---> armeabi-v7a
+                abiFilters "armeabi-v7a"
+            }
+        }
+
+        // 指定CPU架构，打入APK lib/CPU平台
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
         }
     }
 
@@ -92,5 +112,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit_version"
 
     implementation 'androidx.paging:paging-runtime:3.0.0-beta01'
+    //fmd的jar包
+    implementation files("libs\\fmod.jar");
 
 }

@@ -16,6 +16,19 @@ android {
         versionName androidID.versionName
         // 组件化 和 集成化
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+
+        externalNativeBuild {
+            cmake {
+                // cppFlags "" // 默认五大平台
+                // 指定CPU架构，Cmake的本地库， 例如：VoiceChange ---> armeabi-v7a
+                abiFilters "armeabi-v7a"
+            }
+        }
+
+        // 指定CPU架构，打入APK lib/CPU平台
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {

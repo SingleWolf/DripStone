@@ -2,6 +2,7 @@ package com.walker.demo
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
@@ -39,8 +40,8 @@ class MockSummaryData private constructor() {
         }
 
         Summary().run {
-            key = "${++keyIndex}"
-            title = "demo2"
+            key = VoiceChangeFragment.KEY_ID
+            title = "通过fmod实现变声"
             uri = ""
             desc = ""
             summaryList.add(this)

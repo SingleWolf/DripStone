@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
+import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.paging3.RepoFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
@@ -15,6 +16,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
     fun genInstance(channelId: String): Fragment? {
         val fragment: Fragment? = when (channelId) {
             RepoFragment.KEY_ID -> RepoFragment.instance()
+            VoiceChangeFragment.KEY_ID -> VoiceChangeFragment.instance()
             else -> null
         }
         return fragment

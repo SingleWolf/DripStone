@@ -15,6 +15,7 @@ import com.walker.dripstone.activity.SplashActivity
 import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 import leakcanary.LeakCanary
+import shark.LeakTrace
 
 class GlobalApplication : BaseApplication() {
     override fun onCreate() {
@@ -31,7 +32,6 @@ class GlobalApplication : BaseApplication() {
         optimizeProvider?.initBlockCanary()
         optimizeProvider?.transactEpicHooks()
         LeakCanary.config = LeakCanary.config.copy(onHeapAnalyzedListener = LeakUploader())
-
     }
 
     private fun initPlugin() {
