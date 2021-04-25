@@ -5,6 +5,7 @@ import com.walker.core.util.GsonUtils
 import com.walker.study.annotation.InjectFragment
 import com.walker.study.hotfix.HotfixFragment
 import com.walker.study.plugin.HookPluginFragment
+import com.walker.study.skin.SkinFragment
 import com.walker.study.summary.Summary
 import com.walker.study.summary.SummaryListBean
 import com.walker.study.thread.ThreadFragment
@@ -69,6 +70,14 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = WebviewUseFragment.KEY_ID
                 title = "跨进程Webview"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+            Summary().run {
+                key = SkinFragment.KEY_ID
+                title = "插件化换肤"
                 uri = ""
                 desc = ""
                 add(this)

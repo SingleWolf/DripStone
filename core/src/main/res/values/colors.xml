@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/goldenrod</color>
-    <color name="colorPrimaryDark">@color/goldenrod</color>
+    <color name="colorPrimary">#daa520</color>
+    <color name="colorPrimaryDark">#daa520</color>
     <color name="colorAccent">#FF4081</color>
 
     <!-- 白色 -->

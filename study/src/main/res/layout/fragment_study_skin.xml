@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/btnLoad"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="加载皮肤包" />
+
+    <TextView
+        android:id="@+id/btnBlue"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="幽邃蓝" />
+
+    <TextView
+        android:id="@+id/btnBlack"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="酷酷黑" />
+
+    <TextView
+        android:id="@+id/btnYellow"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="暖暖黄" />
+</LinearLayout>

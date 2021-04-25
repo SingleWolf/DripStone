@@ -51,7 +51,8 @@ ext {
             webview : "com.walker.webview",
             collect : "com.walker.collect",
             optimize: "com.walker.optimize",
-            usercenter: "com.walker.usercenter"
+            usercenter: "com.walker.usercenter",
+            skin: "com.walker.skin"
     ]
 
     // MAP  key  value

@@ -9,6 +9,7 @@ import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
 import com.walker.common.router.IOptimizeRouter
+import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
 import com.walker.dripstone.activity.SplashActivity
@@ -22,9 +23,15 @@ class GlobalApplication : BaseApplication() {
         //setupStrictMode()
         super.onCreate()
         initConfig()
+        initSkin()
         initPlugin()
         registerActivityLifecycle()
         initOptimize()
+    }
+
+    private fun initSkin() {
+        val studyProvider = RouterLoader.load(IStudyRouter::class.java)
+        studyProvider?.initSkin(this)
     }
 
     private fun initOptimize() {

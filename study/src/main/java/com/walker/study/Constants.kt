@@ -17,3 +17,5 @@
 package com.walker.study
 
 const val PLUGIN_FILE_NAME = "pluginTest-debug.apk"
+const val SKIN_BLUE__FILE_NAME = "skin-blue.apk"
+const val SKIN_BLACK__FILE_NAME = "skin-black.apk"
