@@ -8,8 +8,10 @@ import com.walker.common.view.titleview.TitleView
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
+import com.walker.ui.group.photoview.MultiTouchFragment
 import com.walker.ui.group.photoview.PhotoViewFragment
-import com.walker.ui.group.recyclerview.StarFragment
+import com.walker.ui.group.recyclerview.ceiling.StarFragment
+import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -23,6 +25,8 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             GoodFishFragment.KEY_ID -> GoodFishFragment.instance()
             StarFragment.KEY_ID -> StarFragment.instance()
             PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance()
+            MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance()
+            SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance()
             else -> null
         }
         return fragment

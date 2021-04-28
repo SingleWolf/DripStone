@@ -1,4 +1,4 @@
-package com.walker.ui.group.recyclerview
+package com.walker.ui.group.recyclerview.ceiling
 
 import android.view.LayoutInflater
 import android.view.View
