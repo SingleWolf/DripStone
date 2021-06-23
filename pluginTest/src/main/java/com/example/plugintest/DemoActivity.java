@@ -1,5 +1,6 @@
 package com.example.plugintest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,12 +16,22 @@ public class DemoActivity extends BaseActivity {
         setLoadPath();
         super.onCreate(savedInstanceState);
         DemoTest.onTest();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.activity_demo, null);
-        setContentView(view);
+        setContentView(R.layout.activity_demo);
+        findViewById(R.id.mapClick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMapClick();
+            }
+        });
     }
 
     private void setLoadPath() {
         String loadPath = getIntent().getStringExtra("load_path");
         LoadUtil.setLoadPath(loadPath);
+    }
+
+    public void onMapClick(){
+        Intent intent=new Intent(this,BasicMapActivity.class);
+        startActivity(intent);
     }
 }

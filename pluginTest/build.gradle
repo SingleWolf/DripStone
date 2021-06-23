@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 
 def androidID = rootProject.ext.androidID
 android {
+    signingConfigs {
+        keySign {
+            storeFile file('/Users/walker/开发/Android/DripStone/keystore/drip.jks')
+            storePassword 'drip1234'
+            keyAlias 'drip'
+            keyPassword 'drip1234'
+        }
+    }
     compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
         minSdkVersion androidID.minSdkVersion
@@ -11,6 +19,12 @@ android {
         // 组件化 和 集成化
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
+
+        ndk {
+            // 设置支持的SO库架构，第三方给的so库哪几种架构，就配置这几种架构
+            abiFilters 'armeabi-v7a'
+        }
+        signingConfig signingConfigs.keySign
     }
 
     buildTypes {

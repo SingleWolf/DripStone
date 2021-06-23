@@ -128,9 +128,9 @@ public class HookPluginFragment extends BaseFragment {
 
     private void startPlugin() {
         try {
-            Class<?> clazz = Class.forName("com.example.plugintest.DemoTest");
-            Method print = clazz.getMethod("onTest");
-            print.invoke(null);
+//            Class<?> clazz = Class.forName("com.example.plugintest.DemoTest");
+//            Method print = clazz.getMethod("onTest");
+//            print.invoke(null);
 
             Intent intent = new Intent();
             intent.setComponent(new ComponentName("com.example.plugintest",
@@ -138,6 +138,17 @@ public class HookPluginFragment extends BaseFragment {
             intent.putExtra(HookUtil.KEY_HOOK_TAG, true);
             intent.putExtra("load_path", BaseApplication.pluginLoadPath);
             getHoldContext().startActivity(intent);
+
+//            HookApplication.init(BaseApplication.pluginLoadPath,BaseApplication.application);
+//            Intent intent = new Intent();
+//            intent.setComponent(new ComponentName("com.thundersoft.cloundlink",
+//                    "com.thundersoft.cloundlink.SplashActivity"));
+//            intent.setComponent(new ComponentName("com.thundersoft.cloundlink",
+//                    "com.thundersoft.plugin.PluginTestActivity"));
+//            intent.putExtra(HookUtil.KEY_HOOK_TAG, true);
+//            intent.putExtra("load_path", BaseApplication.pluginLoadPath);
+//            getHoldContext().startActivity(intent);
+
             LogHelper.get().i("PluginTest", "###  startPlugin ###");
         } catch (Exception e) {
             LogHelper.get().e("PluginTest", e.getMessage());

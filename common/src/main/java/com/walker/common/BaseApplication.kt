@@ -1,6 +1,7 @@
 package com.walker.common
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDexApplication
 
@@ -8,6 +9,9 @@ open class BaseApplication : MultiDexApplication() {
     companion object {
         @JvmField
         open var context: Context? = null
+
+        @JvmField
+        open var application: Application? = null
 
         var activityCount: Int = 0
 

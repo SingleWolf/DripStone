@@ -19,10 +19,8 @@ package com.walker.study.skin
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.walker.common.BaseApplication
 import com.walker.core.log.LogHelper
 import com.walker.core.util.ToastUtils
-import com.walker.study.PLUGIN_FILE_NAME
 import com.walker.study.SKIN_BLACK__FILE_NAME
 import com.walker.study.SKIN_BLUE__FILE_NAME
 import kotlinx.coroutines.coroutineScope

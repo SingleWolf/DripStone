@@ -8,6 +8,18 @@
     <asm skipDebug="true" skipFrames="true" skipCode="true" expandFrames="true" />
     <groovy codeStyle="GROOVIFIER_0_2_0" />
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="pluginTest/src/main/res/drawable/btn_blue_radius.xml" value="0.1" />
+        <entry key="pluginTest/src/main/res/drawable/btn_map_poi.xml" value="0.1" />
+        <entry key="pluginTest/src/main/res/layout/activity_basic_map.xml" value="0.11676798378926039" />
+        <entry key="pluginTest/src/main/res/layout/activity_demo.xml" value="0.1099290780141844" />
+        <entry key="webview/src/main/res/layout/fragment_common_webview.xml" value="0.22826086956521738" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="com.alibaba.android.arouter.facade.annotation.Route" />

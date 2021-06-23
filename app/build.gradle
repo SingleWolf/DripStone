@@ -6,6 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 def androidID = rootProject.ext.androidID
 
 android {
+    signingConfigs {
+        keySign {
+            storeFile file('/Users/walker/开发/Android/DripStone/keystore/drip.jks')
+            storePassword 'drip1234'
+            keyAlias 'drip'
+            keyPassword 'drip1234'
+        }
+    }
     compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
         multiDexEnabled true
@@ -29,6 +37,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a"
         }
+        signingConfig signingConfigs.keySign
     }
 
     buildTypes {
