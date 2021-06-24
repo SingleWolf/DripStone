@@ -2,6 +2,7 @@ package com.walker.common.media.photo.pictureselector;
 
 import android.app.Activity;
 import android.os.Build;
+import android.text.TextUtils;
 
 import androidx.fragment.app.Fragment;
 
@@ -131,15 +132,20 @@ public class PictureSelectorMrg implements IPhotoGetter {
                 continue;
             }
             PhotoData d = new PhotoData();
+            String filePath;
             if (28 < Build.VERSION.SDK_INT) {
-                d.setFilePath(data.getAndroidQToPath());
+                filePath=data.getAndroidQToPath();
+                if(TextUtils.isEmpty(filePath)){
+                    filePath=data.getRealPath();
+                }
             } else {
                 if (data.isCut()) {
-                    d.setFilePath(data.getCutPath());
+                    filePath=data.getCutPath();
                 } else {
-                    d.setFilePath(data.getPath());
+                    filePath=data.getPath();
                 }
             }
+            d.setFilePath(filePath);
             dataList.add(d);
         }
         callback.onSuccess(dataList);
