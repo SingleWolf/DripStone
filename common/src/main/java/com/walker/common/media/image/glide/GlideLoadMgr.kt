@@ -52,7 +52,7 @@ class GlideLoadMgr : IImageLoad {
     }
 
     fun loadImage(view: ImageView, obj: Any, config: ImageConfig?) {
-        val glideRequest: RequestBuilder<Drawable> = Glide.with(view.context).asDrawable().load(obj)
+        val glideRequest: RequestBuilder<Drawable> = Glide.with(view).asDrawable().load(obj)
         config?.run {
             if (placeholder != 0) {
                 glideRequest.placeholder(placeholder)
