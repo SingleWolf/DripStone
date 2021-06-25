@@ -4,10 +4,10 @@ data class Summary(
     var key: String = "",
     var title: String = "",
     var uri: String = "",
-    var desc: String = ""
+    var desc: String = "",
+    var imageUrl: String = ""
 )
 
 data class SummaryListBean(
-    val summaryList: List<Summary>,
-    val allNum: Int
+    val bannerList: List<Summary>?
 )

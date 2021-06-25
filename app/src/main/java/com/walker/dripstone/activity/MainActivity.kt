@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             //Set bottom menu selected item text in toolbar
             val actionBar = supportActionBar
             actionBar?.title = item.title
-            if (item.itemId == R.id.menu_account) {
+            if (item.itemId == R.id.menu_account || item.itemId == R.id.menu_collect) {
                 actionBar?.hide()
                 viewDataBinding.viewSpace.visibility = View.GONE
             } else {

@@ -1,17 +1,24 @@
 package com.walker.collect.summary
 
-import androidx.lifecycle.viewModelScope
-import com.walker.core.base.mvvm.customview.BaseCustomViewModel
-import com.walker.core.base.mvvm.viewmodel.MvvmBaseViewModel
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 
-class SummaryViewModel : MvvmBaseViewModel<SummaryModel, ArrayList<BaseCustomViewModel>> {
-    constructor() : super() {
-        model = SummaryModel(viewModelScope)
-        model.register(this)
-        model.getCachedDataAndLoad()
+class SummaryViewModel : ViewModel(), LifecycleObserver {
+    var dataList: MutableLiveData<SummaryListBean> = MutableLiveData()
+    val summaryModel by lazy { SummaryModel() }
+
+    fun getData() {
+        viewModelScope.launch {
+            val data = summaryModel.load()
+            data?.also {
+                dataList.value = data!!
+                dataList.postValue(dataList.value)
+            }
+        }
     }
 
-    fun tryToLoadNextPage() {
-        model.loadNexPage()
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    private fun onResume() {
+        dataList.postValue(dataList.value)
     }
 }

@@ -13,6 +13,14 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.4609053497942387" />
+        <entry key="collect/src/main/res/layout/activity_collect_cook_list.xml" value="0.18931159420289856" />
+        <entry key="collect/src/main/res/layout/activity_collect_show.xml" value="0.18931159420289856" />
+        <entry key="collect/src/main/res/layout/fragment_collect_news.xml" value="0.18931159420289856" />
+        <entry key="collect/src/main/res/layout/fragment_collect_news_summary.xml" value="0.18931159420289856" />
+        <entry key="collect/src/main/res/layout/fragment_collect_summary.xml" value="0.18931159420289856" />
+        <entry key="collect/src/main/res/layout/item_collect_banner.xml" value="0.18931159420289856" />
+        <entry key="common/src/main/res/layout/common_layout_banner_default.xml" value="0.18931159420289856" />
+        <entry key="common/src/main/res/layout/common_title_view.xml" value="0.18931159420289856" />
         <entry key="pluginTest/src/main/res/drawable/btn_blue_radius.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/drawable/btn_map_poi.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/layout/activity_basic_map.xml" value="0.11676798378926039" />

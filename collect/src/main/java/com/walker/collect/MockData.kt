@@ -11,7 +11,7 @@ class MockSummaryData private constructor() {
     var dataPool: List<Summary>
 
     init {
-        dataPool = this.generateSummary()
+        dataPool = this.generateBanner()
     }
 
     private object Holder {
@@ -26,7 +26,7 @@ class MockSummaryData private constructor() {
         }
     }
 
-    fun generateSummary(): List<Summary> {
+    fun generateBanner(): List<Summary> {
         var index = ORIGINAL_KEY
         var summaryList = mutableListOf<Summary>()
         summaryList.run {
@@ -35,6 +35,8 @@ class MockSummaryData private constructor() {
                 title = "新闻头条"
                 uri = ""
                 desc = ""
+                imageUrl =
+                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171122%2Fedbb7db8b84d4d96b29dea3055e1e0bb.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622187613&t=a946085df1557af8a66a678b8cf3bb0e"
                 add(this)
             }
             Summary().run {
@@ -42,6 +44,8 @@ class MockSummaryData private constructor() {
                 title = "菜谱大全"
                 uri = ""
                 desc = ""
+                imageUrl =
+                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnews.eastday.com%2Fimages%2Fthumbnailimg%2Fmonth_1610%2F201610010403098090.jpg&refer=http%3A%2F%2Fnews.eastday.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622188163&t=f009e64593b3aee9fcbc8ec40bf87709"
                 add(this)
             }
             Summary().run {
@@ -49,6 +53,8 @@ class MockSummaryData private constructor() {
                 title = "开心一刻"
                 uri = ""
                 desc = ""
+                imageUrl =
+                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage6.pinlue.com%2Fwechat%2Fimg_png%2Fhqbfnpsh6MptziaFcLdaKvWGlibKwtXCyZwcIGzqDibqj1bViav0cHxA8FOicyQna44SSmIK3cavcX5sJppQugXNsTA%2F0.png&refer=http%3A%2F%2Fimage6.pinlue.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622187987&t=9daef2b5017c5b8b9fad19b364b81188"
                 add(this)
             }
         }
@@ -58,9 +64,9 @@ class MockSummaryData private constructor() {
 
     fun listSummary(): String {
         var summaryListBean: SummaryListBean
-        var summaryList = mutableListOf<Summary>()
-        summaryList.addAll(dataPool)
-        summaryListBean = SummaryListBean(summaryList, dataPool.size)
+        var bannerList = mutableListOf<Summary>()
+        bannerList.addAll(dataPool)
+        summaryListBean = SummaryListBean(bannerList)
         return GsonUtils.toJson(summaryListBean)
     }
 }
