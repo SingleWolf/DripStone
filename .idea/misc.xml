@@ -21,10 +21,20 @@
         <entry key="collect/src/main/res/layout/item_collect_banner.xml" value="0.18931159420289856" />
         <entry key="common/src/main/res/layout/common_layout_banner_default.xml" value="0.18931159420289856" />
         <entry key="common/src/main/res/layout/common_title_view.xml" value="0.18931159420289856" />
+        <entry key="demo/src/main/res/layout/fragment_demo_app_a2b.xml" value="0.18931159420289856" />
+        <entry key="optimize/src/main/res/layout/fragment_optimize_anr.xml" value="0.18931159420289856" />
+        <entry key="optimize/src/main/res/layout/fragment_optimize_caton.xml" value="0.18931159420289856" />
+        <entry key="optimize/src/main/res/layout/fragment_optimize_oom.xml" value="0.18931159420289856" />
         <entry key="pluginTest/src/main/res/drawable/btn_blue_radius.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/drawable/btn_map_poi.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/layout/activity_basic_map.xml" value="0.11676798378926039" />
         <entry key="pluginTest/src/main/res/layout/activity_demo.xml" value="0.1099290780141844" />
+        <entry key="study/src/main/res/layout/activity_study_main.xml" value="0.18931159420289856" />
+        <entry key="study/src/main/res/layout/fragment_study_hook_plugin.xml" value="0.18931159420289856" />
+        <entry key="study/src/main/res/layout/fragment_study_inject.xml" value="0.18931159420289856" />
+        <entry key="study/src/main/res/layout/fragment_study_my_retrofit.xml" value="0.18931159420289856" />
+        <entry key="study/src/main/res/layout/fragment_study_skin.xml" value="0.18931159420289856" />
+        <entry key="study/src/main/res/layout/fragment_study_thread.xml" value="0.18931159420289856" />
         <entry key="webview/src/main/res/layout/fragment_common_webview.xml" value="0.22826086956521738" />
       </map>
     </option>

@@ -61,7 +61,10 @@ public class SkinAttribute {
                     // 正常以 @ 开头
                     resId = Integer.parseInt(attributeValue.substring(1));
                 }
-
+                //资源id异常，规避
+                if(resId<=0){
+                    continue;
+                }
                 SkinPair skinPair = new SkinPair(attributeName, resId);
                 mSkinPars.add(skinPair);
             }

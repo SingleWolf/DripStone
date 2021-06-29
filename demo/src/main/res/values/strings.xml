@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">demo</string>
+    <string name="app_a2b_json_hint">{
+  "userName": 555033694,
+  "isDebug": true
+  }</string>
 </resources>

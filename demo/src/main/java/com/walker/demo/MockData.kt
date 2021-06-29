@@ -2,6 +2,7 @@ package com.walker.demo
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.summary.Summary
@@ -41,7 +42,15 @@ class MockSummaryData private constructor() {
 
         Summary().run {
             key = VoiceChangeFragment.KEY_ID
-            title = "通过fmod实现变声"
+            title = "fmod实现变声"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = AppA2bFragment.KEY_ID
+            title = "跨应用跳转"
             uri = ""
             desc = ""
             summaryList.add(this)

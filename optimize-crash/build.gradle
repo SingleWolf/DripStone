@@ -6,6 +6,7 @@ def androidID = rootProject.ext.androidID
 android {
     compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
+        applicationId 'com.walker.crash'
         minSdkVersion androidID.minSdkVersion
         targetSdkVersion androidID.targetSdkVersion
         versionCode androidID.versionCode
