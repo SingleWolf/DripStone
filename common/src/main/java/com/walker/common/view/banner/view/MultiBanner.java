@@ -156,6 +156,7 @@ public class MultiBanner<T> extends FrameLayout implements LifecycleObserver {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.common_layout_banner_default, this);
         mLlIndicator = view.findViewById(R.id.layoutIndicator);
         mViewPager = view.findViewById(R.id.vpBanner);
+        mViewPager.setClipChildren(false);
     }
 
     /**

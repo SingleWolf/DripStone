@@ -21,6 +21,13 @@ class MockSummaryData private constructor() {
     companion object {
         const val ORIGINAL_KEY = 100
 
+        const val IMAGE_URL_NEWS =
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.vjshi.com%2F2016-01-27%2F2015-6dc681e22794b6df133e5514323313ed%2F00002.jpg%3Fx-oss-process%3Dstyle%2Fwatermark&refer=http%3A%2F%2Fpic.vjshi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627540680&t=6fe14f9ee4c38233164f071a154da3ca"
+        const val IMAGE_URL_FOOD =
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-09-19%2F5ba1c5466ecf4.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627541006&t=eac76db71fd4aecef8848b337a48c198"
+        const val IMAGE_URL_SMILE =
+            "https://img1.baidu.com/it/u=1756422723,3273404372&fm=26&fmt=auto&gp=0.jpg"
+
         fun get(): MockSummaryData {
             return Holder.instance
         }
@@ -35,8 +42,7 @@ class MockSummaryData private constructor() {
                 title = "新闻头条"
                 uri = ""
                 desc = ""
-                imageUrl =
-                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171122%2Fedbb7db8b84d4d96b29dea3055e1e0bb.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622187613&t=a946085df1557af8a66a678b8cf3bb0e"
+                imageUrl = IMAGE_URL_NEWS
                 add(this)
             }
             Summary().run {
@@ -44,8 +50,7 @@ class MockSummaryData private constructor() {
                 title = "菜谱大全"
                 uri = ""
                 desc = ""
-                imageUrl =
-                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnews.eastday.com%2Fimages%2Fthumbnailimg%2Fmonth_1610%2F201610010403098090.jpg&refer=http%3A%2F%2Fnews.eastday.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622188163&t=f009e64593b3aee9fcbc8ec40bf87709"
+                imageUrl = IMAGE_URL_FOOD
                 add(this)
             }
             Summary().run {
@@ -53,8 +58,7 @@ class MockSummaryData private constructor() {
                 title = "开心一刻"
                 uri = ""
                 desc = ""
-                imageUrl =
-                    "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage6.pinlue.com%2Fwechat%2Fimg_png%2Fhqbfnpsh6MptziaFcLdaKvWGlibKwtXCyZwcIGzqDibqj1bViav0cHxA8FOicyQna44SSmIK3cavcX5sJppQugXNsTA%2F0.png&refer=http%3A%2F%2Fimage6.pinlue.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622187987&t=9daef2b5017c5b8b9fad19b364b81188"
+                imageUrl = IMAGE_URL_SMILE
                 add(this)
             }
         }

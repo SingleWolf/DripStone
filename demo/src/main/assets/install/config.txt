@@ -1,0 +1,6 @@
+{
+  "enable": true,
+  "versionCode":1,
+  "mustVersion":1,
+  "installPath": "install/optimize-crash-debug.apk"
+}

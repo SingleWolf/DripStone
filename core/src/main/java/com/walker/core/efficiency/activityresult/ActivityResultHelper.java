@@ -3,7 +3,7 @@ package com.walker.core.efficiency.activityresult;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 /**
@@ -16,16 +16,16 @@ public class ActivityResultHelper {
     private Context mContext;
     private RouterFragment mRouterFragment;
 
-    public static ActivityResultHelper init(AppCompatActivity activity) {
+    public static ActivityResultHelper init(FragmentActivity activity) {
         return new ActivityResultHelper(activity);
     }
 
-    private ActivityResultHelper(AppCompatActivity activity) {
+    private ActivityResultHelper(FragmentActivity activity) {
         mContext = activity;
         mRouterFragment = getRouterFragment(activity);
     }
 
-    private RouterFragment getRouterFragment(AppCompatActivity activity) {
+    private RouterFragment getRouterFragment(FragmentActivity activity) {
         RouterFragment routerFragment = findRouterFragment(activity);
         if (routerFragment == null) {
             routerFragment = RouterFragment.newInstance();
@@ -39,7 +39,7 @@ public class ActivityResultHelper {
         return routerFragment;
     }
 
-    private RouterFragment findRouterFragment(AppCompatActivity activity) {
+    private RouterFragment findRouterFragment(FragmentActivity activity) {
         return (RouterFragment) activity.getSupportFragmentManager().findFragmentByTag(TAG);
     }
 

@@ -24,6 +24,7 @@ import com.walker.common.view.banner.holder.HolderCreator
 import com.walker.common.view.banner.holder.ViewHolder
 import com.walker.common.view.banner.view.MultiBanner
 import com.walker.common.view.banner.view.MultiBanner.OnPageClickListener
+import com.walker.common.view.transformer.ScaleInTransformer
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.core.util.DisplayUtils
 
@@ -62,7 +63,7 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
 
     private fun initBanner() {
         //设置布局（也可使用默认布局）
-        //banner.setViewPagerLayout(R.layout.multi_layout_view_pager_home,R.id.vp_main,R.id.ll_main_dot);
+        //banner.setViewPagerLayout(R.layout.layout_collect_banner_summary,R.id.vpBanner,R.id.layoutIndicator);
         //  设置指示器位置
         banner.setIndicatorGravity(MultiBanner.CENTER)
         //  是否显示指示器
