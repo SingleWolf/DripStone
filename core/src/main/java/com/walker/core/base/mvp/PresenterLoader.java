@@ -1,16 +1,19 @@
 package com.walker.core.base.mvp;
 
 import android.content.Context;
+import android.content.Loader;
 
-import androidx.loader.content.Loader;
+import com.walker.core.log.LogHelper;
+
 
 /**
- * @date on 2018/7/18 0018 上午 10:34
  * @author Walker
+ * @date on 2018/7/18 0018 上午 10:34
  * @email feitianwumu@163.com
- * @desc  利用系统提供的loader以延长presenter的生命周期
+ * @desc 利用系统提供的loader以延长presenter的生命周期
  */
 public class PresenterLoader<P extends IBasePresenter> extends Loader<P> {
+    private static final String TAG = "PresenterLoader";
     private final PresenterFactory<P> mFactory;
     private P mPresenter;
 
@@ -25,7 +28,8 @@ public class PresenterLoader<P extends IBasePresenter> extends Loader<P> {
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        if(mPresenter != null){
+        LogHelper.get().d(TAG, "onStartLoading()");
+        if (mPresenter != null) {
             deliverResult(mPresenter);//会将Presenter传递给Activity/Fragment。
             return;
         }
@@ -38,6 +42,7 @@ public class PresenterLoader<P extends IBasePresenter> extends Loader<P> {
     @Override
     protected void onForceLoad() {
         super.onForceLoad();
+        LogHelper.get().d(TAG, "onForceLoad()");
         mPresenter = mFactory.create();//创建presenter
         deliverResult(mPresenter);
     }
@@ -48,7 +53,10 @@ public class PresenterLoader<P extends IBasePresenter> extends Loader<P> {
     @Override
     protected void onReset() {
         super.onReset();
-        mPresenter.execRelease();
-        mPresenter = null;
+        LogHelper.get().d(TAG, "onReset()");
+        if (mPresenter != null) {
+            mPresenter.execRelease();
+            mPresenter = null;
+        }
     }
 }

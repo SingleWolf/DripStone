@@ -2,4 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.walker.usercenter">
 
+    <application>
+        <activity android:name=".login.LoginActivity" />
+    </application>
 </manifest>

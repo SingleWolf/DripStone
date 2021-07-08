@@ -14,7 +14,10 @@ import com.walker.common.media.photo.PhotoCallback
 import com.walker.common.media.photo.PhotoConfig
 import com.walker.common.media.photo.PhotoData
 import com.walker.common.media.photo.PhotoGetterHelper
+import com.walker.common.router.IStudyRouter
+import com.walker.common.router.IUserCenterRouter
 import com.walker.core.log.LogHelper
+import com.walker.core.router.RouterLoader
 import com.walker.core.store.sp.SPHelper
 import com.walker.core.util.ImageUtils
 import com.walker.core.util.ToastUtils
@@ -88,9 +91,11 @@ class AccountFragment : Fragment() {
         }
 
         mBinding.ivAccount.setOnClickListener {
-            accountFilePath?.let {
-                ImagePreviewActivity.start(requireContext(), it)
-            }
+//            accountFilePath?.let {
+//                ImagePreviewActivity.start(requireContext(), it)
+//            }
+            val userCenterRouter = RouterLoader.load(IUserCenterRouter::class.java)
+            userCenterRouter?.onLogin(requireActivity())
         }
         mBinding.ivAccount.setOnLongClickListener {
             var config = PhotoConfig()
@@ -126,7 +131,7 @@ class AccountFragment : Fragment() {
     }
 
     fun showImage(imageView: ImageView, isCircle: Boolean, filePath: String) {
-        LogHelper.get().i("showImage","filePath=$filePath")
+        LogHelper.get().i("showImage", "filePath=$filePath")
         val loadConfig = ImageConfig()
         loadConfig.isCircle = isCircle
         ImageLoadHelper.loadFile(imageView, filePath, loadConfig)
