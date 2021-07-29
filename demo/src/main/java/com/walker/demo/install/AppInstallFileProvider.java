@@ -1,4 +1,4 @@
-package com.walker.demo.a2b;
+package com.walker.demo.install;
 
 import androidx.core.content.FileProvider;
 

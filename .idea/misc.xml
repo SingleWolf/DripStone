@@ -22,6 +22,8 @@
         <entry key="collect/src/main/res/layout/layout_collect_banner_summary.xml" value="0.1" />
         <entry key="common/src/main/res/layout/common_layout_banner_default.xml" value="0.18931159420289856" />
         <entry key="common/src/main/res/layout/common_title_view.xml" value="0.18931159420289856" />
+        <entry key="common/src/main/res/layout/common_water_fall_view.xml" value="0.21875" />
+        <entry key="demo/src/main/res/layout/activity_file_explorer.xml" value="0.22083333333333333" />
         <entry key="demo/src/main/res/layout/fragment_demo_app_a2b.xml" value="0.18931159420289856" />
         <entry key="demo/src/main/res/layout/fragment_demo_app_install.xml" value="0.23489583333333333" />
         <entry key="demo/src/main/res/xml/install_file_paths.xml" value="0.23489583333333333" />

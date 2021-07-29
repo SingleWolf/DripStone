@@ -6,8 +6,10 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.transition.Transition
+import com.walker.common.R
 import com.walker.common.media.image.IImageLoad
 import com.walker.common.media.image.ImageConfig
 import com.walker.common.media.image.OnImageLoadListener
@@ -24,6 +26,14 @@ class GlideLoadMgr : IImageLoad {
 
     companion object {
         val urlMap = ConcurrentHashMap<ImageView, String>()
+    }
+
+    private val defaultImageConfig: ImageConfig by lazy {
+        ImageConfig()?.apply {
+            placeholder = R.drawable.empty
+            errorImage = R.drawable.error
+            isCircle = false
+        }
     }
 
     override fun loadUrl(view: ImageView, url: String, config: ImageConfig?) {
@@ -51,9 +61,10 @@ class GlideLoadMgr : IImageLoad {
         loadImage(view, resId, config)
     }
 
-    fun loadImage(view: ImageView, obj: Any, config: ImageConfig?) {
+    fun loadImage(view: ImageView, obj: Any, imageConfig: ImageConfig?) {
         val glideRequest: RequestBuilder<Drawable> = Glide.with(view).asDrawable().load(obj)
-        config?.run {
+        val config= imageConfig ?: defaultImageConfig
+        config.apply {
             if (placeholder != 0) {
                 glideRequest.placeholder(placeholder)
             }
@@ -64,7 +75,8 @@ class GlideLoadMgr : IImageLoad {
                 glideRequest.transform(CircleTransformation())
             }
         }
-        glideRequest.into(GlideImageViewTarget(view))
+        glideRequest.transition(DrawableTransitionOptions.withCrossFade())
+            .into(GlideImageViewTarget(view))
     }
 
     private inner class GlideImageViewTarget internal constructor(view: ImageView) :
@@ -91,7 +103,10 @@ class GlideLoadMgr : IImageLoad {
             super.onLoadFailed(errorDrawable)
         }
 
-        override fun onResourceReady(@NonNull resource: Drawable, @Nullable transition: Transition<in Drawable>?) {
+        override fun onResourceReady(
+            @NonNull resource: Drawable,
+            @Nullable transition: Transition<in Drawable>?
+        ) {
             val url = getUrl()
             url?.let {
                 val onProgressListener = ProgressManager.getProgressListener(it)

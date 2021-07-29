@@ -1,16 +1,21 @@
 package com.walker.collect.cook.cooklist;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.ObservableList;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.SimpleItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.scwang.smartrefresh.header.WaterDropHeader;
@@ -22,8 +27,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.walker.collect.R;
 import com.walker.collect.databinding.ActivityCollectCookListBinding;
 import com.walker.core.base.mvvm.BaseMvvmActivity;
+import com.walker.core.log.LogHelper;
+import com.walker.core.util.DisplayUtils;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import java.lang.reflect.Method;
 
 /**
  * @Author Walker
@@ -34,6 +41,10 @@ public class CookListActivity extends BaseMvvmActivity<ActivityCollectCookListBi
     public static final String CHANNEL_ID = "key_101_cook";
 
     protected CookListRecyclerViewAdapter mAdapter;
+    //StaggeredGridLayoutManager.checkForGaps()
+    private Method mCheckForGapsMethod;
+    //RecyclerView.markItemDecorInsetsDirty()
+    private Method mMarkItemDecorInsetsDirtyMethod;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, CookListActivity.class);
@@ -57,9 +68,34 @@ public class CookListActivity extends BaseMvvmActivity<ActivityCollectCookListBi
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         viewDataBinding.listview.setLayoutManager(layoutManager);
         viewDataBinding.listview.setHasFixedSize(true);
-        ((SimpleItemAnimator) viewDataBinding.listview.getItemAnimator()).setSupportsChangeAnimations(false);
+        viewDataBinding.listview.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+                    switch (((StaggeredGridLayoutManager.LayoutParams) layoutParams).getSpanIndex()) {
+                        case 0:
+                            outRect.left = (int) DisplayUtils.dp2px(CookListActivity.this, 15f);
+                            outRect.right = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            outRect.bottom = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            outRect.top = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            break;
+                        case 1:
+                            outRect.left = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            outRect.right = (int) DisplayUtils.dp2px(CookListActivity.this, 15f);
+                            outRect.bottom = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            outRect.top = (int) DisplayUtils.dp2px(CookListActivity.this, 5f);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
+        hookAndHandle();
 
-        mAdapter=new CookListRecyclerViewAdapter();
+        mAdapter = new CookListRecyclerViewAdapter();
         viewDataBinding.listview.setAdapter(mAdapter);
 
         viewDataBinding.refreshLayout.setRefreshHeader(new WaterDropHeader(this));
@@ -136,5 +172,40 @@ public class CookListActivity extends BaseMvvmActivity<ActivityCollectCookListBi
     protected void loadEnd() {
         viewDataBinding.refreshLayout.finishLoadMore();
         viewDataBinding.refreshLayout.finishRefresh();
+    }
+
+    /**
+     * 高性能地解决顶部空白、重排序问题、间距错乱问题
+     * <p>
+     * 1）反射StaggeredGridLayoutManager的checkForGaps()。在滑动时，仅在有需要的情况下才会重新布局，解决顶部空白、重排序问题
+     * 2）反射RecyclerView的markItemDecorInsetsDirty()。如果发生了重排序，刷新ItemDecoration，解决间距错乱问题
+     */
+    private void hookAndHandle() {
+        //禁用动画
+        viewDataBinding.listview.setItemAnimator(null);
+        try {
+            mCheckForGapsMethod = StaggeredGridLayoutManager.class.getDeclaredMethod("checkForGaps");
+            mCheckForGapsMethod.setAccessible(true);
+            mMarkItemDecorInsetsDirtyMethod = RecyclerView.class.getDeclaredMethod("markItemDecorInsetsDirty");
+            mMarkItemDecorInsetsDirtyMethod.setAccessible(true);
+
+            viewDataBinding.listview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    try {
+                        boolean result = (boolean) mCheckForGapsMethod.invoke(recyclerView.getLayoutManager());
+                        if (result) {
+                            mMarkItemDecorInsetsDirtyMethod.invoke(recyclerView);
+                            LogHelper.get().i("CookListActivity", "发生了重排序，刷新ItemDecoration");
+                        }
+                    } catch (Exception e) {
+                        LogHelper.get().e("CookListActivity", e.getMessage(), true);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            LogHelper.get().e("CookListActivity", e.getMessage(), true);
+        }
     }
 }

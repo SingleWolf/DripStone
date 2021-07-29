@@ -14,7 +14,7 @@ public class LogMonitor implements Printer {
     private boolean mPrintingStarted = false;
     private long mStartTimestamp;
     // 卡顿阈值
-    private long mBlockThresholdMillis = 3000;
+    private long mBlockThresholdMillis = 5000;
     //采样频率
     private long mSampleInterval = 1000;
 

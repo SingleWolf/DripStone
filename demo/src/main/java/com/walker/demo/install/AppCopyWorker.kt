@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.walker.demo.a2b
+package com.walker.demo.install
 
 import android.content.Context
 import androidx.work.CoroutineWorker

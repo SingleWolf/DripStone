@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -102,7 +103,10 @@ class AppA2bFragment : Fragment() {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.component = componentName;
+        val testUri =
+            "icbcAnyOATest://icbc.anyOA.com/url/openserv%3A%2F%2F%2Fmobile%2F%23%2Fhome%3FstartTime%3D1623224820000%26endTime%3D1623225120000%26referenceStartTime%3D1622620020000%26referenceEndTime%3D1622620320000/PreviousPage/BG"
 
+        intent.data = Uri.parse(testUri)
         val dataKey = dataBinding.etDataKey.text.toString().trim()
         val dataValue = dataBinding.etDataValue.text.toString().trim()
         if (!TextUtils.isEmpty(dataKey)) {

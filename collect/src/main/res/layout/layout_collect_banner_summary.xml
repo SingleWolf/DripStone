@@ -6,7 +6,7 @@
     <FrameLayout
         android:id="@+id/layoutContent"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:clipChildren="false"
         android:layerType="software">

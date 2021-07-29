@@ -11,8 +11,21 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
+        <activity android:name=".install.FileExplorerActivity" />
+        <service
+            android:name=".install.AutoInstallAccessibilityService"
+            android:label="智能安装"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/auto_install_accessibility_service_config" />
+        </service>
         <provider
-            android:name=".a2b.AppInstallFileProvider"
+            android:name=".install.AppInstallFileProvider"
             android:authorities="${applicationId}.install_file_provider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
 import com.walker.demo.a2b.AppA2bFragment
-import com.walker.demo.a2b.AppInstallFragment
+import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.paging3.RepoFragment
 

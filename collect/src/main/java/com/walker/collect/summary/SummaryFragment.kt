@@ -19,6 +19,7 @@ import com.walker.collect.R
 import com.walker.collect.cook.cooklist.CookListActivity
 import com.walker.collect.news.headline.NewsSummaryFragment
 import com.walker.common.activity.ShowActivity
+import com.walker.common.media.image.ImageConfig
 import com.walker.common.media.image.ImageLoadHelper
 import com.walker.common.view.banner.holder.HolderCreator
 import com.walker.common.view.banner.holder.ViewHolder
@@ -41,9 +42,7 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
         refreshLayout = baseView.findViewById(R.id.refreshLayout)
         initBanner()
         initRefresh()
-        if (viewModel != null) {
-            lifecycle.addObserver(viewModel)
-        }
+        lifecycle.addObserver(viewModel)
         viewModel.dataList.observe(this, this)
         viewModel.getData()
     }
@@ -63,7 +62,11 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
 
     private fun initBanner() {
         //设置布局（也可使用默认布局）
-        //banner.setViewPagerLayout(R.layout.layout_collect_banner_summary,R.id.vpBanner,R.id.layoutIndicator);
+        banner.setViewPagerLayout(
+            R.layout.layout_collect_banner_summary,
+            R.id.vpBanner,
+            R.id.layoutIndicator
+        );
         //  设置指示器位置
         banner.setIndicatorGravity(MultiBanner.CENTER)
         //  是否显示指示器
@@ -72,9 +75,9 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
         //  设置图片切换时间间隔
         banner.setInterval(5000)
         //  设置是否无限循环
-        banner.setCanLoop(true)
+        banner.isCanLoop = true
         //  设置是否自动轮播
-        banner.setAutoPlay(true)
+        banner.isAutoPlay = true
         //设置Page间间距
         banner.setPageMargin(DisplayUtils.dp2px(requireContext(), 10f).toInt())
         //设置缓存的页面数量
