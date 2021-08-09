@@ -52,4 +52,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     //悬浮框
     api 'com.github.princekin-f:EasyFloat:2.0.1'
+    //permissionx
+    api 'com.guolindev.permissionx:permissionx:1.5.0'
 }

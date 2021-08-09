@@ -1,5 +1,6 @@
 package com.walker.optimize.group.oom
 
+import android.Manifest
 import android.os.Bundle
 import android.os.Process
 import android.text.method.ScrollingMovementMethod
@@ -15,6 +16,9 @@ import com.lzf.easyfloat.interfaces.OnInvokeView
 import com.lzf.easyfloat.interfaces.OnTouchRangeListener
 import com.lzf.easyfloat.utils.DragUtils
 import com.lzf.easyfloat.widget.switch.BaseSwitchView
+import com.permissionx.guolindev.PermissionX
+import com.permissionx.guolindev.callback.ExplainReasonCallback
+import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.BaseApplication
 import com.walker.core.util.DateTimeUtils
 import com.walker.optimize.R
@@ -92,14 +96,32 @@ class OOMFragment : Fragment() {
     }
 
     fun onGetStatisticsInfoTapped() {
-        startFloatWindow()
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.SYSTEM_ALERT_WINDOW
+            )
+            .onExplainRequestReason(ExplainReasonCallback { scope, deniedList ->
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    "该功能需要以下权限",
+                    "允许",
+                    "拒绝"
+                )
+            })
+            .request(
+                RequestCallback { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        startFloatWindow()
+                    }
+                }
+            )
 
         val info = OOMHelper.get().listStatisticsInfo(Process.myPid())
         tvShowInfo?.append("${DateTimeUtils.getNormalDate()}\t\t\t${info}")
     }
 
     private fun onMockJavaObjLeakTapped() {
-        OOMTest.get().testLeakObject(activity!!)
+        OOMTest.get().testLeakObject(requireActivity())
     }
 
     fun onMockIncreaseJavaHeapTapped() {
@@ -123,7 +145,7 @@ class OOMFragment : Fragment() {
             return
         }
         try {
-            EasyFloat.with(context!!.applicationContext)
+            EasyFloat.with(requireContext().applicationContext)
                 .setShowPattern(ShowPattern.ALL_TIME)
                 .setSidePattern(SidePattern.RESULT_SIDE)
                 //.setImmersionStatusBar(true)
@@ -145,7 +167,7 @@ class OOMFragment : Fragment() {
                         }
                         setOnClickListener {
                             if (BaseApplication.isAppBack()) {
-                                BaseApplication.gotoMainPage(activity!!)
+                                BaseApplication.gotoMainPage(requireActivity())
                             }
                         }
                     }

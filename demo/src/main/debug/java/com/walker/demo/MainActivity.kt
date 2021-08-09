@@ -10,7 +10,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo_main)
         initToolbar()
-        initFragment()
+
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .onExplainRequestReason(ExplainReasonCallback { scope, deniedList ->
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    "应用运行需要以下权限",
+                    "允许",
+                    "拒绝"
+                )
+            })
+            .request(
+                RequestCallback { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        initFragment()
+                    }else{
+                        finish()
+                    }
+                }
+            )
     }
 
     private fun initToolbar() {

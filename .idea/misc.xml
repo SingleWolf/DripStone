@@ -12,6 +12,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="../../../.gradle/caches/transforms-2/files-2.1/f7af72fbb32d3e1908d6abcc39ea61e8/permissionx-1.5.0/res/drawable/permissionx_default_dialog_bg.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.4609053497942387" />
         <entry key="collect/src/main/res/layout/activity_collect_cook_list.xml" value="0.18931159420289856" />
         <entry key="collect/src/main/res/layout/activity_collect_show.xml" value="0.18931159420289856" />
