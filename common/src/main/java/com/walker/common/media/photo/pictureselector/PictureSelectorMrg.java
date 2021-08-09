@@ -134,15 +134,15 @@ public class PictureSelectorMrg implements IPhotoGetter {
             PhotoData d = new PhotoData();
             String filePath;
             if (28 < Build.VERSION.SDK_INT) {
-                filePath=data.getAndroidQToPath();
-                if(TextUtils.isEmpty(filePath)){
-                    filePath=data.getRealPath();
+                filePath = data.getAndroidQToPath();
+                if (TextUtils.isEmpty(filePath)) {
+                    filePath = data.getRealPath();
                 }
             } else {
                 if (data.isCut()) {
-                    filePath=data.getCutPath();
+                    filePath = data.getCutPath();
                 } else {
-                    filePath=data.getPath();
+                    filePath = data.getPath();
                 }
             }
             d.setFilePath(filePath);

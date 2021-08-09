@@ -1,7 +1,10 @@
 package com.walker.common.media.image
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.widget.ImageView
 import com.walker.common.media.image.glide.GlideLoadMgr
+import java.io.File
 
 /**
  * @Author Walker
@@ -41,6 +44,34 @@ object ImageLoadHelper : IImageLoad {
 
     override fun loadRes(view: ImageView, resId: Int, config: ImageConfig?) {
         getProxy()?.loadRes(view, resId, config)
+    }
+
+    override fun downloadFile(context: Context, url: String, width: Int, height: Int): File? {
+        return getProxy()?.downloadFile(context, url, width, height)
+    }
+
+    override fun downloadFile(
+        context: Context,
+        url: String,
+        width: Int,
+        height: Int,
+        downloadListener: OnDownloadListener<File>
+    ) {
+        getProxy()?.downloadFile(context, url, width, height, downloadListener)
+    }
+
+    override fun downloadBitmap(context: Context, url: String, width: Int, height: Int): Bitmap? {
+        return getProxy()?.downloadBitmap(context, url, width, height)
+    }
+
+    override fun downloadBitmap(
+        context: Context,
+        url: String,
+        width: Int,
+        height: Int,
+        downloadListener: OnDownloadListener<Bitmap>
+    ) {
+        getProxy()?.downloadBitmap(context, url, width, height, downloadListener)
     }
 
 }

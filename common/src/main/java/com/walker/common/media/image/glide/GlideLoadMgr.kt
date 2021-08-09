@@ -1,5 +1,7 @@
 package com.walker.common.media.image.glide
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.NonNull
@@ -7,12 +9,17 @@ import androidx.annotation.Nullable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.FutureTarget
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.walker.common.R
 import com.walker.common.media.image.IImageLoad
 import com.walker.common.media.image.ImageConfig
+import com.walker.common.media.image.OnDownloadListener
 import com.walker.common.media.image.OnImageLoadListener
+import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -61,9 +68,102 @@ class GlideLoadMgr : IImageLoad {
         loadImage(view, resId, config)
     }
 
+    override fun downloadFile(context: Context, url: String, width: Int, height: Int): File? {
+        var data: File? = null
+        try {
+            val target: FutureTarget<File> = Glide.with(context)
+                .load(url)
+                .downloadOnly(width, height)
+            data = target.get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return data
+    }
+
+    override fun downloadFile(
+        context: Context,
+        url: String,
+        width: Int,
+        height: Int,
+        downloadListener: OnDownloadListener<File>
+    ) {
+        val simpleTarget = if (width == 0 || height == 0) {
+            object : SimpleTarget<File>() {
+                override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                    downloadListener.onResult(resource)
+                }
+
+            }
+        } else {
+            object : SimpleTarget<File>(width, height) {
+                override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                    downloadListener.onResult(resource)
+                }
+
+            }
+        }
+        try {
+            Glide.with(context)
+                .load(url)
+                .downloadOnly(simpleTarget)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            downloadListener.onError(e.toString())
+        }
+    }
+
+    override fun downloadBitmap(context: Context, url: String, width: Int, height: Int): Bitmap? {
+        var data: Bitmap? = null
+        try {
+            data = Glide.with(context)
+                .asBitmap()
+                .load(url)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(width, height).get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return data
+    }
+
+    override fun downloadBitmap(
+        context: Context,
+        url: String,
+        width: Int,
+        height: Int,
+        downloadListener: OnDownloadListener<Bitmap>
+    ) {
+        val simpleTarget = if (width == 0 || height == 0) {
+            object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    downloadListener.onResult(resource)
+                }
+
+            }
+        } else {
+            object : SimpleTarget<Bitmap>(width, height) {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    downloadListener.onResult(resource)
+                }
+
+            }
+        }
+        try {
+            Glide.with(context)
+                .asBitmap()
+                .load(url)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(simpleTarget)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            downloadListener.onError(e.toString())
+        }
+    }
+
     fun loadImage(view: ImageView, obj: Any, imageConfig: ImageConfig?) {
         val glideRequest: RequestBuilder<Drawable> = Glide.with(view).asDrawable().load(obj)
-        val config= imageConfig ?: defaultImageConfig
+        val config = imageConfig ?: defaultImageConfig
         config.apply {
             if (placeholder != 0) {
                 glideRequest.placeholder(placeholder)

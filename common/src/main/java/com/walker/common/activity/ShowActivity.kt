@@ -28,7 +28,7 @@ class ShowActivity : AppCompatActivity() {
             context: Context,
             channelId: String,
             channelName: String,
-            task: (channelId: String) -> Fragment?
+            task: ((channelId: String) -> Fragment?)?
         ) {
             if (TextUtils.isEmpty(channelId)) {
                 return
