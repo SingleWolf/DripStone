@@ -34,7 +34,6 @@ object ShortcutHelper {
         // 不允许重复创建，不是根据快捷方式的名字判断重复的
         addShortcutIntent.putExtra("duplicate", false)
         addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, data.name)
-        addShortcutIntent.putExtra("data", data.extraData)
         //图标
         addShortcutIntent.putExtra(
             Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
@@ -42,8 +41,9 @@ object ShortcutHelper {
         )
 
         // 设置关联程序
-        val launcherIntent = Intent()
-        launcherIntent.setClass(context, ShortcutActivity::class.java)
+        val launcherIntent =  Intent(context, ShortcutActivity::class.java)
+        launcherIntent.putExtra("data", data.extraData)
+        launcherIntent.action = Intent.ACTION_VIEW
         addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent)
         // 发送广播
         context.sendBroadcast(addShortcutIntent)
