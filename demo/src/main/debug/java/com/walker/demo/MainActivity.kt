@@ -1,7 +1,14 @@
 package com.walker.demo
 
+import android.Manifest
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.permissionx.guolindev.PermissionX
+import com.permissionx.guolindev.callback.ExplainReasonCallback
+import com.permissionx.guolindev.callback.RequestCallback
+import com.walker.core.log.LogHelper
+import com.walker.core.util.ToastUtils
 import com.walker.demo.summary.SummaryFragment
 import kotlinx.android.synthetic.main.activity_demo_main.*
 
@@ -28,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 RequestCallback { allGranted, grantedList, deniedList ->
                     if (allGranted) {
                         initFragment()
-                    }else{
+                    } else {
                         finish()
                     }
                 }

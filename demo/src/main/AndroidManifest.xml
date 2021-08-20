@@ -12,6 +12,8 @@
 
     <application>
         <activity android:name=".install.FileExplorerActivity" />
+        <activity android:name=".shortcut.ShortcutActivity" />
+
         <service
             android:name=".install.AutoInstallAccessibilityService"
             android:label="智能安装"
@@ -34,5 +36,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/install_file_paths" />
         </provider>
+        <receiver
+            android:name=".shortcut.ShortcutReceiver"
+            android:exported="false" />
     </application>
 </manifest>
