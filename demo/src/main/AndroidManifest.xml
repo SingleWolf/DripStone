@@ -9,7 +9,9 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission
+        android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
+        android:maxSdkVersion="25" />
 
     <application>
         <activity android:name=".install.FileExplorerActivity" />
