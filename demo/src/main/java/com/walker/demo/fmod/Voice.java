@@ -1,6 +1,8 @@
 package com.walker.demo.fmod;
 
+import com.walker.common.aop.AopTrace;
 import com.walker.core.log.LogHelper;
+import com.walker.demo.CheckOut;
 
 public class Voice {
     private static final int MODE_NORMAL = 0; // 正常
@@ -14,7 +16,7 @@ public class Voice {
         System.loadLibrary("VoiceChange");
     }
 
-
+    @AopTrace(point = CheckOut.class)
     public void changeVoice(String path, int mode) {
         voiceChangeNative(mode, path);
     }

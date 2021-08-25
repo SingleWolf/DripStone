@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+def androidID = rootProject.ext.androidID
+android {
+    compileSdkVersion androidID.compileSdkVersion
+    defaultConfig {
+        applicationId appID.remoteserver
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+        consumerProguardFiles 'consumer-rules.pro'
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidx_version"
+    implementation 'com.google.android.material:material:1.1.0'
+
+    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.multidex:multidex:$rootProject.ext.multidex_version"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraint_layout_verson"
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    implementation project(':common')
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlin_coroutines_version"
+
+}

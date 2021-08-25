@@ -8,7 +8,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def androidID = rootProject.ext.androidID
-
 android {
     compileSdkVersion androidID.compileSdkVersion
     defaultConfig {
@@ -85,6 +84,25 @@ android {
         //给模块设置不同的资源前缀，可以避免重复命名
         resourcePrefix "demo_"
     }
+}
+
+apply plugin: 'aop.trace.plugin'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        //自定义插件maven地址
+        maven { url '../repo/aop_trace_repo' }
+    }
+    dependencies {
+        //加载自定义插件 group + module + version
+        classpath 'com.walker.plugin:aop_trace_plugin:1.0.0'
+    }
+}
+
+AopTraceExt {
+    enable true
+    tracePrefix["com/walker/"]
 }
 
 dependencies {

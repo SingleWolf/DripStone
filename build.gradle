@@ -14,7 +14,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${rootProject.ext.gradle_ersion}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.ext.kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
     }
 }
 

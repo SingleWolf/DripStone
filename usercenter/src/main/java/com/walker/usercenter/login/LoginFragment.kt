@@ -41,10 +41,16 @@ class LoginFragment : BaseMvpFragment<LoginPresenter>(), LoginView {
     }
 
     override fun loginError(errCode: Int) {
-        if (errCode == LoginModel.CODE_INVALID_INFO) {
-            ToastUtils.showCenter("用户信息有误")
-        } else {
-            ToastUtils.showCenter("登录异常")
+        when (errCode) {
+            LoginModel.CODE_INVALID_INFO -> {
+                ToastUtils.showCenter("用户信息有误")
+            }
+            LoginModel.CODE_CONN_ERROR -> {
+                ToastUtils.showCenter("服务连接失败")
+            }
+            else -> {
+                ToastUtils.showCenter("登录异常")
+            }
         }
     }
 
@@ -61,8 +67,20 @@ class LoginFragment : BaseMvpFragment<LoginPresenter>(), LoginView {
 
     private fun login() {
         lifecycleScope.launch {
-            presenter?.onLogin(edtUserName.text.toString(), edtPassword.text.toString())
+            presenter?.onLogin(
+                requireActivity(),
+                edtUserName.text.toString(),
+                edtPassword.text.toString()
+            )
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.execRelease()
+    }
 }

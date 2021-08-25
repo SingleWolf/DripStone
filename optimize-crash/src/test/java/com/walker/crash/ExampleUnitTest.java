@@ -12,6 +12,22 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        Student stu = new Student(18, "aa");
+        changeStudent(stu);
+        System.out.println("student=" + stu.name + "," + stu.age);
+    }
+
+    private void changeStudent(Student stu) {
+        stu=new Student(45,"cc");
+    }
+
+    class Student {
+        public int age;
+        public String name;
+
+        public Student(int age, String name) {
+            this.age = age;
+            this.name = name;
+        }
     }
 }

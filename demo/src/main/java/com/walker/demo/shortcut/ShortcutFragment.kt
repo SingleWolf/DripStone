@@ -8,9 +8,11 @@ import android.widget.TextView
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
 import com.permissionx.guolindev.callback.RequestCallback
+import com.walker.common.aop.AopTrace
 import com.walker.common.isEmptyOrNull
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.core.util.ToastUtils
+import com.walker.demo.CheckOut
 import com.walker.demo.R
 
 /**
@@ -49,6 +51,7 @@ class ShortcutFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_short_cut
 
+    @AopTrace(point = CheckOut::class)
     private fun transactAddShortcut() {
         val id = etId.text.toString()
         val name = etName.text.toString()

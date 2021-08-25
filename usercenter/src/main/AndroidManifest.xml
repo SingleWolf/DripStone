@@ -2,7 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.walker.usercenter">
 
+    <permission android:name="com.walker.drip.permission.ACCESS_REMOTE_SERVER"/>
+    <uses-permission android:name="com.walker.drip.permission.ACCESS_REMOTE_SERVER"/>
+
     <application>
         <activity android:name=".login.LoginActivity" />
+        <receiver android:name=".login.UserBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="walker.drip.USER_RECEIVER" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

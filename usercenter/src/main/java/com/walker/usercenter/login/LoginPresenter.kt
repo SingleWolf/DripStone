@@ -1,5 +1,7 @@
 package com.walker.usercenter.login
 
+import android.app.Activity
+import android.content.Context
 import com.walker.core.base.mvp.IBasePresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,12 +24,12 @@ class LoginPresenter : IBasePresenter<LoginView> {
     }
 
     override fun execRelease() {
+        loginModel.execRelease()
     }
 
-    suspend fun onLogin(userName: String, password: String) {
+    suspend fun onLogin(context:Activity,userName: String, password: String) {
         loginView.showProgress()
-        withContext(Dispatchers.Default) {}
-        var result = loginModel.onLogin(userName, password)
+        var result = loginModel.onLogin(context,userName, password)
         withContext(Dispatchers.Main) {
             if (result == LoginModel.CODE_SUCCESS) {
                 loginView.loginSuccess()

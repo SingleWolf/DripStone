@@ -155,8 +155,9 @@ public class HotfixPlugin implements Plugin<Project> {
      */
     private byte[] referHackWhenInit(InputStream fis) throws IOException {
         ClassReader cr = new ClassReader(fis);// 通过IO流，将一个class解析出来，解析失败会抛异常
-        ClassWriter cw = new ClassWriter(cr, 0);//再构建一个writer
+        ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);//再构建一个writer
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM5, cw) {
+
             @Override
             public MethodVisitor visitMethod(int access, final String name, String desc,
                                              String signature, String[] exceptions) {
@@ -173,7 +174,7 @@ public class HotfixPlugin implements Plugin<Project> {
                 return mv;
             }
         };
-        cr.accept(cv, 0);
+        cr.accept(cv, ClassWriter.COMPUTE_FRAMES);
         return cw.toByteArray();
     }
 
