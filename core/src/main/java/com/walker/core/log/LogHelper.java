@@ -1,7 +1,6 @@
 package com.walker.core.log;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * @Author Walker
@@ -15,7 +14,7 @@ public class LogHelper {
      */
     private int mMinLevel = LogLevel.DEBUG;
 
-    private BaseLogger mLogger;
+    private ILogger mLogger;
 
     private IExtraLogHandler mExtraLogHandler;
 
@@ -30,7 +29,7 @@ public class LogHelper {
         return this;
     }
 
-    public LogHelper setLogger(BaseLogger logger) {
+    public LogHelper setLogger(ILogger logger) {
         mLogger = logger;
         return this;
     }
@@ -40,7 +39,7 @@ public class LogHelper {
         return this;
     }
 
-    public void config(){
+    public void config() {
         if (mLogger != null) {
             mLogger.start();
         }
@@ -113,10 +112,8 @@ public class LogHelper {
             }
             try {
                 String tagLabel = String.format("%s(%s)", TAG, tag);
-                Log.d(tagLabel, message);
-                if (isSave) {
-                    log2File(tagLabel, message, "d");
-                }
+                mLogger.d(tagLabel, message, isSave);
+
                 if (isExtra) {
                     exeExtraLog(tagLabel, message);
                 }
@@ -133,10 +130,7 @@ public class LogHelper {
             }
             try {
                 String tagLabel = String.format("%s(%s)", TAG, tag);
-                Log.i(tagLabel, message);
-                if (isSave) {
-                    log2File(tagLabel, message, "i");
-                }
+                mLogger.i(tagLabel, message, isSave);
                 if (isExtra) {
                     exeExtraLog(tagLabel, message);
                 }
@@ -153,10 +147,8 @@ public class LogHelper {
             }
             try {
                 String tagLabel = String.format("%s(%s)", TAG, tag);
-                Log.w(tagLabel, message);
-                if (isSave) {
-                    log2File(tagLabel, message, "w");
-                }
+                mLogger.w(tagLabel, message, isSave);
+
                 if (isExtra) {
                     exeExtraLog(tagLabel, message);
                 }
@@ -173,10 +165,8 @@ public class LogHelper {
             }
             try {
                 String tagLabel = String.format("%s(%s)", TAG, tag);
-                Log.e(tagLabel, message);
-                if (isSave) {
-                    log2File(tagLabel, message, "e");
-                }
+                mLogger.e(tagLabel, message, isSave);
+
                 if (isExtra) {
                     exeExtraLog(tagLabel, message);
                 }
@@ -192,9 +182,15 @@ public class LogHelper {
         }
     }
 
-    private void log2File(String tag, String message, String level) {
+    public void flush(){
         if (mLogger != null) {
-            mLogger.writeDisk(tag, message, level);
+            mLogger.flush();
+        }
+    }
+
+    public void close() {
+        if (mLogger != null) {
+            mLogger.close();
         }
     }
 }

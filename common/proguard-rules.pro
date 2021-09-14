@@ -36,3 +36,5 @@
   **[] $VALUES;
   public *;
 }
+#xlog
+-keep class com.tencent.mars.xlog.** { *; }

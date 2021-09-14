@@ -1,6 +1,8 @@
-package com.walker.core.log;
+package com.walker.common.log;
 
 import android.content.Context;
+
+import com.walker.core.log.BaseLogger;
 
 import java.io.File;
 

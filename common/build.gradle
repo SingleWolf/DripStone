@@ -54,4 +54,6 @@ dependencies {
     api 'com.github.princekin-f:EasyFloat:2.0.1'
     //permissionx
     api 'com.guolindev.permissionx:permissionx:1.5.0'
+    //xlog
+    implementation 'com.tencent.mars:mars-xlog:1.2.5'
 }

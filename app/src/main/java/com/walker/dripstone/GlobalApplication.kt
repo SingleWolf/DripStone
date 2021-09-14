@@ -82,7 +82,7 @@ class GlobalApplication : BaseApplication() {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-
+                LogHelper.get().flush()
             }
         })
     }
@@ -113,5 +113,10 @@ class GlobalApplication : BaseApplication() {
     fun gotoMainPage(activity: Activity) {
         val intent = Intent(activity, SplashActivity::class.java)
         activity.startActivity(intent)
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        LogHelper.get().close()
     }
 }

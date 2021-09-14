@@ -2,7 +2,7 @@ package com.walker.ui
 
 import com.kingja.loadsir.core.LoadSir
 import com.walker.common.BaseApplication
-import com.walker.core.log.DefaultLogger
+import com.walker.common.log.DefaultLogger
 import com.walker.core.log.LogHelper
 import com.walker.core.log.LogLevel
 import com.walker.core.store.sp.SPHelper
@@ -10,7 +10,7 @@ import com.walker.core.store.storage.StorageHelper
 import com.walker.core.ui.loadsir.*
 import com.walker.core.util.ToastUtils
 
-class GlobalApplication :BaseApplication() {
+class GlobalApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         //SharedPreferences

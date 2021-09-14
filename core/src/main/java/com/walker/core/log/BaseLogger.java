@@ -2,6 +2,7 @@ package com.walker.core.log;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.walker.core.store.sp.SPHelper;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @Date 2020-03-26 15:13
  * @Summary 日志打印到文件
  */
-public abstract class BaseLogger {
+public abstract class BaseLogger implements ILogger {
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     protected Context mContext;
@@ -53,12 +54,6 @@ public abstract class BaseLogger {
         if (mMaxFileSize < DEFAULT_MAX_FILE_LENGTH) {
             mMaxFileSize = DEFAULT_MAX_FILE_LENGTH;
         }
-    }
-
-    public void start() {
-        LoggerTaskThread loggerTaskThread = new LoggerTaskThread();
-        loggerTaskThread.setName("DripLogger");
-        loggerTaskThread.start();
     }
 
     protected abstract String getLogDirPath();
@@ -167,5 +162,54 @@ public abstract class BaseLogger {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void d(String tag, String message, boolean isSave) {
+        Log.d(tag, message);
+        if (isSave) {
+            writeDisk(tag, message, "d");
+        }
+    }
+
+    @Override
+    public void i(String tag, String message, boolean isSave) {
+        Log.i(tag, message);
+        if (isSave) {
+            writeDisk(tag, message, "i");
+        }
+    }
+
+    @Override
+    public void w(String tag, String message, boolean isSave) {
+        Log.w(tag, message);
+        if (isSave) {
+            writeDisk(tag, message, "w");
+        }
+    }
+
+    @Override
+    public void e(String tag, String message, boolean isSave) {
+        Log.e(tag, message);
+        if (isSave) {
+            writeDisk(tag, message, "e");
+        }
+    }
+
+    @Override
+    public void start() {
+        LoggerTaskThread loggerTaskThread = new LoggerTaskThread();
+        loggerTaskThread.setName("DripLogger");
+        loggerTaskThread.start();
+    }
+
+    @Override
+    public void flush() {
+
+    }
+
+    @Override
+    public void close() {
+
     }
 }

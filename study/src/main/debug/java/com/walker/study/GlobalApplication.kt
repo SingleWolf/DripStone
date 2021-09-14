@@ -2,7 +2,7 @@ package com.walker.study
 
 import com.kingja.loadsir.core.LoadSir
 import com.walker.common.BaseApplication
-import com.walker.core.log.DefaultLogger
+import com.walker.common.log.DefaultLogger
 import com.walker.core.log.LogHelper
 import com.walker.core.log.LogLevel
 import com.walker.core.store.sp.SPHelper
