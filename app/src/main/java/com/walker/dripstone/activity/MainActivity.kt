@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.router.ICollectRouter
 import com.walker.common.router.IDemoRouter
+import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
 import com.walker.core.util.SteepStatusBarUtils
 import com.walker.core.util.ToastUtils
@@ -219,6 +220,7 @@ class MainActivity : AppCompatActivity() {
             backPressTime = now
         } else {
             super.onBackPressed()
+            LogHelper.get().close()
         }
     }
 }
