@@ -36,5 +36,5 @@
   **[] $VALUES;
   public *;
 }
-#xlog
--keep class com.tencent.mars.xlog.** { *; }
+#walker-log
+-keep class com.walker.log.** { *; }

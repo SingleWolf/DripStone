@@ -3,10 +3,11 @@ package com.walker.common.log;
 import android.content.Context;
 import android.os.Environment;
 
-import com.tencent.mars.xlog.Log;
-import com.tencent.mars.xlog.Xlog;
-import com.walker.core.BuildConfig;
 import com.walker.core.log.ILogger;
+import com.walker.log.BuildConfig;
+import com.walker.log.xlog.Log;
+import com.walker.log.xlog.Options;
+import com.walker.log.xlog.Xlog;
 
 public class XLogger implements ILogger {
 
@@ -19,16 +20,24 @@ public class XLogger implements ILogger {
         String cachePath = context.getFilesDir() + "/xlog";
         String pubkey = "9b40b6c9ad693aba1651f6bd294efca3701272056c8803fc8626ba411fc1d6887f5c1936c72bbe0a29de05da8f363b9535ee7e231ee62d603edeed65e23dd836";
         String logFileName = "drip";
+        Options options = new Options();
+        options.setNamePrefix(logFileName);
+        options.setCacheDir(cachePath);
+        options.setLogDir(logPath);
+        options.setLoadLib(true);
+        options.setPubkey(pubkey);
+        options.setMode(Xlog.AppednerModeAsync);
+        options.setMaxFileSize(MAX_FILE_SIZE);
+        if (BuildConfig.DEBUG) {
+            options.setConsoleLogOpen(true);
+            options.setLevel(Xlog.LEVEL_DEBUG);
+        } else {
+            options.setConsoleLogOpen(false);
+            options.setLevel(Xlog.LEVEL_INFO);
+        }
         Xlog xlog = new Xlog();
         Log.setLogImp(xlog);
-        if (BuildConfig.DEBUG) {
-            Xlog.open(true, Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, cachePath, logPath, logFileName, pubkey);
-            Log.setConsoleLogOpen(true);
-        } else {
-            Xlog.open(true, Xlog.LEVEL_INFO, Xlog.AppednerModeAsync, cachePath, logPath, logFileName, pubkey);
-            Log.setConsoleLogOpen(false);
-        }
-        Log.getImpl().setMaxFileSize(0, MAX_FILE_SIZE);
+        Xlog.open(options);
     }
 
     @Override
@@ -58,7 +67,7 @@ public class XLogger implements ILogger {
 
     @Override
     public void flush() {
-        Log.appenderFlush();
+        Log.appenderFlush(false);
     }
 
     @Override
