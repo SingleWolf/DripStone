@@ -20,6 +20,15 @@
             android:textSize="22dp" />
 
         <TextView
+            android:id="@+id/nativeInfoClick"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="45dp"
+            android:background="@android:color/holo_orange_light"
+            android:gravity="center"
+            android:text="nativeInfoClick" />
+
+        <TextView
             android:id="@+id/mapClick"
             android:layout_width="match_parent"
             android:layout_height="45dp"

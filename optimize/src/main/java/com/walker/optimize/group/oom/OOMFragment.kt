@@ -1,6 +1,8 @@
 package com.walker.optimize.group.oom
 
 import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Process
 import android.text.method.ScrollingMovementMethod
@@ -22,6 +24,7 @@ import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.BaseApplication
 import com.walker.core.util.DateTimeUtils
 import com.walker.optimize.R
+import com.walker.optimize.group.oom.leakcanary.LeakCanaryHelper
 
 
 class OOMFragment : Fragment() {
@@ -75,6 +78,11 @@ class OOMFragment : Fragment() {
         onDismissFloatWindow()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        LeakCanaryHelper.get().watch(this, "OOMFragment")
+    }
+
     fun onDismissFloatWindow() {
         if (floatWindowIsShow) {
             EasyFloat.dismiss(TAG, false)
@@ -121,7 +129,9 @@ class OOMFragment : Fragment() {
     }
 
     private fun onMockJavaObjLeakTapped() {
-        OOMTest.get().testLeakObject(requireActivity())
+        val test = BitmapFactory.decodeResource(resources,R.drawable.custom)
+        OOMTest.get().testLeakObject(test)
+        LeakCanaryHelper.get().watch(test, "onMockJavaObjLeakTapped")
     }
 
     fun onMockIncreaseJavaHeapTapped() {

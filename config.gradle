@@ -26,7 +26,7 @@ ext {
     multidex_version = '2.0.0'
 
     // 正式环境 和 测试环境
-    isRelease = false
+    isRelease = true
 
     // 正式环境 和 测试环境 服务器 URL 配置
     url = [
@@ -55,7 +55,8 @@ ext {
             optimize: "com.walker.optimize",
             usercenter: "com.walker.usercenter",
             skin: "com.walker.skin",
-            remoteserver: "com.walker.remoteserver"
+            remoteserver: "com.walker.remoteserver",
+            security:"com.walker.security"
     ]
 
     // MAP  key  value

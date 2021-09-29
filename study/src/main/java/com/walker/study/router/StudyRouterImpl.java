@@ -21,8 +21,8 @@ public class StudyRouterImpl implements IStudyRouter {
     }
 
     @Override
-    public void loadClass(@NotNull Context context, @NotNull String loadPath) {
-        LoadUtil.loadClass(context,loadPath);
+    public void loadPlugin(@NotNull Context context, @NotNull String loadPath) {
+        LoadUtil.loadPlugin(context,loadPath);
     }
 
     @Override

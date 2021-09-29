@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.plugintest">
-    //地图SDK（包含其搜索功能）需要的基础权限
+    <!--    地图SDK（包含其搜索功能）需要的基础权限-->
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
@@ -22,14 +22,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--        pluginTest key-->
-        <!--        <meta-data-->
-        <!--            android:name="com.amap.api.v2.apikey"-->
-        <!--            android:value="381b7926231cf58f325a71486db3d2e2" />-->
-
-        <!--        dripStone key-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="073b2547db539f078c54789fe45272fe" />
+            android:value="381b7926231cf58f325a71486db3d2e2" />
+
+        <!--        dripStone key-->
+        <!--        <meta-data-->
+        <!--            android:name="com.amap.api.v2.apikey"-->
+        <!--            android:value="073b2547db539f078c54789fe45272fe" />-->
 
         <meta-data
             android:name="application"
@@ -39,11 +39,11 @@
             android:name=".DemoActivity"
             android:configChanges="locale|layoutDirection"
             android:screenOrientation="portrait">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".BasicMapActivity"

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,12 @@ public class DemoActivity extends BaseActivity {
                 onMapClick();
             }
         });
+        findViewById(R.id.nativeInfoClick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onNativeInfoClick();
+            }
+        });
     }
 
     private void setLoadPath() {
@@ -30,8 +37,12 @@ public class DemoActivity extends BaseActivity {
         LoadUtil.setLoadPath(loadPath);
     }
 
-    public void onMapClick(){
-        Intent intent=new Intent(this,BasicMapActivity.class);
+    private void onNativeInfoClick() {
+        Toast.makeText(this, new NativeTest().getInfo(), Toast.LENGTH_LONG).show();
+    }
+
+    public void onMapClick() {
+        Intent intent = new Intent(this, BasicMapActivity.class);
         startActivity(intent);
     }
 }

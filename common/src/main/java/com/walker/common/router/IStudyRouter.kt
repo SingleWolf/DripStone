@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 interface IStudyRouter {
     fun getSummaryFragment(): Fragment?
 
-    fun loadClass(context: Context, loadPath: String)
+    fun loadPlugin(context: Context, loadPath: String)
 
     fun initSkin(application: Application)
 }
