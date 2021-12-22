@@ -5,6 +5,7 @@ import com.walker.core.util.GsonUtils
 import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.fmod.VoiceChangeFragment
+import com.walker.demo.location.LocationFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
 import com.walker.demo.summary.Summary
@@ -69,6 +70,14 @@ class MockSummaryData private constructor() {
         Summary().run {
             key = ShortcutFragment.KEY_ID
             title = "快捷方式"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = LocationFragment.KEY_ID
+            title = "定位功能"
             uri = ""
             desc = ""
             summaryList.add(this)

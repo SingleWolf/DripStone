@@ -8,6 +8,7 @@ import com.walker.common.view.titleview.TitleView
 import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.install.AppInstallFragment
+import com.walker.demo.location.LocationFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
 
@@ -23,6 +24,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             AppA2bFragment.KEY_ID -> AppA2bFragment.instance()
             AppInstallFragment.KEY_ID -> AppInstallFragment.instance()
             ShortcutFragment.KEY_ID -> ShortcutFragment.instance()
+            LocationFragment.KEY_ID -> LocationFragment.instance()
             else -> null
         }
         return fragment

@@ -8,6 +8,7 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
+import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.core.log.LogHelper
@@ -50,6 +51,8 @@ class GlobalApplication : BaseApplication() {
         //retrofit
         RetrofitNetworkApi.init(NetworkRequestInfo(this))
         setMainPageBlock(::gotoMainPage)
+        //location
+        LocationHelper.init(this)
     }
 
     private fun registerActivityLifecycle() {

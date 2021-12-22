@@ -13,6 +13,11 @@ android {
         // 组件化 和 集成化
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
         consumerProguardFiles 'consumer-rules.pro'
+
+        // 指定CPU架构，打入APK lib/CPU平台
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {
@@ -55,4 +60,6 @@ dependencies {
     //permissionx
     api 'com.guolindev.permissionx:permissionx:1.5.0'
     implementation files("libs\\walker-log-1.0.0.jar");
+    implementation files('libs\\BaiduLBS_Android.jar')
+    implementation files('libs\\AMap_Location_V5.6.1_20211115.jar')
 }

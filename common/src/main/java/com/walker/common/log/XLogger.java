@@ -32,7 +32,7 @@ public class XLogger implements ILogger {
             options.setConsoleLogOpen(true);
             options.setLevel(Xlog.LEVEL_DEBUG);
         } else {
-            options.setConsoleLogOpen(false);
+            options.setConsoleLogOpen(true);
             options.setLevel(Xlog.LEVEL_INFO);
         }
         Xlog xlog = new Xlog();
