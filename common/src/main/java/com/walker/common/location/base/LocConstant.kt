@@ -4,6 +4,9 @@ object LocConstant {
     //成功标识
     const val KEY_SUC = "key_suc"
 
+    //错误码
+    const val ERR_CODE = "err_code"
+
     //成功码
     const val CODE_SUC = "0"
 

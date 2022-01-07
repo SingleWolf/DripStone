@@ -100,21 +100,29 @@ class BaiduLocation(val context: Context) : ILocation, BDAbstractLocationListene
         LogHelper.get().i(TAG, "onReceiveLocation()")
         val data = mutableMapOf<String, String>()
         data[LocConstant.KEY_TYPE] = getType()
-        if (location != null && location.locType != BDLocation.TypeServerError) {
-            data[LocConstant.KEY_SUC] = LocConstant.CODE_SUC
+        if (location != null) {
             try {
-                data[LocConstant.KEY_LATITUDE] = location.latitude.toString()
-                data[LocConstant.KEY_LONGTITUDE] = location.longitude.toString()
-                data[LocConstant.KEY_COUNTRY] = location.country
-                data[LocConstant.KEY_PROVINCE] = location.province
-                data[LocConstant.KEY_CITY] = location.city
-                data[LocConstant.KEY_ADDR] = location.addrStr
+                if (location.locType != BDLocation.TypeServerError) {
+                    data[LocConstant.KEY_SUC] = LocConstant.CODE_SUC
+                    data[LocConstant.ERR_CODE] = location.locType.toString()
+                    data[LocConstant.KEY_LATITUDE] = location.latitude.toString()
+                    data[LocConstant.KEY_LONGTITUDE] = location.longitude.toString()
+                    data[LocConstant.KEY_COUNTRY] = location.country
+                    data[LocConstant.KEY_PROVINCE] = location.province
+                    data[LocConstant.KEY_CITY] = location.city
+                    data[LocConstant.KEY_ADDR] = location.addrStr
+                } else {
+                    data[LocConstant.KEY_SUC] = LocConstant.CODE_FAIL
+                    data[LocConstant.ERR_CODE] = location.locType.toString()
+                }
             } catch (e: Throwable) {
-                LogHelper.get().e(TAG, "get loc error=$e")
+                LogHelper.get().e(TAG, "get loc error=$e", true)
             }
         } else {
             data[LocConstant.KEY_SUC] = LocConstant.CODE_FAIL
+            data[LocConstant.ERR_CODE] = "0000"
         }
+        LogHelper.get().i(TAG, "onReceiveLocation() : $data", true)
 
         //回传结果
         listenerMap.forEach {
