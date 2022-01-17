@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/tvTaskOne"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="弹框三连击"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tvTaskTwo"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="一揽子操作"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tvTaskThree"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="插队任务"
+        android:textColor="@color/colorPrimary" />
+</LinearLayout>

@@ -11,6 +11,7 @@ import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.location.LocationFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
+import com.walker.demo.taskflow.TaskFlowFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -25,6 +26,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             AppInstallFragment.KEY_ID -> AppInstallFragment.instance()
             ShortcutFragment.KEY_ID -> ShortcutFragment.instance()
             LocationFragment.KEY_ID -> LocationFragment.instance()
+            TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance()
             else -> null
         }
         return fragment

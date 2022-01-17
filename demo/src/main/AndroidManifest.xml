@@ -18,6 +18,7 @@
         <activity
             android:name=".shortcut.ShortcutActivity"
             android:exported="true" />
+        <activity android:name=".taskflow.TaskWebActivity" />
 
         <service
             android:name=".install.AutoInstallAccessibilityService"

@@ -32,11 +32,11 @@ class WebviewUseFragment : BaseFragment(), OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvLocalDemo -> webviewImpl?.startActivity(
-                activity!!, "demo",
+                holdContext, "demo",
                 "file:///android_asset/demo.html"
             )
             R.id.tvWebPage -> webviewImpl?.startActivity(
-                activity!!, "百度一下",
+                holdContext, "百度一下",
                 "https://www.baidu.com"
             )
 
