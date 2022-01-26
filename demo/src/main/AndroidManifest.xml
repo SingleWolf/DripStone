@@ -19,6 +19,10 @@
             android:name=".shortcut.ShortcutActivity"
             android:exported="true" />
         <activity android:name=".taskflow.TaskWebActivity" />
+        <activity android:name=".largebitmap.ShowBitmapActivity" />
+        <activity
+            android:name=".largebitmap.ShowBitmap2Activity"
+            android:process=":remote" />
 
         <service
             android:name=".install.AutoInstallAccessibilityService"

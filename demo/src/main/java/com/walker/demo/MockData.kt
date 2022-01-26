@@ -5,6 +5,7 @@ import com.walker.core.util.GsonUtils
 import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.install.AppInstallFragment
+import com.walker.demo.largebitmap.LargeBitmapFragment
 import com.walker.demo.location.LocationFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
@@ -87,6 +88,14 @@ class MockSummaryData private constructor() {
         Summary().run {
             key = TaskFlowFragment.KEY_ID
             title = "任务流"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = LargeBitmapFragment.KEY_ID
+            title = "大图传递"
             uri = ""
             desc = ""
             summaryList.add(this)

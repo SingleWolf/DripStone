@@ -29,6 +29,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".install.FileExplorerActivity" />
+        <activity android:name=".largebitmap.ShowBitmapActivity" />
+        <activity
+            android:name=".largebitmap.ShowBitmap2Activity"
+            android:process=":remote" />
+
         <activity
             android:name=".shortcut.ShortcutActivity"
             android:exported="true" />

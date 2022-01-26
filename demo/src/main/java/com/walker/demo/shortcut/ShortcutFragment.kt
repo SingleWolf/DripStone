@@ -1,13 +1,9 @@
 package com.walker.demo.shortcut
 
-import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.permissionx.guolindev.PermissionX
-import com.permissionx.guolindev.callback.ExplainReasonCallback
-import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.aop.AopTrace
 import com.walker.common.isEmptyOrNull
 import com.walker.core.base.mvc.BaseFragment
