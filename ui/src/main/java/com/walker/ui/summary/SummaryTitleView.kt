@@ -11,6 +11,7 @@ import com.walker.ui.group.goodfish.GoodFishFragment
 import com.walker.ui.group.photoview.MultiTouchFragment
 import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.ceiling.StarFragment
+import com.walker.ui.group.recyclerview.draworder.DrawOrderFragment
 import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
@@ -27,6 +28,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance()
             MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance()
             SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance()
+            DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance()
             else -> null
         }
         return fragment

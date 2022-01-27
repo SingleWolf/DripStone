@@ -25,7 +25,7 @@ public abstract class UniversalAdapter<T> extends RecyclerView.Adapter<ViewHolde
         return this;
     }
 
-    public OnItemClickListener getmOnItemClickListener() {
+    public OnItemClickListener getOnItemClickListener() {
         return this.mOnItemClickListener;
     }
 

@@ -51,6 +51,8 @@
         <entry key="study/src/main/res/layout/fragment_study_skin.xml" value="0.18931159420289856" />
         <entry key="study/src/main/res/layout/fragment_study_thread.xml" value="0.18931159420289856" />
         <entry key="study/src/main/res/layout/fragment_webview_use.xml" value="0.21875" />
+        <entry key="ui/src/main/res/layout/fragment_ui_draw_order.xml" value="0.2328125" />
+        <entry key="ui/src/main/res/layout/item_ui_star.xml" value="0.2328125" />
         <entry key="usercenter/src/main/res/layout/activity_user_login.xml" value="0.23020833333333332" />
         <entry key="usercenter/src/main/res/layout/fragment_user_login.xml" value="0.23020833333333332" />
         <entry key="usercenter/src/main/res/layout/layout_content_login.xml" value="0.24427083333333333" />
