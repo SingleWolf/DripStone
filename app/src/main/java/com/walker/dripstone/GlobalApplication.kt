@@ -11,11 +11,14 @@ import com.walker.common.BaseApplication
 import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
+import com.walker.common.share.IShareConfig
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
 import com.walker.dripstone.activity.SplashActivity
 import com.walker.dripstone.initializer.CrashInitializer
+import com.walker.dripstone.share.ShareActionMgr
 import com.walker.network.retrofit.base.RetrofitNetworkApi
+import com.walker.platform.share.WechatShareConfig
 import leakcanary.LeakCanary
 
 class GlobalApplication : BaseApplication() {
@@ -53,6 +56,10 @@ class GlobalApplication : BaseApplication() {
         setMainPageBlock(::gotoMainPage)
         //location
         LocationHelper.init(this)
+        //share
+        val shareConfigs= mutableListOf<IShareConfig>()
+        shareConfigs.add(WechatShareConfig())
+        ShareActionMgr.get().init(this,shareConfigs)
     }
 
     private fun registerActivityLifecycle() {

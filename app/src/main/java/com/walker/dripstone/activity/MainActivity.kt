@@ -1,6 +1,7 @@
 package com.walker.dripstone.activity
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -16,8 +17,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.walker.common.router.ICollectRouter
 import com.walker.common.router.IDemoRouter
+import com.walker.common.share.ShareOption
+import com.walker.common.share.SharePlatform
+import com.walker.common.util.DrawableHelper
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
+import com.walker.core.util.ImageUtils
 import com.walker.core.util.SteepStatusBarUtils
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
@@ -28,6 +33,7 @@ import com.walker.dripstone.fragment.DemoFragment
 import com.walker.dripstone.home.headline.HomeFragment
 import com.walker.dripstone.links.LinkHelper
 import com.walker.dripstone.setting.AccountFragment
+import com.walker.dripstone.share.ShareActionMgr
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : AppCompatActivity() {
@@ -170,6 +176,9 @@ class MainActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
+            R.id.action_share -> {
+                execShare()
+            }
         }// case blocks for other MenuItems (if any)
         return true
     }
@@ -222,5 +231,14 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
             LogHelper.get().close()
         }
+    }
+
+    private fun execShare() {
+        val option = ShareOption<Bitmap, Bitmap>().apply {
+            image = DrawableHelper.createBitmapFromView(viewDataBinding.productClMainView)
+            thumb = DrawableHelper.createBitmapFromView(viewDataBinding.productClMainView, 0.3f)
+            platform = SharePlatform.MEDIA_WEIXIN
+        }
+        ShareActionMgr.get().shareImage(this, option, null)
     }
 }
