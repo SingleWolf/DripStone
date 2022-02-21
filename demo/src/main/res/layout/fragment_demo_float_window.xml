@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ResourceName">
+
+    <TextView
+        android:id="@+id/tvDismissFloat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="取消悬浮框" />
+
+    <TextView
+        android:id="@+id/tvUpdateFloat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_above="@id/tvDismissFloat"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="更新悬浮框" />
+
+    <TextView
+        android:id="@+id/tvShowFloat"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_above="@id/tvUpdateFloat"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="显示悬浮框" />
+</RelativeLayout>

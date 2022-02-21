@@ -26,18 +26,23 @@
         <entry key="common/src/main/res/layout/common_title_view.xml" value="0.18931159420289856" />
         <entry key="common/src/main/res/layout/common_water_fall_view.xml" value="0.21875" />
         <entry key="core/src/main/res/layout/layout_loading.xml" value="0.21875" />
+        <entry key="demo/src/main/res/drawable/bg_shape_white_r12.xml" value="0.8535714285714285" />
         <entry key="demo/src/main/res/layout/activity_demo_show_bitmap.xml" value="0.21875" />
         <entry key="demo/src/main/res/layout/activity_file_explorer.xml" value="0.22083333333333333" />
         <entry key="demo/src/main/res/layout/activity_short_cut.xml" value="0.1" />
         <entry key="demo/src/main/res/layout/fragment_demo_app_a2b.xml" value="0.18931159420289856" />
         <entry key="demo/src/main/res/layout/fragment_demo_app_install.xml" value="0.23489583333333333" />
+        <entry key="demo/src/main/res/layout/fragment_demo_float_window.xml" value="0.2328125" />
         <entry key="demo/src/main/res/layout/fragment_demo_task_flow.xml" value="0.2328125" />
         <entry key="demo/src/main/res/layout/fragment_large_bitmap.xml" value="0.11927083333333334" />
         <entry key="demo/src/main/res/layout/fragment_short_cut.xml" value="0.23333333333333334" />
+        <entry key="demo/src/main/res/layout/layout_demo_meeting_come.xml" value="0.21875" />
+        <entry key="demo/src/main/res/layout/layout_meeting_come.xml" value="0.2328125" />
         <entry key="demo/src/main/res/xml/install_file_paths.xml" value="0.23489583333333333" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_anr.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_caton.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_oom.xml" value="0.18931159420289856" />
+        <entry key="optimize/src/main/res/layout/layout_optimize_oom_floatwindow.xml" value="0.2328125" />
         <entry key="pluginTest/src/main/res/drawable/btn_blue_radius.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/drawable/btn_map_poi.xml" value="0.1" />
         <entry key="pluginTest/src/main/res/layout/activity_basic_map.xml" value="0.11676798378926039" />

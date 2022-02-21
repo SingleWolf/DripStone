@@ -3,6 +3,7 @@ package com.walker.demo
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
 import com.walker.demo.a2b.AppA2bFragment
+import com.walker.demo.floatview.FloatWindowFragment
 import com.walker.demo.fmod.VoiceChangeFragment
 import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.largebitmap.LargeBitmapFragment
@@ -87,7 +88,7 @@ class MockSummaryData private constructor() {
 
         Summary().run {
             key = TaskFlowFragment.KEY_ID
-            title = "任务流"
+            title = "工作任务流"
             uri = ""
             desc = ""
             summaryList.add(this)
@@ -96,6 +97,14 @@ class MockSummaryData private constructor() {
         Summary().run {
             key = LargeBitmapFragment.KEY_ID
             title = "大图传递"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = FloatWindowFragment.KEY_ID
+            title = "悬浮框操作"
             uri = ""
             desc = ""
             summaryList.add(this)
