@@ -135,6 +135,6 @@ dependencies {
 
     implementation 'androidx.paging:paging-runtime:3.0.0-beta01'
     //fmd的jar包
-    implementation files("libs\\fmod.jar");
+    implementation files("libs\\fmod.jar")
 
 }

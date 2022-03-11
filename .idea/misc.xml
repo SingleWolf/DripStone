@@ -41,6 +41,8 @@
         <entry key="demo/src/main/res/xml/install_file_paths.xml" value="0.23489583333333333" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_anr.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_caton.xml" value="0.18931159420289856" />
+        <entry key="optimize/src/main/res/layout/fragment_optimize_crash.xml" value="0.1" />
+        <entry key="optimize/src/main/res/layout/fragment_optimize_lancet.xml" value="0.1" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_oom.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/layout_optimize_oom_floatwindow.xml" value="0.2328125" />
         <entry key="pluginTest/src/main/res/drawable/btn_blue_radius.xml" value="0.1" />

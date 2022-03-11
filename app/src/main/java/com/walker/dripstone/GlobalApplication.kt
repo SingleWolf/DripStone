@@ -20,8 +20,15 @@ import com.walker.dripstone.share.ShareActionMgr
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 import com.walker.platform.share.WechatShareConfig
 import leakcanary.LeakCanary
+import java.lang.ref.WeakReference
 
 class GlobalApplication : BaseApplication() {
+
+    companion object {
+        private var currentActivityRef = WeakReference<Activity>(null);
+        fun getCurrentActivity() = currentActivityRef.get()
+    }
+
     override fun onCreate() {
         //setupStrictMode()
         super.onCreate()
@@ -57,14 +64,16 @@ class GlobalApplication : BaseApplication() {
         //location
         LocationHelper.init(this)
         //share
-        val shareConfigs= mutableListOf<IShareConfig>()
+        val shareConfigs = mutableListOf<IShareConfig>()
         shareConfigs.add(WechatShareConfig())
-        ShareActionMgr.get().init(this,shareConfigs)
+        ShareActionMgr.get().init(this, shareConfigs)
     }
 
     private fun registerActivityLifecycle() {
         registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                currentActivityRef = WeakReference(activity)
+            }
 
             override fun onActivityStarted(activity: Activity) {
                 LogHelper.get().d(

@@ -36,13 +36,16 @@ class OOMHelper {
 
     private constructor()
 
-    fun genDumpFile(): Boolean {
+    fun genDumpFile(callback: ((path: String) -> Unit)? = null): Boolean {
         val hprofParentPath =
             "${StorageHelper.getRootPath()}/dump_gc"
-        return genDumpFile(hprofParentPath)
+        return genDumpFile(hprofParentPath, callback)
     }
 
-    private fun genDumpFile(filePath: String): Boolean {
+    private fun genDumpFile(
+        filePath: String,
+        callback: ((path: String) -> Unit)? = null
+    ): Boolean {
         var result = false
         try {
             val file = File(filePath)
@@ -52,7 +55,8 @@ class OOMHelper {
             val hprofPath = "${filePath}/${DateTimeUtils.getNormalDate()}.hprof"
             android.os.Debug.dumpHprofData(hprofPath)
             result = true
-            LogHelper.get().d(TAG, "genDumpFile successful")
+            LogHelper.get().i(TAG, "genDumpFile successful")
+            callback?.invoke(hprofPath)
         } catch (e: Exception) {
             LogHelper.get().e(TAG, e.message)
         }

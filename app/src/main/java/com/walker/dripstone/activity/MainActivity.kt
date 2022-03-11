@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.util.Log
+import android.view.*
+import android.view.accessibility.AccessibilityEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -22,7 +22,6 @@ import com.walker.common.share.SharePlatform
 import com.walker.common.util.DrawableHelper
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
-import com.walker.core.util.ImageUtils
 import com.walker.core.util.SteepStatusBarUtils
 import com.walker.core.util.ToastUtils
 import com.walker.dripstone.NetworkState
@@ -95,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         LinkHelper.getInstance().transactLink(this)
+        Log.i("MainActivity", "onCreate()");
+        interceptWindowCallback()
     }
 
     private fun initSteepStatusBar() {
@@ -179,6 +180,8 @@ class MainActivity : AppCompatActivity() {
             R.id.action_share -> {
                 execShare()
             }
+            R.id.action_about -> {
+            }
         }// case blocks for other MenuItems (if any)
         return true
     }
@@ -240,5 +243,106 @@ class MainActivity : AppCompatActivity() {
             platform = SharePlatform.MEDIA_WEIXIN
         }
         ShareActionMgr.get().shareImage(this, option, null)
+    }
+
+    fun interceptWindowCallback() {
+        window.callback = object : Window.Callback {
+            override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+                return super@MainActivity.dispatchKeyEvent(event)
+            }
+
+            @SuppressLint("RestrictedApi")
+            override fun dispatchKeyShortcutEvent(event: KeyEvent): Boolean {
+                return super@MainActivity.dispatchKeyShortcutEvent(event)
+            }
+
+            override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+                LogHelper.get().i("MainActivity", "dispatchTouchEvent : $event")
+                return window.superDispatchTouchEvent(event)
+            }
+
+            override fun dispatchTrackballEvent(event: MotionEvent): Boolean {
+                return super@MainActivity.dispatchTrackballEvent(event)
+            }
+
+            override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
+                return super@MainActivity.dispatchGenericMotionEvent(event)
+            }
+
+            override fun dispatchPopulateAccessibilityEvent(event: AccessibilityEvent): Boolean {
+                return super@MainActivity.dispatchPopulateAccessibilityEvent(event)
+            }
+
+            override fun onCreatePanelView(featureId: Int): View? {
+                return super@MainActivity.onCreatePanelView(featureId)
+            }
+
+            override fun onCreatePanelMenu(featureId: Int, menu: Menu): Boolean {
+                return super@MainActivity.onCreatePanelMenu(featureId, menu)
+            }
+
+            override fun onPreparePanel(featureId: Int, view: View?, menu: Menu): Boolean {
+                return super@MainActivity.onPreparePanel(featureId, view, menu)
+            }
+
+            override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
+                return super@MainActivity.onMenuOpened(featureId, menu)
+            }
+
+            override fun onMenuItemSelected(featureId: Int, item: MenuItem): Boolean {
+                return super@MainActivity.onMenuItemSelected(featureId, item)
+            }
+
+            override fun onWindowAttributesChanged(attrs: WindowManager.LayoutParams) {
+                super@MainActivity.onWindowAttributesChanged(attrs)
+            }
+
+            override fun onContentChanged() {
+                super@MainActivity.onContentChanged()
+            }
+
+            override fun onWindowFocusChanged(hasFocus: Boolean) {
+                super@MainActivity.onWindowFocusChanged(hasFocus)
+            }
+
+            override fun onAttachedToWindow() {
+                super@MainActivity.onAttachedToWindow()
+            }
+
+            override fun onDetachedFromWindow() {
+                super@MainActivity.onDetachedFromWindow()
+            }
+
+            override fun onPanelClosed(featureId: Int, menu: Menu) {
+                super@MainActivity.onPanelClosed(featureId, menu)
+            }
+
+            override fun onSearchRequested(): Boolean {
+                return super@MainActivity.onSearchRequested()
+            }
+
+            override fun onSearchRequested(searchEvent: SearchEvent): Boolean {
+                return super@MainActivity.onSearchRequested(searchEvent)
+            }
+
+            override fun onWindowStartingActionMode(callback: ActionMode.Callback): ActionMode? {
+                return super@MainActivity.onWindowStartingActionMode(callback)
+            }
+
+            override fun onWindowStartingActionMode(
+                callback: ActionMode.Callback,
+                type: Int
+            ): ActionMode? {
+                return super@MainActivity.onWindowStartingActionMode(callback, type)
+            }
+
+            override fun onActionModeStarted(mode: ActionMode) {
+                super@MainActivity.onActionModeStarted(mode)
+            }
+
+            override fun onActionModeFinished(mode: ActionMode) {
+                super@MainActivity.onActionModeFinished(mode)
+            }
+        }
     }
 }

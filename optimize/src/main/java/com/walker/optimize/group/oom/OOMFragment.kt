@@ -23,6 +23,7 @@ import com.permissionx.guolindev.callback.ExplainReasonCallback
 import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.BaseApplication
 import com.walker.core.util.DateTimeUtils
+import com.walker.core.util.ToastUtils
 import com.walker.optimize.R
 import com.walker.optimize.group.oom.leakcanary.LeakCanaryHelper
 
@@ -91,12 +92,14 @@ class OOMFragment : Fragment() {
     }
 
     fun onGenDumpFileTapped() {
-        OOMHelper.get().genDumpFile()
+        OOMHelper.get().genDumpFile() {
+            ToastUtils.showCenterLong("获取内存快照成功：\nfilePath=$it")
+
+        }
     }
 
     fun onGetAppMemorySizeTapped() {
         startFloatWindow()
-
         val limitSize = OOMHelper.get().getAppMemorySize2M()
         tvShowInfo?.append("${DateTimeUtils.getNormalDate()}\t\t\t设备对app内存限制为${limitSize}M\r\n")
         val memoryInfo = OOMHelper.get().getMemoryInfo()
@@ -129,7 +132,7 @@ class OOMFragment : Fragment() {
     }
 
     private fun onMockJavaObjLeakTapped() {
-        val test = BitmapFactory.decodeResource(resources,R.drawable.custom)
+        val test = BitmapFactory.decodeResource(resources, R.drawable.custom)
         OOMTest.get().testLeakObject(test)
         LeakCanaryHelper.get().watch(test, "onMockJavaObjLeakTapped")
     }

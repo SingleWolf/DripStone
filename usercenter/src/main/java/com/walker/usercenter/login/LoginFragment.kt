@@ -1,5 +1,6 @@
 package com.walker.usercenter.login
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -37,6 +38,7 @@ class LoginFragment : BaseMvpFragment<LoginPresenter>(), LoginView {
 
     override fun loginSuccess() {
         ToastUtils.showCenter("登录成功")
+        requireActivity().setResult(Activity.RESULT_OK)
         mActivity?.finish()
     }
 
@@ -44,12 +46,15 @@ class LoginFragment : BaseMvpFragment<LoginPresenter>(), LoginView {
         when (errCode) {
             LoginModel.CODE_INVALID_INFO -> {
                 ToastUtils.showCenter("用户信息有误")
+                requireActivity().setResult(Activity.RESULT_CANCELED)
             }
             LoginModel.CODE_CONN_ERROR -> {
                 ToastUtils.showCenter("服务连接失败")
+                requireActivity().setResult(Activity.RESULT_CANCELED)
             }
             else -> {
                 ToastUtils.showCenter("登录异常")
+                requireActivity().setResult(Activity.RESULT_CANCELED)
             }
         }
     }

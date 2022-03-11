@@ -30,7 +30,8 @@
                     android:hint="用户名"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="walker" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,7 +46,8 @@
                     android:hint="密 码"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="pass1234" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

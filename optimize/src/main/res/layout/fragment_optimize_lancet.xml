@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTryCatch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="try/catch兜底" />
+
+    <TextView
+        android:id="@+id/tvAopLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="获取个人信息" />
+</LinearLayout>

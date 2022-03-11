@@ -8,6 +8,7 @@ import com.walker.common.view.titleview.TitleView
 import com.walker.optimize.group.anr.AnrFragment
 import com.walker.optimize.group.caton.CatonFragment
 import com.walker.optimize.group.crash.CrashFragment
+import com.walker.optimize.group.lancet.LancetFragment
 import com.walker.optimize.group.network.NetSpeedFragment
 import com.walker.optimize.group.oom.OOMFragment
 import com.walker.optimize.group.trace.TraceMethodFragment
@@ -36,6 +37,9 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             }
             OOMFragment.KEY_ID -> {
                 OOMFragment.instance();
+            }
+            LancetFragment.KEY_ID -> {
+                LancetFragment.instance();
             }
             else -> null
         }
