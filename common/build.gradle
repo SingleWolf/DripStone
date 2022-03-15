@@ -16,7 +16,7 @@ android {
 
         // 指定CPU架构，打入APK lib/CPU平台
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
@@ -46,7 +46,7 @@ dependencies {
 
     api project(':core')
     //PictureSelector
-    implementation ('io.github.lucksiege:pictureselector:v2.7.3-rc03'){
+    implementation('io.github.lucksiege:pictureselector:v2.7.3-rc03') {
         exclude group: 'org.jetbrains.kotlin'
     }
     //Glide

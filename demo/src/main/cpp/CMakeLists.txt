@@ -21,7 +21,12 @@ add_library(
 # ${ANDROID_ABI} 之前用的
 
 # TODO 第二步：导入库文件
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/../jniLibs/${CMAKE_ANDROID_ARCH_ABI}")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/../jniLibs/${CMAKE_ANDROID_ARCH_ABI}")
+
+add_library(libfmod SHARED IMPORTED)
+set_target_properties(libfmod PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../jniLibs/${CMAKE_ANDROID_ARCH_ABI}/libfmod.so)
+add_library(libfmodL SHARED IMPORTED)
+set_target_properties(libfmodL PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../jniLibs/${CMAKE_ANDROID_ARCH_ABI}/libfmodL.so)
 
 #[[find_library(
         log-varAAAA
@@ -32,6 +37,6 @@ target_link_libraries(
         VoiceChange
         #${log-varAAAA}
         log # 自动寻找  # 具体的库 链接到 libVoiceChange.so里面去
-        fmod # 具体的库 链接到 libVoiceChange.so里面去
-        fmodL # 具体的库 链接到 libVoiceChange.so里面去
+        libfmod # 具体的库 链接到 libVoiceChange.so里面去
+        libfmodL # 具体的库 链接到 libVoiceChange.so里面去
 )

@@ -16,13 +16,13 @@ android {
         // 配置我们自己的C/C++代码要编译哪些CPU架构
         externalNativeBuild {
             cmake {
-                abiFilters 'armeabi-v7a', 'x86'
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
         }
 
         // 配置打包时会把哪些CPU架构打包进去
         ndk {
-            abiFilters 'armeabi-v7a', 'x86'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
 

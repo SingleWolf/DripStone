@@ -29,13 +29,13 @@ android {
             cmake {
                 // cppFlags "" // 默认五大平台
                 // 指定CPU架构，Cmake的本地库， 例如：VoiceChange ---> armeabi-v7a
-                abiFilters "armeabi-v7a"
+                abiFilters 'armeabi-v7a' , 'arm64-v8a'
             }
         }
 
         // 指定CPU架构，打入APK lib/CPU平台
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters 'armeabi-v7a' , 'arm64-v8a'
         }
         signingConfig signingConfigs.keySign
     }
@@ -109,11 +109,11 @@ dependencies {
 }
 
 //Build构件过程
-gradle.taskGraph.whenReady{
-    it.allTasks.each{
+gradle.taskGraph.whenReady {
+    it.allTasks.each {
         task ->
             println("---- Task name : ${task.name}")
-            task.dependsOn.each{
+            task.dependsOn.each {
                 t ->
                     println "   ----- Class : ${t.class}"
             }

@@ -6,7 +6,7 @@ using namespace FMOD; // fmod的命名空间
 extern "C" JNIEXPORT void JNICALL Java_com_walker_demo_fmod_Voice_voiceChangeNative
         (JNIEnv *env, jobject thiz, jint mode, jstring path) {
 
-    char *content_ = "默认 播放完毕";
+    const char *content_ = "默认 播放完毕";
 
 // C认识的字符串
     const char *path_ = env->GetStringUTFChars(path, NULL);

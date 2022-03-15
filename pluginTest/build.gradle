@@ -23,13 +23,13 @@ android {
         externalNativeBuild {
             cmake {
                 // cppFlags "" // 默认五大平台
-                abiFilters "armeabi-v7a"
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
         }
 
         // 指定CPU架构，打入APK lib/CPU平台
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
         signingConfig signingConfigs.keySign
     }
