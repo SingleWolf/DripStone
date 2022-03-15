@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @Summary 网络测试辅助类
  */
 public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
-    private static final String TAG="NetSpeedHelper";
+    private static final String TAG = "NetSpeedHelper";
     private static AtomicReference<NetSpeedHelper> mAtomicReference = new AtomicReference<>(null);
     private CopyOnWriteArrayList<OnNetSpeedListener> mListenerList = new CopyOnWriteArrayList<>();
     private INetSpeedMonitor mNetSpeedMonitor;
@@ -21,7 +21,7 @@ public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
             if (mAtomicReference.get() != null) {
                 return mAtomicReference.get();
             }
-            Log.d(TAG,"NetSpeedHelper generate instance");
+            Log.d(TAG, "NetSpeedHelper generate instance");
             mAtomicReference.compareAndSet(null, new NetSpeedHelper());
         }
     }
@@ -47,7 +47,7 @@ public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
     @Override
     public void register() {
         if (mNetSpeedMonitor != null) {
-            Log.d(TAG,"register()");
+            Log.d(TAG, "register()");
             mNetSpeedMonitor.register();
         }
     }
@@ -55,29 +55,30 @@ public class NetSpeedHelper implements INetSpeedMonitor, OnNetSpeedListener {
     @Override
     public void unregister() {
         if (mNetSpeedMonitor != null) {
-            Log.d(TAG,"unregister()");
+            Log.d(TAG, "unregister()");
             mNetSpeedMonitor.unregister();
+            mListenerList.clear();
         }
     }
 
     @Override
     public void onNetChanged(NetSpeed netSpeed) {
         for (OnNetSpeedListener listener : mListenerList) {
-            Log.d(TAG,"当前网速状态="+netSpeed.toString());
+            Log.d(TAG, "当前网速状态=" + netSpeed.toString());
             listener.onNetChanged(netSpeed);
         }
     }
 
     public void setOnNetSpeedListener(OnNetSpeedListener listener) {
         if (listener != null) {
-            Log.d(TAG,"setOnNetSpeedListener()");
+            Log.d(TAG, "setOnNetSpeedListener()");
             mListenerList.add(listener);
         }
     }
 
     public void removeNetSpeedListener(OnNetSpeedListener listener) {
         if (listener != null) {
-            Log.d(TAG,"removeNetSpeedListener()");
+            Log.d(TAG, "removeNetSpeedListener()");
             mListenerList.remove(listener);
         }
     }

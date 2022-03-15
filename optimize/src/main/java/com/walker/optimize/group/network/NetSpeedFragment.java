@@ -15,7 +15,6 @@ import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.walker.core.base.mvc.BaseFragment;
-import com.walker.core.ui.loadsir.EmptyCallback;
 import com.walker.core.ui.loadsir.LoadingCallback;
 import com.walker.optimize.R;
 import com.walker.optimize.databinding.FragmentOptimizeNetSpeedBinding;
@@ -77,6 +76,8 @@ public class NetSpeedFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        //不移除监听接口，会导致内存泄漏
+        NetSpeedHelper.get().removeNetSpeedListener(mListener);
         NetSpeedHelper.get().unregister();
     }
 
