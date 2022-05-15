@@ -37,5 +37,6 @@ open class BaseApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         context = this
+        application = this
     }
 }

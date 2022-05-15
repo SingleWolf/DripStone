@@ -1,4 +1,6 @@
 apply plugin: 'java-library'
+apply plugin: 'groovy'
+
 tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 repositories {
     google()
@@ -8,6 +10,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation gradleApi()
+    implementation localGroovy()
     implementation 'com.android.tools.build:gradle:3.5.0'
 }
 

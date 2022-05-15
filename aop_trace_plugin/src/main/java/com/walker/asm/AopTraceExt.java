@@ -1,6 +1,8 @@
 package com.walker.asm;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 public class AopTraceExt {
     private boolean enable;
@@ -19,6 +21,8 @@ public class AopTraceExt {
     }
 
     public void setTracePrefix(ArrayList<String> list) {
-        this.tracePrefix.addAll(list);
+        for (String prefix : list) {
+            tracePrefix.add(prefix.replaceAll(Matcher.quoteReplacement(File.separator), "/"));
+        }
     }
 }

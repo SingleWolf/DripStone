@@ -1,10 +1,13 @@
 package com.walker.network.retrofit.base;
 
 import com.walker.network.dsn.OkHttpDns;
-import com.walker.network.retrofit.environment.IEnvironment;
+import com.walker.network.environment.EnvironmentActivity;
+import com.walker.network.environment.IEnvironment;
 import com.walker.network.retrofit.errorhandler.HttpErrorHandler;
 import com.walker.network.retrofit.interceptor.CommonRequestInterceptor;
 import com.walker.network.retrofit.interceptor.CommonResponseInterceptor;
+import com.walker.network.wakeNetwork.DoraemonWeakNetworkInterceptor;
+import com.walker.network.wakeNetwork.WeakNetworkManager;
 
 import java.util.HashMap;
 
@@ -30,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class RetrofitNetworkApi implements IEnvironment {
     private static INetworkRequiredInfo mNetworkRequiredInfo;
-    private static final int CACHE_SIZE=100 * 1024 * 1024;
+    private static final int CACHE_SIZE = 100 * 1024 * 1024;
     private static HashMap<String, Retrofit> mRetrofitHashMap = new HashMap<>();
     private String mBaseUrl;
     private OkHttpClient mOkHttpClient;
@@ -45,7 +48,9 @@ public abstract class RetrofitNetworkApi implements IEnvironment {
 
     public static void init(INetworkRequiredInfo networkRequiredInfo) {
         mNetworkRequiredInfo = networkRequiredInfo;
-        mIsFormal = true;
+        mIsFormal = EnvironmentActivity.isOfficialEnvironment(networkRequiredInfo.getApplicationContext());
+        int networkType = EnvironmentActivity.getNetworkType(networkRequiredInfo.getApplicationContext());
+        WeakNetworkManager.get().setType(networkType);
     }
 
     protected Retrofit getRetrofit(Class service) {
@@ -71,9 +76,10 @@ public abstract class RetrofitNetworkApi implements IEnvironment {
             }
             int cacheSize = CACHE_SIZE;
             okHttpClientBuilder.cache(new Cache(mNetworkRequiredInfo.getApplicationContext().getCacheDir(), cacheSize));
+            okHttpClientBuilder.addInterceptor(new DoraemonWeakNetworkInterceptor());
             okHttpClientBuilder.addInterceptor(new CommonRequestInterceptor(mNetworkRequiredInfo));
             okHttpClientBuilder.addInterceptor(new CommonResponseInterceptor());
-            if (mNetworkRequiredInfo != null &&(mNetworkRequiredInfo.isDebug())) {
+            if (mNetworkRequiredInfo != null && (mNetworkRequiredInfo.isDebug())) {
                 HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 okHttpClientBuilder.addInterceptor(httpLoggingInterceptor);
@@ -84,11 +90,11 @@ public abstract class RetrofitNetworkApi implements IEnvironment {
     }
 
 
-    public  <T> ObservableTransformer<T, T> applySchedulers(final Observer<T> observer) {
+    public <T> ObservableTransformer<T, T> applySchedulers(final Observer<T> observer) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
-                Observable<T> observable = (Observable<T>)upstream
+                Observable<T> observable = (Observable<T>) upstream
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .map(getAppErrorHandler())

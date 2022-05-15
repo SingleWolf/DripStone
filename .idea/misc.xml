@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ASMIdeaPluginConfiguration">
-    <asm skipDebug="false" skipFrames="false" skipCode="false" expandFrames="false" />
+    <asm skipDebug="true" skipFrames="true" skipCode="true" expandFrames="false" />
     <groovy codeStyle="LEGACY" />
   </component>
   <component name="ASMPluginConfiguration">
@@ -13,7 +13,10 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="../../../.gradle/caches/transforms-2/files-2.1/f7af72fbb32d3e1908d6abcc39ea61e8/permissionx-1.5.0/res/drawable/permissionx_default_dialog_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_window_background.xml" value="0.21851851851851853" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.4609053497942387" />
+        <entry key="app/src/main/res/menu/tab_menu.xml" value="0.21927083333333333" />
         <entry key="collect/src/main/res/layout/activity_collect_cook_list.xml" value="0.18931159420289856" />
         <entry key="collect/src/main/res/layout/activity_collect_show.xml" value="0.18931159420289856" />
         <entry key="collect/src/main/res/layout/fragment_collect_news.xml" value="0.18931159420289856" />
@@ -33,12 +36,16 @@
         <entry key="demo/src/main/res/layout/fragment_demo_app_a2b.xml" value="0.18931159420289856" />
         <entry key="demo/src/main/res/layout/fragment_demo_app_install.xml" value="0.23489583333333333" />
         <entry key="demo/src/main/res/layout/fragment_demo_float_window.xml" value="0.2328125" />
+        <entry key="demo/src/main/res/layout/fragment_demo_large_bitmap.xml" value="0.23333333333333334" />
+        <entry key="demo/src/main/res/layout/fragment_demo_qiang.xml" value="0.2328125" />
         <entry key="demo/src/main/res/layout/fragment_demo_task_flow.xml" value="0.2328125" />
         <entry key="demo/src/main/res/layout/fragment_large_bitmap.xml" value="0.11927083333333334" />
         <entry key="demo/src/main/res/layout/fragment_short_cut.xml" value="0.23333333333333334" />
         <entry key="demo/src/main/res/layout/layout_demo_meeting_come.xml" value="0.21875" />
         <entry key="demo/src/main/res/layout/layout_meeting_come.xml" value="0.2328125" />
         <entry key="demo/src/main/res/xml/install_file_paths.xml" value="0.23489583333333333" />
+        <entry key="network/src/main/res/drawable/ic_controls.xml" value="0.11354166666666667" />
+        <entry key="network/src/main/res/layout/network_activity_environment.xml" value="0.11145833333333334" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_anr.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_caton.xml" value="0.18931159420289856" />
         <entry key="optimize/src/main/res/layout/fragment_optimize_crash.xml" value="0.1" />

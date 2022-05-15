@@ -70,7 +70,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
         System.out.println("\n\n---------- TraceMethodPlugin from library ----------\n\n");
         DefaultDomainObjectSet<com.android.build.gradle.api.LibraryVariant> libraryExtensions = libraryExtension.getLibraryVariants();
         for (LibraryVariant var : libraryExtensions) {
-            String variantName = var.getName();
+            final String variantName = var.getName();
             String myTaskName = "createFullJar" + firstCharUpperCase(variantName);
             Task task = project.getTasks().findByName(myTaskName);
             if (task == null) {
@@ -111,7 +111,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
         for (ApplicationVariant var : applicationVariants) {
             //transformClassesWithDexBuilderForDebug/transformClassesWithDexBuilderForRelease
             // 在task将class文件编译成dex文件之前插桩代码
-            String variantName = var.getName();
+            final String variantName = var.getName();
             String myTaskName = "transformClassesWithDexBuilderFor" + firstCharUpperCase(variantName);
             Task task = project.getTasks().findByName(myTaskName);
             task.doFirst(new Action<Task>() {
@@ -155,7 +155,7 @@ public class TraceMethodPlugin implements Plugin<Project> {
             InputStream is = jarFile.getInputStream(jarEntry);
 
             String className = jarEntry.getName();
-            if (className.endsWith(".class")&&isTraceClz(className)) {
+            if (className.endsWith(".class") && isTraceClz(className)) {
                 byte[] sourceBytes = IOUtils.toByteArray(is);
                 byte[] byteCode = modifyClass(sourceBytes);
                 jos.write(byteCode);

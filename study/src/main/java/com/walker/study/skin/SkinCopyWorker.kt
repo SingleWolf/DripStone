@@ -46,11 +46,11 @@ class SkinCopyWorker(
 
                 applicationContext.assets.open(SKIN_BLUE__FILE_NAME).use { inputStream ->
                     File(SkinFragment.SKIN_BLUE_PATH).writeBytes(inputStream.readBytes())
-                    LogHelper.get().d(TAG, "Copy skin-blue.apk file from assets")
+                    LogHelper.get().i(TAG, "Copy skin-blue.apk file from assets")
                 }
                 applicationContext.assets.open(SKIN_BLACK__FILE_NAME).use { inputStream ->
                     File(SkinFragment.SKIN_BLACK_PATH).writeBytes(inputStream.readBytes())
-                    LogHelper.get().d(TAG, "Copy skin-black.apk from assets")
+                    LogHelper.get().i(TAG, "Copy skin-black.apk from assets")
                 }
                 ToastUtils.show("加载成功")
                 Result.success()

@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import com.walker.common.skin.SkinResources;
 import com.walker.common.skin.SkinViewSupport;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
  */
 public class SkinAttribute {
     private static final List<String> mAttributes = new ArrayList<>();
+
     static {
         mAttributes.add("background");
         mAttributes.add("src");
@@ -62,7 +64,7 @@ public class SkinAttribute {
                     resId = Integer.parseInt(attributeValue.substring(1));
                 }
                 //资源id异常，规避
-                if(resId<=0){
+                if (resId <= 0) {
                     continue;
                 }
                 SkinPair skinPair = new SkinPair(attributeName, resId);
@@ -89,20 +91,25 @@ public class SkinAttribute {
     }
 
     static class SkinView {
-        View view;
+        WeakReference<View> viewRef;
         //这个View的能被 换肤的属性与它对应的id 集合
         List<SkinPair> skinPairs;
 
         public SkinView(View view, List<SkinPair> skinPairs) {
-            this.view = view;
+            this.viewRef = new WeakReference<>(view);
             this.skinPairs = skinPairs;
 
         }
+
         /**
          * 对一个View中的所有的属性进行修改
          */
         public void applySkin() {
-            applySkinSupport();
+            View view = viewRef.get();
+            if (view == null) {
+                return;
+            }
+            applySkinSupport(view);
             for (SkinPair skinPair : skinPairs) {
                 Drawable left = null, top = null, right = null, bottom = null;
                 switch (skinPair.attributeName) {
@@ -151,7 +158,8 @@ public class SkinAttribute {
                 }
             }
         }
-        private void applySkinSupport() {
+
+        private void applySkinSupport(View view) {
             if (view instanceof SkinViewSupport) {
                 ((SkinViewSupport) view).applySkin();
             }

@@ -36,12 +36,12 @@ public class OkHttpDns implements Dns {
         if (!TextUtils.isEmpty(ip)) {
             //如果ip不为null，直接使用该ip进行网络请求
             List<InetAddress> inetAddresses = Arrays.asList(InetAddress.getAllByName(ip));
-            LogHelper.get().d("OkHttpDns", "AliDsn.SYSTEM.lookup:" + inetAddresses, true);
+            LogHelper.get().i("OkHttpDns", "AliDsn.SYSTEM.lookup:" + inetAddresses, true);
             return inetAddresses;
         }
         //如果返回null，走系统DNS服务解析域名
         List<InetAddress> inetAddresses = Dns.SYSTEM.lookup(hostname);
-        LogHelper.get().d("OkHttpDns", "Dns.SYSTEM.lookup:" + inetAddresses, true);
+        LogHelper.get().i("OkHttpDns", "Dns.SYSTEM.lookup:" + inetAddresses, true);
         return inetAddresses;
     }
 }

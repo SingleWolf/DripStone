@@ -2,9 +2,13 @@ package com.walker.study.skin.core;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -26,7 +30,7 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
     };
 
     //记录对应VIEW的构造函数
-    private static final Class<?>[] mConstructorSignature = new Class[] {
+    private static final Class<?>[] mConstructorSignature = new Class[]{
             Context.class, AttributeSet.class};
 
     private static final HashMap<String, Constructor<? extends View>> mConstructorMap =
@@ -42,7 +46,6 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
         this.activity = activity;
         skinAttribute = new SkinAttribute();
     }
-
 
 
     @Override
@@ -68,10 +71,16 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
         if (-1 != name.indexOf('.')) {
             return null;
         }
+        if (TextUtils.equals("ImageView", name)) {
+            View view = createImageView(context, attrs);
+            if (view != null) {
+                return view;
+            }
+        }
         //不包含就要在解析的 节点 name前，拼上： android.widget. 等尝试去反射
         for (int i = 0; i < mClassPrefixList.length; i++) {
             View view = createView(mClassPrefixList[i] + name, context, attrs);
-            if(view!=null){
+            if (view != null) {
                 return view;
             }
         }
@@ -89,7 +98,6 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
     }
 
 
-
     private Constructor<? extends View> findConstructor(Context context, String name) {
         Constructor<? extends View> constructor = mConstructorMap.get(name);
         if (constructor == null) {
@@ -105,8 +113,6 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
     }
 
 
-
-
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         return null;
@@ -117,5 +123,10 @@ public class SkinLayoutInflaterFactory implements LayoutInflater.Factory2, Obser
     public void update(Observable o, Object arg) {
         SkinThemeUtils.updateStatusBarColor(activity);
         skinAttribute.applySkin();
+    }
+
+    @NonNull
+    protected AppCompatImageView createImageView(Context context, AttributeSet attrs) {
+        return new AppCompatImageView(context, attrs);
     }
 }

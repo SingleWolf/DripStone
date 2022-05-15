@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -65,13 +67,13 @@ class LargeBitmapFragment : BaseFragment() {
 
     private fun sendBitmap4MultiProcess() {
         imageBitmap?.apply {
-           ShowBitmap2Activity.start(holdContext,this)
+            ShowBitmap2Activity.start(holdContext, this)
         }
     }
 
     private fun sendBitmap4SameProcess() {
         imageBitmap?.apply {
-            ShowBitmapActivity.start(holdContext,this)
+            ShowBitmapActivity.start(holdContext, this)
         }
     }
 
@@ -114,8 +116,11 @@ class LargeBitmapFragment : BaseFragment() {
 
     fun showImage(imageView: ImageView, isCircle: Boolean, filePath: String) {
         LogHelper.get().i("showImage", "filePath=$filePath")
-        val loadConfig = ImageConfig()
-        loadConfig.isCircle = isCircle
-        ImageLoadHelper.loadFile(imageView, filePath, loadConfig)
+//        val loadConfig = ImageConfig()
+//        loadConfig.isCircle = isCircle
+//        ImageLoadHelper.loadFile(imageView, filePath, loadConfig)
+        Log.d("WalkerTest","imageView class is ${imageView.javaClass.name}")
+
+        imageView.setImageBitmap(BitmapFactory.decodeFile(filePath))
     }
 }

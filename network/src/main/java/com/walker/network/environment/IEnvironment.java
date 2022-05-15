@@ -1,4 +1,4 @@
-package com.walker.network.retrofit.environment;
+package com.walker.network.environment;
 
 /**
  * @Author Walker

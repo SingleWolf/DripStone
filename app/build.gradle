@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: com.walker.buildsrc.hotfix.HotfixPlugin
+apply plugin: com.walker.buildsrc.hotfix.HotfixPlugin
+
 def androidID = rootProject.ext.androidID
 
 android {
@@ -57,26 +58,81 @@ android {
     }
 }
 
-//HotfixExt {
-//    onDebug true
-//    outputPath 'xxx'
-//    applicationName 'com.walker.dripstone.GlobalApplication'
-//}
+HotfixExt {
+    open false
+    onDebug true
+    applicationName 'com.walker.dripstone.GlobalApplication'
+    fixPrefix["com.walker."]
+}
 
 apply plugin: 'aop.lancet.plugin'
+apply plugin: 'check.native.plugin'
+apply plugin: 'aop.opthread.plugin'
+apply plugin: 'aop.opimage.plugin'
+apply plugin: 'aop.antishake.plugin'
+
 buildscript {
     repositories {
         google()
         jcenter()
         //自定义插件maven地址
         maven { url '../repo/walker_lancet_repo' }
+        maven { url '../repo/privacy_repo' }
+        maven { url '../repo/aop_optimize_repo' }
     }
     dependencies {
         //加载自定义插件 group + module + version
         //classpath 'com.walker.lancet:lancet-plugin:1.0.1'
         classpath 'io.github.singlewolf:lancet-plugin:1.0.0'
+        classpath 'com.walker.plugin:privacy:1.0.0'
+        classpath 'com.walker.plugin:aop_optimize_plugin:1.0.4'
     }
 }
+
+PrivacyExt{
+    enable64Bit true
+}
+
+apply plugin: 'AndResGuard'
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    use7zip = true
+    useSign = true
+    // It will keep the origin path of your resources when it's true
+    keepRoot = true
+    // If set, name column in arsc those need to proguard will be kept to this value
+    fixedResName = "arg"
+    // It will merge the duplicated resources, but don't rely on this feature too much.
+    // it's always better to remove duplicated resource from repo
+    mergeDuplicatedRes = true
+    whiteList = [
+            // your icon
+            "R.drawable.icon",
+            // for fabric
+            "R.string.com.crashlytics.*",
+            // for google-services
+            "R.string.google_app_id",
+            "R.string.gcm_defaultSenderId",
+            "R.string.default_web_client_id",
+            "R.string.ga_trackingId",
+            "R.string.firebase_database_url",
+            "R.string.google_api_key",
+            "R.string.google_crash_reporting_api_key",
+            "R.string.project_id",
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.21'
+        //path = "/usr/local/bin/7za"
+    }
+}
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"

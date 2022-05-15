@@ -114,7 +114,8 @@ public class NewsListFragment extends BaseMvvmFragment<FragmentCollectNewsBindin
 
     @Override
     protected void loadEnd() {
-
+        viewDataBinding.refreshLayout.finishLoadMore();
+        viewDataBinding.refreshLayout.finishRefresh();
     }
 
 }

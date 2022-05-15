@@ -3,6 +3,7 @@ package com.walker.study.util;
 import android.content.Context;
 import android.os.Environment;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -182,5 +183,13 @@ public class Utils {
         if (!cache.exists())
             cache.mkdirs();
         return cache;
+    }
+
+    public static void close(Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

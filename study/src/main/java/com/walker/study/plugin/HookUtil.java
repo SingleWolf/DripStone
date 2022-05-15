@@ -58,7 +58,6 @@ public class HookUtil {
                 Class<?> clazz = Class.forName("android.app.ActivityManager");
                 singletonField = clazz.getDeclaredField("IActivityManagerSingleton");
             }
-
             singletonField.setAccessible(true);
             Object singleton = singletonField.get(null);
 

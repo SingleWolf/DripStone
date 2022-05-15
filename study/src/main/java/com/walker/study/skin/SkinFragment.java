@@ -47,15 +47,16 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnLoad) {
+            LogHelper.get().i("SkinFragment", "skin-load");
             SkinWorker.INSTANCE.transactSkin();
         } else if (id == R.id.btnBlue) {
-            LogHelper.get().d("SkinFragment", "skin-blue");
+            LogHelper.get().i("SkinFragment", "skin-blue");
             SkinManager.getInstance().loadSkin(SKIN_BLUE_PATH);
         } else if (id == R.id.btnBlack) {
-            LogHelper.get().d("SkinFragment", "skin-black");
+            LogHelper.get().i("SkinFragment", "skin-black");
             SkinManager.getInstance().loadSkin(SKIN_BLACK_PATH);
         } else if (id == R.id.btnYellow) {
-            LogHelper.get().d("SkinFragment", "skin-yellow");
+            LogHelper.get().i("SkinFragment", "skin-yellow");
             SkinManager.getInstance().loadSkin(null);
         }
     }

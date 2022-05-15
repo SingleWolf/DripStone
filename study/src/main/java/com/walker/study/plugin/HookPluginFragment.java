@@ -94,7 +94,6 @@ public class HookPluginFragment extends BaseFragment {
             public Boolean apply(@NonNull Boolean isLoaded) throws Exception {
                 if (!isLoaded) {
                     loadingPlugin();
-                    Thread.sleep(3 * 1000);
                 }
                 return true;
             }
@@ -143,8 +142,9 @@ public class HookPluginFragment extends BaseFragment {
     private void loadingPlugin() {
         if (!sPluginLoaded) {
             LoadUtil.loadPlugin(BaseApplication.context, BaseApplication.pluginLoadPath);
+            HookApplication.init(BaseApplication.pluginLoadPath, BaseApplication.application);
             sPluginLoaded = true;
-            LogHelper.get().d("PluginTest", "load plugin successful !");
+            LogHelper.get().i("PluginTest", "load plugin successful !");
         }
     }
 }

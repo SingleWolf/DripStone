@@ -4,4 +4,5 @@ include ':app', ':core', ':ui', ':optimize', ':optimize-crash', ':common', ':net
 rootProject.name = 'DripStone'
 include ':remoteserver'
 include ':aop_trace_plugin'
-include ':security'
+//include ':security'
+include ':aop_optimize_plugin'

@@ -23,10 +23,10 @@ public class ExecutorUtils {
     private static Handler gMainHandler = null;
 
     //不包含网络传输处理过程的线程池执行对象
-    private static ExecutorService gThreadPoolExecutor = null;
+    private static ThreadPoolExecutor gThreadPoolExecutor = null;
 
     //包含网络传输处理过程的线程池执行对象
-    private static ExecutorService gNetProcessThreadPoolExecutor = null;
+    private static ThreadPoolExecutor gNetProcessThreadPoolExecutor = null;
 
     //执行不包含网络传输处理过程的线程
     public static void executeTask(Runnable task) {
@@ -82,7 +82,7 @@ public class ExecutorUtils {
                     60L, TimeUnit.SECONDS,
                     new LinkedBlockingQueue<Runnable>(),
                     Executors.defaultThreadFactory());
-
+            //gThreadPoolExecutor.allowCoreThreadTimeOut(true);
         }
     }
 
@@ -92,13 +92,14 @@ public class ExecutorUtils {
                     60L, TimeUnit.SECONDS,
                     new LinkedBlockingQueue<Runnable>(),
                     Executors.defaultThreadFactory());
-
+            gNetProcessThreadPoolExecutor.allowCoreThreadTimeOut(true);
         }
     }
 
     private static void ensureScheduledThreadPoolExecutor() {
         if (gScheduledThreadPoolExecutor == null) {
             gScheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(2);
+            gScheduledThreadPoolExecutor.allowCoreThreadTimeOut(true);
         }
     }
 

@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.walker.core.log.LogHelper;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -53,6 +55,7 @@ public class HookApplication {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            LogHelper.get().e("HookApplication",e.toString());
         }
     }
 
@@ -116,6 +119,7 @@ public class HookApplication {
 
         } catch (Exception e) {
             e.printStackTrace();
+            LogHelper.get().e("HookApplication",e.toString());
         }
         return delegateApplication != null ? delegateApplication : application;
     }
@@ -147,6 +151,7 @@ public class HookApplication {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            LogHelper.get().e("HookApplication",e.toString());
         }
 
     }

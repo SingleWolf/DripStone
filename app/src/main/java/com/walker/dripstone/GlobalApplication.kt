@@ -2,12 +2,15 @@ package com.walker.dripstone
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
+import com.walker.common.BuildConfig
 import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
@@ -19,6 +22,7 @@ import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.dripstone.share.ShareActionMgr
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 import com.walker.platform.share.WechatShareConfig
+import com.walker.study.hotfix.HotfixHelper
 import leakcanary.LeakCanary
 import java.lang.ref.WeakReference
 
@@ -27,6 +31,11 @@ class GlobalApplication : BaseApplication() {
     companion object {
         private var currentActivityRef = WeakReference<Activity>(null);
         fun getCurrentActivity() = currentActivityRef.get()
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+//        HotfixHelper.installPatch(this, java.io.File("/sdcard/patch.jar"))
     }
 
     override fun onCreate() {

@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap
 class GlideLoadMgr : IImageLoad {
 
     companion object {
-        val urlMap = ConcurrentHashMap<ImageView, String>()
+        val urlMap = ConcurrentHashMap<Int, String>()
     }
 
     private val defaultImageConfig: ImageConfig by lazy {
@@ -54,7 +54,7 @@ class GlideLoadMgr : IImageLoad {
         loadListener: OnImageLoadListener?
     ) {
         loadImage(view, url, config)
-        urlMap[view] = url
+        urlMap[view.hashCode()] = url
         loadListener?.let {
             ProgressManager.addListener(url, it)
         }
@@ -188,7 +188,7 @@ class GlideLoadMgr : IImageLoad {
 
         fun getUrl(): String? {
             view ?: return ""
-            return urlMap[view]
+            return urlMap[view.hashCode()]
         }
 
         override fun onLoadFailed(@Nullable errorDrawable: Drawable?) {
