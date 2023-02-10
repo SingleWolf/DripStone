@@ -11,9 +11,6 @@ import com.walker.common.location.gaode.GaodeLocation
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.demo.R
 
-/**
- * 跨应用跳转
- */
 class LocationFragment : BaseFragment() {
 
     companion object {

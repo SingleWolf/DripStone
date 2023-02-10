@@ -14,6 +14,7 @@ import com.walker.demo.location.LocationFragment
 import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
 import com.walker.demo.taskflow.TaskFlowFragment
+import com.walker.demo.vcard.VCardTestFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -31,6 +32,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance()
             LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance()
             FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance()
+            VCardTestFragment.KEY_ID -> VCardTestFragment.instance()
             else -> null
         }
         return fragment

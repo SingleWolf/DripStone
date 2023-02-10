@@ -13,6 +13,7 @@ import com.walker.demo.shortcut.ShortcutFragment
 import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
 import com.walker.demo.taskflow.TaskFlowFragment
+import com.walker.demo.vcard.VCardTestFragment
 
 class MockSummaryData private constructor() {
     var dataPool: List<Summary>
@@ -105,6 +106,14 @@ class MockSummaryData private constructor() {
         Summary().run {
             key = FloatWindowFragment.KEY_ID
             title = "悬浮框操作"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = VCardTestFragment.KEY_ID
+            title = "vcard"
             uri = ""
             desc = ""
             summaryList.add(this)

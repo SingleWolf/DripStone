@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tvTest"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="test" />
+
+    <TextView
+        android:id="@+id/tvScan"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/tvTest"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="二维码扫描" />
+
+    <RelativeLayout
+        android:id="@+id/layoutShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_react_theme_r10"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/icon_face_smile" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivIcon"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            tools:text="张三" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/ivIcon"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="职位：经理一级" />
+
+        <!--移动电话-->
+        <TextView
+            android:id="@+id/tvLabelPhone"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/ivIcon"
+            android:gravity="center_vertical"
+            android:text="移动电话"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/ivIcon"
+            android:layout_toRightOf="@id/tvLabelPhone"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="1381111111" />
+        <!--工作电话-->
+        <TextView
+            android:id="@+id/tvLabelTell"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelPhone"
+            android:gravity="center_vertical"
+            android:text="工作电话"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tvTell"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelPhone"
+            android:layout_toRightOf="@id/tvLabelTell"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="021 00000000" />
+        <!--工作地址-->
+        <TextView
+            android:id="@+id/tvLabelAddress"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelTell"
+            android:gravity="center_vertical"
+            android:text="工作地址"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelTell"
+            android:layout_toRightOf="@id/tvLabelAddress"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="上海市虹口区曲阳路888号" />
+
+        <!--        电子邮箱-->
+        <TextView
+            android:id="@+id/tvLabelEmail"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelAddress"
+            android:gravity="center_vertical"
+            android:text="电子邮箱"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelAddress"
+            android:layout_toRightOf="@id/tvLabelEmail"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="aaaa@sdc.icbc.com.cn" />
+        <!--        组织-->
+        <TextView
+            android:id="@+id/tvLabelOrganization"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelEmail"
+            android:gravity="center_vertical"
+            android:text="组织"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tvOrganization"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvLabelEmail"
+            android:layout_toRightOf="@id/tvLabelOrganization"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            tools:text="中国工商银行" />
+    </RelativeLayout>
+
+</RelativeLayout>
