@@ -14,12 +14,13 @@ import com.walker.core.util.ToastUtils
 import com.walker.demo.R
 import com.yzq.zxinglibrary.android.CaptureActivity
 import com.yzq.zxinglibrary.common.Constant
-import ezvcard.Ezvcard
-import ezvcard.VCard
-import ezvcard.parameter.AddressType
-import ezvcard.parameter.EmailType
-import ezvcard.parameter.TelephoneType
 import kotlinx.android.synthetic.main.fragment_demo_vacard.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 
 class VCardTestFragment : BaseFragment() {
@@ -29,6 +30,8 @@ class VCardTestFragment : BaseFragment() {
         const val TAG = "VCardTestFragment"
         fun instance() = VCardTestFragment()
     }
+
+    private val mainScope by lazy { MainScope() }
 
     override fun buildView(baseView: View?, savedInstanceState: Bundle?) {
         layoutShow.visibility = View.GONE
@@ -68,7 +71,7 @@ class VCardTestFragment : BaseFragment() {
                     val result = data.getStringExtra(Constant.CODED_CONTENT)
                     LogHelper.get().i(TAG, "onScanParse data= $result", true)
                     result?.also {
-                        if (result.contains("BEGIN:VCARD") && result.contains("END:VCARD")) {
+                        if (VCardUtils.isValid(it)) {
                             parseVCardData(it)
                         } else {
                             ToastUtils.showCenterLong("不是VCrd格式")
@@ -83,11 +86,11 @@ class VCardTestFragment : BaseFragment() {
     private fun onVCardTest() {
         val testStr = "BEGIN:VCARD\n" +
                 "VERSION:3.0\n" +
-                "FN;CHARSET=UTF-8:张三\n" +
-                "TEL;TYPE=CELL:13811111111\n" +
-                "TEL;TYPE=WORK:021 00000000\n" +
+                "FN;CHARSET=UTF-8:李四\n" +
+                "TEL;TYPE=CELL:13811111222\n" +
+                "TEL;TYPE=WORK:021 00000888\n" +
                 "ORG;CHARSET=UTF-8:中国工商银行\n" +
-                "TITLE:经理一级\n" +
+                "TITLE:经理三级\n" +
                 "ADR;TYPE=WORK;UTF-8:上海市虹口区曲阳路888号\n" +
                 "EMAIL;TYPE=internet:aaaa@sdc.icbc.com.cn\n" +
                 "END:VCARD"
@@ -95,66 +98,27 @@ class VCardTestFragment : BaseFragment() {
     }
 
     private fun parseVCardData(dataStr: String) {
-        try {
-            val vcard = Ezvcard.parse(dataStr).first()
-            vcard?.also {
-                LogHelper.get().i(TAG, "$it", true)
-                showInfo(it)
-            }
-        } catch (e: Throwable) {
-            LogHelper.get().i(TAG, e.message, true)
-            layoutShow.visibility = View.GONE
+        mainScope.launch {
+            flow {
+                val vcard = VCardUtils.parseData<VCardEntity>(dataStr)
+                emit(vcard)
+            }.flowOn(Dispatchers.IO).collect { showInfo(it) }
         }
     }
 
-    private fun showInfo(vcard: VCard) {
-        layoutShow.visibility = View.VISIBLE
-        tvName.text = ""
-        tvTitle.text = ""
-        tvTell.text = ""
-        tvPhone.text = ""
-        tvEmail.text = ""
-        tvAddress.text = ""
-        tvOrganization.text = ""
+    private fun showInfo(vcard: VCardEntity?) {
+        vcard?.apply {
+            layoutShow.visibility = View.VISIBLE
 
-        vcard.formattedName?.also {
-            tvName.text = it.value
-        }
-
-        if (vcard.titles.isNotEmpty()) {
-            tvTitle.text = "职位：${vcard.titles[0].value}"
-        }
-
-        vcard.telephoneNumbers?.apply {
-            this.forEachIndexed { index, telephone ->
-                if (telephone.parameters.type.toLowerCase() == TelephoneType.WORK.value) {
-                    tvTell.text = telephone.text
-                } else if (telephone.parameters.type.toLowerCase() == TelephoneType.CELL.value) {
-                    tvPhone.text = telephone.text
-                }
-            }
-        }
-
-        vcard.addresses?.apply {
-            this.forEachIndexed { index, address ->
-                if (address.parameters.type.toLowerCase() == AddressType.WORK.value) {
-                    tvAddress.text = address.poBox
-                }
-            }
-        }
-
-        vcard.emails?.apply {
-            this.forEachIndexed { index, email ->
-                if (email.parameters.type.toLowerCase() == EmailType.INTERNET.value) {
-                    tvEmail.text = email.value
-                }
-            }
-        }
-
-        vcard.organization?.apply {
-            if (this.values.isNotEmpty()) {
-                tvOrganization.text = this.values[0]
-            }
+            tvName.text = this.name
+            tvTitle.text = "职位：${this.title}"
+            tvTell.text = this.tell
+            tvPhone.text = this.phone
+            tvEmail.text = this.email
+            tvAddress.text = this.email
+            tvOrganization.text = this.organization
+        } ?: let {
+            layoutShow.visibility = View.GONE
         }
 
     }
