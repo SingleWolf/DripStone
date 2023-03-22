@@ -115,7 +115,7 @@ class VCardTestFragment : BaseFragment() {
             tvTell.text = this.tell
             tvPhone.text = this.phone
             tvEmail.text = this.email
-            tvAddress.text = this.email
+            tvAddress.text = this.address
             tvOrganization.text = this.organization
         } ?: let {
             layoutShow.visibility = View.GONE

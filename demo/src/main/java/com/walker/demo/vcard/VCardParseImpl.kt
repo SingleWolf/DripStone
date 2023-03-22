@@ -9,18 +9,24 @@ import ezvcard.parameter.EmailType
 import ezvcard.parameter.TelephoneType
 
 class VCardParseImpl : IVCardParser {
+
+    companion object {
+        const val TAG = "VCardParseImpl"
+    }
+
     override fun onParse(data: String): String {
         var result = mutableMapOf<String, String>()
         result[VCardConst.ERR_CODE] = VCardConst.CODE_FAIL
         result[VCardConst.ERR_MSG] = "failed"
+
         try {
-            val vcard = Ezvcard.parse(data).first()
-            vcard?.also {
-                LogHelper.get().i(VCardTestFragment.TAG, "$it", true)
+            val goalData = rectifyData(data)
+            Ezvcard.parse(goalData).first()?.also {
+                LogHelper.get().i(TAG, "$it", true)
                 result = mapInfo(it)
             }
         } catch (e: Throwable) {
-            LogHelper.get().i(VCardTestFragment.TAG, e.message, true)
+            LogHelper.get().i(TAG, e.message, true)
             result[VCardConst.ERR_MSG] = e.toString()
         }
         return GsonUtils.toJson(result)
@@ -28,6 +34,9 @@ class VCardParseImpl : IVCardParser {
 
     override fun isValid(data: String) =
         data.contains(VCardConst.FLAG_BEGIN) && data.contains(VCardConst.FLAG_END)
+
+    fun rectifyData(data: String) =
+        data.replaceBefore(VCardConst.FLAG_BEGIN, "").replaceAfterLast(VCardConst.FLAG_END, "")
 
     private fun mapInfo(vcard: VCard): MutableMap<String, String> {
         val result = mutableMapOf<String, String>();
