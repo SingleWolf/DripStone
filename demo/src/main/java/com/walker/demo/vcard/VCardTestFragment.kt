@@ -3,6 +3,7 @@ package com.walker.demo.vcard
 import android.Manifest
 import android.app.Activity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
@@ -86,13 +87,17 @@ class VCardTestFragment : BaseFragment() {
     private fun onVCardTest() {
         val testStr = "BEGIN:VCARD\n" +
                 "VERSION:3.0\n" +
-                "FN;CHARSET=UTF-8:李四\n" +
-                "TEL;TYPE=CELL:13811111222\n" +
-                "TEL;TYPE=WORK:021 00000888\n" +
-                "ORG;CHARSET=UTF-8:中国工商银行\n" +
-                "TITLE:经理三级\n" +
-                "ADR;TYPE=WORK;UTF-8:上海市虹口区曲阳路888号\n" +
-                "EMAIL;TYPE=internet:aaaa@sdc.icbc.com.cn\n" +
+                "FN;CHARSET=UTF-8:峰峰\n" +
+                "N;CHARSET=UTF-8:1;2;3\n" +
+                "TEL;TYPE=CELL:1\n" +
+                "TEL;TYPE=WORK:1\n" +
+                "TEL;TYPE=HOME:1\n" +
+                "TEL;TYPE=FAX:1\n" +
+                "ORG;CHARSET=UTF-8:中国工商银行股份有限公司\n" +
+                "TITLE:\n" +
+                "ADR;TYPE=WORK;UTF-8:办公室地址\n" +
+                "EMAIL;TYPE=internet:caisy@163.com\n" +
+                "ID:888804029\n" +
                 "END:VCARD"
         parseVCardData(testStr)
     }
@@ -108,10 +113,40 @@ class VCardTestFragment : BaseFragment() {
 
     private fun showInfo(vcard: VCardEntity?) {
         vcard?.apply {
+            LogHelper.get().i(TAG, this.toString())
+
             layoutShow.visibility = View.VISIBLE
 
-            tvName.text = this.name
-            tvTitle.text = "职位：${this.title}"
+            var showName = ""
+            if (TextUtils.isEmpty(this.lastName)) {
+                showName = this.userName
+            } else {
+                val structuredNames = this.lastName.split(";")
+                var first = ""
+                var second = ""
+                structuredNames?.also {
+                    it.forEachIndexed { index, s ->
+                        if (index == 0) {
+                            first = s
+                        } else {
+                            second = "${second}${s}"
+                        }
+                    }
+                }
+                showName = if (TextUtils.isEmpty(second)) {
+                    "${first}${this.userName}"
+                } else {
+                    "${second}${first}"
+                }
+            }
+            tvName.text = showName
+
+            if (!TextUtils.isEmpty(this.title)) {
+                tvTitle.visibility = View.VISIBLE
+                tvTitle.text = "职位：${this.title}"
+            } else {
+                tvTitle.visibility = View.GONE
+            }
             tvTell.text = this.tell
             tvPhone.text = this.phone
             tvEmail.text = this.email

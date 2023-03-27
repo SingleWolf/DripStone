@@ -12,6 +12,7 @@ class VCardParseImpl : IVCardParser {
 
     companion object {
         const val TAG = "VCardParseImpl"
+        const val PROPERTY_NAME_ID = "ID"
     }
 
     override fun onParse(data: String): String {
@@ -40,8 +41,33 @@ class VCardParseImpl : IVCardParser {
 
     private fun mapInfo(vcard: VCard): MutableMap<String, String> {
         val result = mutableMapOf<String, String>();
+
+        vcard.getExtendedProperty(PROPERTY_NAME_ID)?.also {
+            result[VCardConst.ID] = it.value
+        }
+
+        vcard.structuredName?.also {
+            var lastName = ""
+            it.family?.apply {
+                lastName = this
+            }
+
+            lastName = if (it.given != null) {
+                "${lastName};${it.given}"
+            } else {
+                "${lastName};"
+            }
+
+            it.additionalNames?.forEach { v ->
+                if (v != null) {
+                    lastName = "${lastName};${v}"
+                }
+            }
+            result[VCardConst.LAST_NAME] = lastName
+        }
+
         vcard.formattedName?.also {
-            result[VCardConst.NAME] = it.value
+            result[VCardConst.USER_NAME] = it.value
         }
 
         if (vcard.titles.isNotEmpty()) {
@@ -52,9 +78,12 @@ class VCardParseImpl : IVCardParser {
             this.forEachIndexed { index, telephone ->
                 if (telephone.parameters.type.toLowerCase() == TelephoneType.WORK.value) {
                     result[VCardConst.TELL] = telephone.text
-
                 } else if (telephone.parameters.type.toLowerCase() == TelephoneType.CELL.value) {
                     result[VCardConst.PHONE] = telephone.text
+                } else if (telephone.parameters.type.toLowerCase() == TelephoneType.HOME.value) {
+                    result[VCardConst.CALL] = telephone.text
+                } else if (telephone.parameters.type.toLowerCase() == TelephoneType.FAX.value) {
+                    result[VCardConst.FAX] = telephone.text
                 }
             }
         }
