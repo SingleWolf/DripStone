@@ -4,19 +4,19 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
-import com.permissionx.guolindev.callback.ForwardToSettingsCallback
 import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.core.log.LogHelper
+import com.walker.dripstone.R
 import com.walker.dripstone.links.LinkHelper
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LogHelper.get().d("SplashActivity", "onCreate", true)
+        setContentView(R.layout.activity_splash)
         if (intent.data == null) {
             // 解决部分机型按Home键退出桌面再次点击应用图标会重新启动欢迎页面问题
             if (!isTaskRoot) {

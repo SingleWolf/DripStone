@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.scwang.smartrefresh.header.WaterDropHeader
@@ -19,13 +18,11 @@ import com.walker.collect.R
 import com.walker.collect.cook.cooklist.CookListActivity
 import com.walker.collect.news.headline.NewsSummaryFragment
 import com.walker.common.activity.ShowActivity
-import com.walker.common.media.image.ImageConfig
 import com.walker.common.media.image.ImageLoadHelper
 import com.walker.common.view.banner.holder.HolderCreator
 import com.walker.common.view.banner.holder.ViewHolder
 import com.walker.common.view.banner.view.MultiBanner
 import com.walker.common.view.banner.view.MultiBanner.OnPageClickListener
-import com.walker.common.view.transformer.ScaleInTransformer
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.core.util.DisplayUtils
 
@@ -137,9 +134,9 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
         }
     }
 
-    fun genInstance(channelId: String): Fragment? {
-        val fragment: Fragment? = when (channelId) {
-            NewsSummaryFragment.channel_id -> NewsSummaryFragment()
+    fun genInstance(channelId: String): String? {
+        val fragment: String? = when (channelId) {
+            NewsSummaryFragment.channel_id -> NewsSummaryFragment().javaClass.simpleName
             else -> null
         }
         return fragment

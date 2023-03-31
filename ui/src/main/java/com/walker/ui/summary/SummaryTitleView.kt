@@ -2,7 +2,6 @@ package com.walker.ui.summary
 
 import android.content.Context
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
@@ -19,16 +18,16 @@ class SummaryTitleView(context: Context) : TitleView(context) {
         ShowActivity.start(context, viewModel.key, viewModel.title, ::genInstance)
     }
 
-    fun genInstance(channelId: String): Fragment? {
-        var fragment: Fragment? = when (channelId) {
-            FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance()
-            ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance()
-            GoodFishFragment.KEY_ID -> GoodFishFragment.instance()
-            StarFragment.KEY_ID -> StarFragment.instance()
-            PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance()
-            MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance()
-            SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance()
-            DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance()
+    fun genInstance(channelId: String): String? {
+        var fragment: String? = when (channelId) {
+            FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance().javaClass.simpleName
+            ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance().javaClass.simpleName
+            GoodFishFragment.KEY_ID -> GoodFishFragment.instance().javaClass.simpleName
+            StarFragment.KEY_ID -> StarFragment.instance().javaClass.simpleName
+            PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance().javaClass.simpleName
+            MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance().javaClass.simpleName
+            SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance().javaClass.simpleName
+            DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.simpleName
             else -> null
         }
         return fragment

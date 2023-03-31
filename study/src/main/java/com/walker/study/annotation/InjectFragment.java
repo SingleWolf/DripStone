@@ -37,10 +37,10 @@ public class InjectFragment extends BaseFragment {
         baseView.findViewById(R.id.btnRetrofit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowActivity.Companion.start(getContext(), "my_retrofit", "手撕Retrofit", new Function1<String, Fragment>() {
+                ShowActivity.Companion.start(getContext(), "my_retrofit", "手撕Retrofit", new Function1<String, String>() {
                     @Override
-                    public Fragment invoke(String s) {
-                        return MyRetrofitFragment.instance();
+                    public String invoke(String s) {
+                        return MyRetrofitFragment.instance().getClass().getSimpleName();
                     }
                 });
             }

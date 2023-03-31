@@ -37,8 +37,8 @@ class GlideLoadMgr : IImageLoad {
 
     private val defaultImageConfig: ImageConfig by lazy {
         ImageConfig()?.apply {
-            placeholder = R.drawable.empty
-            errorImage = R.drawable.error
+            placeholder = R.drawable.ic_image_default
+            errorImage = R.drawable.ic_image_default
             isCircle = false
         }
     }
@@ -108,7 +108,6 @@ class GlideLoadMgr : IImageLoad {
                 .load(url)
                 .downloadOnly(simpleTarget)
         } catch (e: Exception) {
-            e.printStackTrace()
             downloadListener.onError(e.toString())
         }
     }
@@ -156,7 +155,6 @@ class GlideLoadMgr : IImageLoad {
                 .apply(RequestOptions.fitCenterTransform())
                 .into(simpleTarget)
         } catch (e: Exception) {
-            e.printStackTrace()
             downloadListener.onError(e.toString())
         }
     }

@@ -2,7 +2,6 @@ package com.walker.demo.summary
 
 import android.content.Context
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
 import com.walker.demo.a2b.AppA2bFragment
@@ -21,18 +20,18 @@ class SummaryTitleView(context: Context) : TitleView(context) {
         ShowActivity.start(context, viewModel.key, viewModel.title, ::genInstance)
     }
 
-    fun genInstance(channelId: String): Fragment? {
-        val fragment: Fragment? = when (channelId) {
-            RepoFragment.KEY_ID -> RepoFragment.instance()
-            VoiceChangeFragment.KEY_ID -> VoiceChangeFragment.instance()
-            AppA2bFragment.KEY_ID -> AppA2bFragment.instance()
-            AppInstallFragment.KEY_ID -> AppInstallFragment.instance()
-            ShortcutFragment.KEY_ID -> ShortcutFragment.instance()
-            LocationFragment.KEY_ID -> LocationFragment.instance()
-            TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance()
-            LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance()
-            FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance()
-            VCardTestFragment.KEY_ID -> VCardTestFragment.instance()
+    fun genInstance(channelId: String): String? {
+        val fragment: String? = when (channelId) {
+            RepoFragment.KEY_ID -> RepoFragment.instance().javaClass.simpleName
+            VoiceChangeFragment.KEY_ID -> VoiceChangeFragment.instance().javaClass.simpleName
+            AppA2bFragment.KEY_ID -> AppA2bFragment.instance().javaClass.simpleName
+            AppInstallFragment.KEY_ID -> AppInstallFragment.instance().javaClass.simpleName
+            ShortcutFragment.KEY_ID -> ShortcutFragment.instance().javaClass.simpleName
+            LocationFragment.KEY_ID -> LocationFragment.instance().javaClass.simpleName
+            TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance().javaClass.simpleName
+            LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance().javaClass.simpleName
+            FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance().javaClass.simpleName
+            VCardTestFragment.KEY_ID -> VCardTestFragment.instance().javaClass.simpleName
             else -> null
         }
         return fragment

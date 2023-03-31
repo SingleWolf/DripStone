@@ -2,7 +2,6 @@ package com.walker.study.summary
 
 import android.content.Context
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
 import com.walker.study.annotation.InjectFragment
@@ -17,16 +16,16 @@ class SummaryTitleView(context: Context) : TitleView(context) {
         ShowActivity.start(context, viewModel.key, viewModel.title, ::genInstance)
     }
 
-    fun genInstance(channelId: String): Fragment? {
-        var fragment: Fragment? = when (channelId) {
-            HotfixFragment.KEY_ID -> HotfixFragment.instance()
-            HookPluginFragment.KEY_ID -> HookPluginFragment.instance()
-            InjectFragment.KEY_ID -> InjectFragment.instance()
-            ThreadFragment.KEY_ID -> ThreadFragment.instance()
-            WebviewUseFragment.KEY_ID -> WebviewUseFragment.instance()
-            SkinFragment.KEY_ID -> SkinFragment.instance()
+    fun genInstance(channelId: String): String? {
+        var fragmentClazz: String? = when (channelId) {
+            HotfixFragment.KEY_ID -> HotfixFragment.instance().javaClass.simpleName
+            HookPluginFragment.KEY_ID -> HookPluginFragment.instance().javaClass.simpleName
+            InjectFragment.KEY_ID -> InjectFragment.instance().javaClass.simpleName
+            ThreadFragment.KEY_ID -> ThreadFragment.instance().javaClass.simpleName
+            WebviewUseFragment.KEY_ID -> WebviewUseFragment.instance().javaClass.simpleName
+            SkinFragment.KEY_ID -> SkinFragment.instance().javaClass.simpleName
             else -> null
         }
-        return fragment
+        return fragmentClazz
     }
 }

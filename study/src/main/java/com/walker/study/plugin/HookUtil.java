@@ -214,6 +214,7 @@ public class HookUtil {
                                 // 启动代理Intent
                                 Intent proxyIntent = (Intent) intentField.get(msg.obj);
                                 boolean isPlugin = proxyIntent.getBooleanExtra(KEY_HOOK_TAG, false);
+                                Log.d(TAG,"即将跳转的activity="+proxyIntent.getComponent().getShortClassName());
                                 if (isPlugin) {
                                     Log.d(TAG, "hookHandler->替换activity");
                                     // 启动插件的 Intent
@@ -245,7 +246,7 @@ public class HookUtil {
                                                 .getDeclaredField("mIntent");
                                         mIntentField.setAccessible(true);
                                         Intent proxyIntent = (Intent) mIntentField.get(launchActivityItem);
-
+                                        Log.d(TAG,"即将跳转的activity="+proxyIntent.getComponent().getClassName());
                                         // 目标 intent 替换 proxyIntent
                                         boolean isPlugin = proxyIntent.getBooleanExtra(KEY_HOOK_TAG, false);
                                         if (isPlugin) {

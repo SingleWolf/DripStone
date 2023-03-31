@@ -22,13 +22,13 @@ class ShowActivity : AppCompatActivity() {
 
         const val KEY_PARAM_CHANNEL_NAME = "key_param_channel_name"
 
-        var taskCollection = LinkedHashMap<String, (channelId: String) -> Fragment?>()
+        var taskFunction: ((channelId: String) -> String?)? = null
 
         fun start(
             context: Context,
             channelId: String,
             channelName: String,
-            task: ((channelId: String) -> Fragment?)?
+            task: ((channelId: String) -> String?)?
         ) {
             if (TextUtils.isEmpty(channelId)) {
                 return
@@ -37,9 +37,7 @@ class ShowActivity : AppCompatActivity() {
             Intent(context, ShowActivity::class.java).let {
                 it.putExtra(KEY_PARAM_CHANNEL_ID, channelId)
                 it.putExtra(KEY_PARAM_CHANNEL_NAME, channelName)
-                task?.run {
-                    taskCollection[channelId] = this
-                }
+                taskFunction = task
                 if (context is Activity) {
                     context.startActivity(it)
                 } else {
@@ -80,8 +78,16 @@ class ShowActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        var fragment: Fragment? = taskCollection[channelId]?.invoke(channelId)
-        fragment?:let { fragment=EmptyFragment.instance(channelName) }
+        var fragmentClazz: String? = taskFunction?.invoke(channelId)
+        var fragment: Fragment? = null
+        fragmentClazz?.apply {
+            Class.forName(this)?.newInstance()?.also {
+                if (it is Fragment) {
+                    fragment = it
+                }
+            }
+        }
+        fragment ?: let { fragment = EmptyFragment.instance(channelName) }
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
         transaction.add(R.id.container, fragment!!, fragment!!.javaClass.name).commit()

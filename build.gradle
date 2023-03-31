@@ -10,9 +10,8 @@ buildscript {
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:${rootProject.ext.gradle_ersion}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'
+        classpath "com.android.tools.build:gradle:$gradle_ersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.ext.kotlin_version}"
     }
 }
 

@@ -2,7 +2,6 @@ package com.walker.optimize.summary
 
 import android.content.Context
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
 import com.walker.optimize.group.anr.AnrFragment
@@ -18,28 +17,28 @@ class SummaryTitleView(context: Context) : TitleView(context) {
         ShowActivity.start(context, viewModel.key, viewModel.title, ::genInstance)
     }
 
-    fun genInstance(channelId: String): Fragment? {
-        var fragment: Fragment? = when (channelId) {
+    fun genInstance(channelId: String): String? {
+        var fragment: String? = when (channelId) {
             TraceMethodFragment.KEY_ID -> {
-                TraceMethodFragment.instance();
+                TraceMethodFragment.instance().javaClass.simpleName
             }
             NetSpeedFragment.KEY_ID -> {
-                NetSpeedFragment.instance();
+                NetSpeedFragment.instance().javaClass.simpleName
             }
             CatonFragment.KEY_ID -> {
-                CatonFragment.instance();
+                CatonFragment.instance().javaClass.simpleName
             }
             AnrFragment.KEY_ID -> {
-                AnrFragment.instance();
+                AnrFragment.instance().javaClass.simpleName
             }
             CrashFragment.KEY_ID -> {
-                CrashFragment.instance();
+                CrashFragment.instance().javaClass.simpleName
             }
             OOMFragment.KEY_ID -> {
-                OOMFragment.instance();
+                OOMFragment.instance().javaClass.simpleName
             }
             LancetFragment.KEY_ID -> {
-                LancetFragment.instance();
+                LancetFragment.instance().javaClass.simpleName
             }
             else -> null
         }

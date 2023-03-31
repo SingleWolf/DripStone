@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.walker.dripstone.home.Channel
-import java.util.*
 
 class HeadlineFragmentAdapter(
     fm: FragmentManager,
@@ -17,18 +16,11 @@ class HeadlineFragmentAdapter(
 ) {
 
     private var channels: ObservableList<Channel> = ObservableArrayList()
-    private val fragmentHashMap = HashMap<String, Fragment>()
 
     override fun getItemCount() = channels.size
 
     override fun createFragment(pos: Int): Fragment {
-        val key = "${channels[pos].channelId}_$${channels[pos].channelName}"
-        var fragment: Fragment? = fragmentHashMap[key]
-        fragment ?: let {
-            fragment = HomeChannelModel.createFragment(channels[pos].channelId)
-            fragmentHashMap.put(key, fragment!!)
-        }
-        return fragment!!
+        return HomeChannelModel.createFragment(channels[pos].channelId)
     }
 
     fun setChannels(channels: ObservableList<Channel>) {
