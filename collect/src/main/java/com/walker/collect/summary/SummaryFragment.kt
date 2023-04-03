@@ -136,7 +136,7 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
 
     fun genInstance(channelId: String): String? {
         val fragment: String? = when (channelId) {
-            NewsSummaryFragment.channel_id -> NewsSummaryFragment().javaClass.simpleName
+            NewsSummaryFragment.channel_id -> NewsSummaryFragment().javaClass.name
             else -> null
         }
         return fragment

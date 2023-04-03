@@ -20,25 +20,25 @@ class SummaryTitleView(context: Context) : TitleView(context) {
     fun genInstance(channelId: String): String? {
         var fragment: String? = when (channelId) {
             TraceMethodFragment.KEY_ID -> {
-                TraceMethodFragment.instance().javaClass.simpleName
+                TraceMethodFragment.instance().javaClass.name
             }
             NetSpeedFragment.KEY_ID -> {
-                NetSpeedFragment.instance().javaClass.simpleName
+                NetSpeedFragment.instance().javaClass.name
             }
             CatonFragment.KEY_ID -> {
-                CatonFragment.instance().javaClass.simpleName
+                CatonFragment.instance().javaClass.name
             }
             AnrFragment.KEY_ID -> {
-                AnrFragment.instance().javaClass.simpleName
+                AnrFragment.instance().javaClass.name
             }
             CrashFragment.KEY_ID -> {
-                CrashFragment.instance().javaClass.simpleName
+                CrashFragment.instance().javaClass.name
             }
             OOMFragment.KEY_ID -> {
-                OOMFragment.instance().javaClass.simpleName
+                OOMFragment.instance().javaClass.name
             }
             LancetFragment.KEY_ID -> {
-                LancetFragment.instance().javaClass.simpleName
+                LancetFragment.instance().javaClass.name
             }
             else -> null
         }

@@ -22,16 +22,16 @@ class SummaryTitleView(context: Context) : TitleView(context) {
 
     fun genInstance(channelId: String): String? {
         val fragment: String? = when (channelId) {
-            RepoFragment.KEY_ID -> RepoFragment.instance().javaClass.simpleName
-            VoiceChangeFragment.KEY_ID -> VoiceChangeFragment.instance().javaClass.simpleName
-            AppA2bFragment.KEY_ID -> AppA2bFragment.instance().javaClass.simpleName
-            AppInstallFragment.KEY_ID -> AppInstallFragment.instance().javaClass.simpleName
-            ShortcutFragment.KEY_ID -> ShortcutFragment.instance().javaClass.simpleName
-            LocationFragment.KEY_ID -> LocationFragment.instance().javaClass.simpleName
-            TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance().javaClass.simpleName
-            LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance().javaClass.simpleName
-            FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance().javaClass.simpleName
-            VCardTestFragment.KEY_ID -> VCardTestFragment.instance().javaClass.simpleName
+            RepoFragment.KEY_ID -> RepoFragment.instance().javaClass.name
+            VoiceChangeFragment.KEY_ID -> VoiceChangeFragment.instance().javaClass.name
+            AppA2bFragment.KEY_ID -> AppA2bFragment.instance().javaClass.name
+            AppInstallFragment.KEY_ID -> AppInstallFragment.instance().javaClass.name
+            ShortcutFragment.KEY_ID -> ShortcutFragment.instance().javaClass.name
+            LocationFragment.KEY_ID -> LocationFragment.instance().javaClass.name
+            TaskFlowFragment.KEY_ID -> TaskFlowFragment.instance().javaClass.name
+            LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance().javaClass.name
+            FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance().javaClass.name
+            VCardTestFragment.KEY_ID -> VCardTestFragment.instance().javaClass.name
             else -> null
         }
         return fragment

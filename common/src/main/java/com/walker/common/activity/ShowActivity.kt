@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.walker.common.R
 import com.walker.common.fragment.EmptyFragment
+import com.walker.core.log.LogHelper
 import kotlinx.android.synthetic.main.activity_common_show.*
 
 class ShowActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class ShowActivity : AppCompatActivity() {
     private lateinit var channelName: String
 
     companion object {
+        const val TAG = "ShowActivity"
         const val KEY_PARAM_CHANNEL_ID = "key_param_channel_id"
 
         const val KEY_PARAM_CHANNEL_NAME = "key_param_channel_name"
@@ -79,17 +81,26 @@ class ShowActivity : AppCompatActivity() {
 
     private fun initFragment() {
         var fragmentClazz: String? = taskFunction?.invoke(channelId)
-        var fragment: Fragment? = null
-        fragmentClazz?.apply {
-            Class.forName(this)?.newInstance()?.also {
-                if (it is Fragment) {
-                    fragment = it
-                }
-            }
-        }
+        var fragment = findFragmentByClazz(fragmentClazz)
         fragment ?: let { fragment = EmptyFragment.instance(channelName) }
         val manger = supportFragmentManager
         val transaction = manger.beginTransaction()
         transaction.add(R.id.container, fragment!!, fragment!!.javaClass.name).commit()
+    }
+
+    private fun findFragmentByClazz(fragmentClazz: String?): Fragment? {
+        var fragment: Fragment? = null
+        fragmentClazz?.apply {
+            try {
+                Class.forName(this)?.newInstance()?.also {
+                    if (it is Fragment) {
+                        fragment = it
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                LogHelper.get().e(TAG, "findFragmentByClazz error : $e")
+            }
+        }
+        return fragment
     }
 }

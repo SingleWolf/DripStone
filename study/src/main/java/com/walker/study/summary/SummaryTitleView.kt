@@ -18,12 +18,12 @@ class SummaryTitleView(context: Context) : TitleView(context) {
 
     fun genInstance(channelId: String): String? {
         var fragmentClazz: String? = when (channelId) {
-            HotfixFragment.KEY_ID -> HotfixFragment.instance().javaClass.simpleName
-            HookPluginFragment.KEY_ID -> HookPluginFragment.instance().javaClass.simpleName
-            InjectFragment.KEY_ID -> InjectFragment.instance().javaClass.simpleName
-            ThreadFragment.KEY_ID -> ThreadFragment.instance().javaClass.simpleName
-            WebviewUseFragment.KEY_ID -> WebviewUseFragment.instance().javaClass.simpleName
-            SkinFragment.KEY_ID -> SkinFragment.instance().javaClass.simpleName
+            HotfixFragment.KEY_ID -> HotfixFragment.instance().javaClass.name
+            HookPluginFragment.KEY_ID -> HookPluginFragment.instance().javaClass.name
+            InjectFragment.KEY_ID -> InjectFragment.instance().javaClass.name
+            ThreadFragment.KEY_ID -> ThreadFragment.instance().javaClass.name
+            WebviewUseFragment.KEY_ID -> WebviewUseFragment.instance().javaClass.name
+            SkinFragment.KEY_ID -> SkinFragment.instance().javaClass.name
             else -> null
         }
         return fragmentClazz

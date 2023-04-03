@@ -33,6 +33,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="60dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </FrameLayout>
@@ -40,13 +41,12 @@
         <com.walker.common.skin.SkinBottomNavigationView
             android:id="@+id/bottom_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="bottom"
             android:background="@android:color/white"
             app:itemIconTint="@color/color_state_menu_navi"
             app:itemTextColor="@color/color_state_menu_navi"
             app:labelVisibilityMode="labeled"
-            app:layout_behavior=".utils.BottomNavigationBehavior"
             design:menu="@menu/tab_menu" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

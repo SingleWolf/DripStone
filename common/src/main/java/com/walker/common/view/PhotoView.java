@@ -58,7 +58,7 @@ public class PhotoView extends View {
     }
 
     private void init(Context context) {
-        bitmap = ImageUtils.getBitmap(R.drawable.empty);
+        bitmap = ImageUtils.getBitmap(R.drawable.ic_empty);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         gestureDetector = new GestureDetector(context, new PhotoGestureDetector());
         // 关闭长按响应

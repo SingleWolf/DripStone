@@ -5,15 +5,13 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import java.lang.ref.SoftReference;
-
 /**
  * @Author Walker
  * @Date 2020-03-26 11:02
  * @Summary Toast工具类
  */
 public class ToastUtils {
-    private static SoftReference<Toast> sToastRef = new SoftReference<>(null);
+    private static Toast sToast;
     private static Context sContext;
 
     public static void init(Context context) {
@@ -39,10 +37,9 @@ public class ToastUtils {
     private static void show(String msg, int time) {
         if (sContext != null && !TextUtils.isEmpty(msg)) {
             ExecutorUtils.runTaskOnUiThread(() -> {
-                Toast toast = sToastRef.get();
-                checkGenToast(toast, time);
-                toast.setText(msg);
-                toast.show();
+                checkGenToast(time);
+                sToast.setText(msg);
+                sToast.show();
             });
         }
     }
@@ -50,22 +47,20 @@ public class ToastUtils {
     private static void showCenter(String msg, int time) {
         if (sContext != null && !TextUtils.isEmpty(msg)) {
             ExecutorUtils.runTaskOnUiThread(() -> {
-                Toast toast = sToastRef.get();
-                checkGenToast(toast, time);
-                toast.setText(msg);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                checkGenToast(time);
+                sToast.setText(msg);
+                sToast.setGravity(Gravity.CENTER, 0, 0);
+                sToast.show();
             });
         }
     }
 
-    private static void checkGenToast(Toast toast, int time) {
-        if (toast != null) {
-            toast.cancel();
-            toast.setDuration(time);
+    private static void checkGenToast(int time) {
+        if (sToast != null) {
+            sToast.cancel();
+            sToast.setDuration(time);
         } else {
-            toast = Toast.makeText(sContext, "", time);
-            sToastRef = new SoftReference<>(toast);
+            sToast = Toast.makeText(sContext, "", time);
         }
     }
 }

@@ -20,14 +20,14 @@ class SummaryTitleView(context: Context) : TitleView(context) {
 
     fun genInstance(channelId: String): String? {
         var fragment: String? = when (channelId) {
-            FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance().javaClass.simpleName
-            ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance().javaClass.simpleName
-            GoodFishFragment.KEY_ID -> GoodFishFragment.instance().javaClass.simpleName
-            StarFragment.KEY_ID -> StarFragment.instance().javaClass.simpleName
-            PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance().javaClass.simpleName
-            MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance().javaClass.simpleName
-            SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance().javaClass.simpleName
-            DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.simpleName
+            FloatLayoutFragment.KEY_ID -> FloatLayoutFragment.instance().javaClass.name
+            ColorLayoutFragment.KEY_ID -> ColorLayoutFragment.instance().javaClass.name
+            GoodFishFragment.KEY_ID -> GoodFishFragment.instance().javaClass.name
+            StarFragment.KEY_ID -> StarFragment.instance().javaClass.name
+            PhotoViewFragment.KEY_ID -> PhotoViewFragment.getInstance().javaClass.name
+            MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance().javaClass.name
+            SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance().javaClass.name
+            DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.name
             else -> null
         }
         return fragment

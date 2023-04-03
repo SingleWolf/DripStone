@@ -10,7 +10,7 @@
      android:layout_marginBottom="4dp"
         android:layout_width="100dp"
         android:layout_height="80dp"
-        android:background="@drawable/error"/>
+        android:background="@drawable/ic_error"/>
 
     <TextView
         android:textSize="18sp"

@@ -1,7 +1,6 @@
 package com.walker.optimize.group.oom
 
 import android.Manifest
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Process
@@ -132,7 +131,7 @@ class OOMFragment : Fragment() {
     }
 
     private fun onMockJavaObjLeakTapped() {
-        val test = BitmapFactory.decodeResource(resources, R.drawable.custom)
+        val test = BitmapFactory.decodeResource(resources, R.drawable.ic_custom)
         OOMTest.get().testLeakObject(test)
         LeakCanaryHelper.get().watch(test, "onMockJavaObjLeakTapped")
     }
