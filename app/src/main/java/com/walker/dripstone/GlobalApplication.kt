@@ -15,6 +15,7 @@ import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.common.share.IShareConfig
+import com.walker.common.window.FloatingWindowManager
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
 import com.walker.dripstone.activity.SplashActivity
@@ -76,6 +77,8 @@ class GlobalApplication : BaseApplication() {
         val shareConfigs = mutableListOf<IShareConfig>()
         shareConfigs.add(WechatShareConfig())
         ShareActionMgr.get().init(this, shareConfigs)
+        //FloatingWindow
+        FloatingWindowManager.init(this)
     }
 
     private fun registerActivityLifecycle() {

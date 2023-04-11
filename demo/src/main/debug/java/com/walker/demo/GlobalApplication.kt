@@ -31,5 +31,7 @@ class GlobalApplication :BaseApplication() {
         ToastUtils.init(this)
         //StorageHelper
         StorageHelper.init(context, "DripStone")
+        //FloatingWindow
+        FloatingWindowManager.init(this)
     }
 }

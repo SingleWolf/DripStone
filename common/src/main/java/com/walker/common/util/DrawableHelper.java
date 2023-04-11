@@ -129,6 +129,9 @@ public class DrawableHelper {
                 return createBitmapSafely(width, height, config, retryCount - 1);
             }
             return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -165,13 +168,13 @@ public class DrawableHelper {
     /**
      * 设置Drawable的颜色
      * <b>这里不对Drawable进行mutate()，会影响到所有用到这个Drawable的地方，如果要避免，请先自行mutate()</b>
-     *
+     * <p>
      * please use {@link DrawableCompat#setTint(Drawable, int)} replace this.
      */
     @Deprecated
     public static ColorFilter setDrawableTintColor(Drawable drawable, @ColorInt int tintColor) {
         LightingColorFilter colorFilter = new LightingColorFilter(Color.argb(255, 0, 0, 0), tintColor);
-        if(drawable != null){
+        if (drawable != null) {
             drawable.setColorFilter(colorFilter);
         }
         return colorFilter;

@@ -14,6 +14,7 @@ import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
 import com.walker.demo.taskflow.TaskFlowFragment
 import com.walker.demo.vcard.VCardTestFragment
+import com.walker.demo.window.PrePageBitmapFragment
 
 class MockSummaryData private constructor() {
     var dataPool: List<Summary>
@@ -114,6 +115,14 @@ class MockSummaryData private constructor() {
         Summary().run {
             key = VCardTestFragment.KEY_ID
             title = "vcard"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
+
+        Summary().run {
+            key = PrePageBitmapFragment.KEY_ID
+            title = "陈页旧图"
             uri = ""
             desc = ""
             summaryList.add(this)

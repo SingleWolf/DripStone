@@ -14,6 +14,7 @@ import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
 import com.walker.demo.taskflow.TaskFlowFragment
 import com.walker.demo.vcard.VCardTestFragment
+import com.walker.demo.window.PrePageBitmapFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -32,6 +33,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             LargeBitmapFragment.KEY_ID -> LargeBitmapFragment.instance().javaClass.name
             FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance().javaClass.name
             VCardTestFragment.KEY_ID -> VCardTestFragment.instance().javaClass.name
+            PrePageBitmapFragment.KEY_ID -> PrePageBitmapFragment.instance().javaClass.name
             else -> null
         }
         return fragment
