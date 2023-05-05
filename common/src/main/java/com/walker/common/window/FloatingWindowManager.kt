@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.core.view.marginLeft
 import com.walker.common.util.DrawableHelper
 import com.walker.core.util.DisplayUtils
+import java.util.*
 
 object FloatingWindowManager {
 
@@ -123,15 +126,21 @@ object FloatingWindowManager {
         // 根据目标 index 从 mParams 集合中找到目标 token
         val targetToken = mParams[targetIndex].token
 
-
         val floatView = arrayListOf<View>()
+        val sysViewStack=Stack<View>()
 
         mParams.forEachIndexed { index, params ->
             val token = params.token
-            if (token == targetSubToken || token == null || token == targetToken) {
+            if (token == targetSubToken || token == targetToken) {
                 // 根据 index 拿到 mView 中的 View
                 floatView.add(mView[index])
             }
+            if(token==null){
+                sysViewStack.add(mView[index])
+            }
+        }
+        while(!sysViewStack.empty()){
+            floatView.add(sysViewStack.pop())
         }
         return floatView
     }
@@ -170,18 +179,22 @@ object FloatingWindowManager {
         )
         contentLayout.layoutParams = parentLayoutParams
 
-        val subLayoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
-        subLayoutParams.gravity = Gravity.CENTER
-
         viewList.forEach {
             DrawableHelper.createBitmapFromView(it)?.apply {
+                //创建imageview
                 val imageView = ImageView(activity)
-                imageView.layoutParams = subLayoutParams
                 imageView.setImageBitmap(this)
                 contentLayout.addView(imageView)
+                //调整区域大小
+                val layoutParam = imageView.layoutParams
+                layoutParam.width=it.right-it.left
+                layoutParam.height=it.bottom-it.top
+                imageView.layoutParams = layoutParam
+                //获取指定位置
+                var location = intArrayOf(0, 0)
+                it.getLocationOnScreen(location)
+                imageView.x= location[0].toFloat()
+                imageView.y=location[1].toFloat()
             }
         }
 

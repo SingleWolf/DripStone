@@ -74,7 +74,7 @@ public class DrawableHelper {
                 Canvas canvas = sCanvas;
                 canvas.setBitmap(bitmap);
                 canvas.save();
-                canvas.drawColor(Color.WHITE); // 防止 View 上面有些区域空白导致最终 Bitmap 上有些区域变黑
+                canvas.drawColor(Color.TRANSPARENT); // 防止 View 上面有些区域空白导致最终 Bitmap 上有些区域变黑
                 canvas.scale(scale, scale);
                 view.draw(canvas);
                 canvas.restore();
@@ -103,7 +103,7 @@ public class DrawableHelper {
         Canvas canvas = new Canvas(cutBitmap);
         Rect src = new Rect(leftCrop, topCrop, view.getWidth() - rightCrop, view.getHeight() - bottomCrop);
         Rect dest = new Rect(0, 0, view.getWidth() - rightCrop - leftCrop, view.getHeight() - topCrop - bottomCrop);
-        canvas.drawColor(Color.WHITE); // 防止 View 上面有些区域空白导致最终 Bitmap 上有些区域变黑
+        canvas.drawColor(Color.TRANSPARENT); // 防止 View 上面有些区域空白导致最终 Bitmap 上有些区域变黑
         canvas.drawBitmap(originBitmap, src, dest, null);
         originBitmap.recycle();
         return cutBitmap;

@@ -9,6 +9,8 @@ import com.walker.core.store.sp.SPHelper
 import com.walker.core.store.storage.StorageHelper
 import com.walker.core.ui.loadsir.*
 import com.walker.core.util.ToastUtils
+import com.walker.common.feedback.FeedbackHelper
+import com.walker.demo.feedback.FeedbackPlayerImpl
 
 class GlobalApplication :BaseApplication() {
     override fun onCreate() {
@@ -32,6 +34,7 @@ class GlobalApplication :BaseApplication() {
         //StorageHelper
         StorageHelper.init(context, "DripStone")
         //FloatingWindow
-        FloatingWindowManager.init(this)
+        //FloatingWindowManager.init(this)
+        FeedbackHelper.config(this,FeedbackPlayerImpl())
     }
 }

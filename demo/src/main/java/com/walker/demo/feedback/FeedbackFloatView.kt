@@ -1,13 +1,15 @@
-package com.walker.demo.floatview
+package com.walker.demo.feedback
 
 import android.content.Context
+import android.view.Gravity
 import com.lzf.easyfloat.EasyFloat
+import com.lzf.easyfloat.anim.DefaultAnimator
 import com.lzf.easyfloat.enums.ShowPattern
 import com.lzf.easyfloat.enums.SidePattern
 import com.walker.common.view.floatview.BaseFloatView
 
-class MeetingFloatView(var context: Context) : BaseFloatView(context) {
-    override fun getTag() = "MeetingComeFloatView"
+class FeedbackFloatView (var context: Context) : BaseFloatView(context) {
+    override fun getTag() = "FeedbackFloatView"
 
     override fun show() {
         if (isShow()) {
@@ -16,12 +18,12 @@ class MeetingFloatView(var context: Context) : BaseFloatView(context) {
             floatAdapter?.apply {
                 EasyFloat.with(context.applicationContext)
                     .setShowPattern(ShowPattern.FOREGROUND)
-                    .setSidePattern(SidePattern.AUTO_SIDE)
-                    .setAnimator(null)
+                    .setSidePattern(SidePattern.RESULT_RIGHT)
+                    .setAnimator(DefaultAnimator())
                     //.setImmersionStatusBar(true)
                     .setDragEnable(true)
-                    .setMatchParent(widthMatch = true, heightMatch = false)
-                    .setLocation(0, 200)
+                    .setMatchParent(widthMatch = false, heightMatch = false)
+                    .setGravity(Gravity.RIGHT,0,1600)
                     .setLayout(getLayoutId()) { it ->
                         attachView(it)
                     }

@@ -2,9 +2,9 @@ package com.walker.demo.window
 
 import android.os.Bundle
 import android.view.View
-import com.walker.common.window.FloatingWindowManager
 import com.walker.core.base.mvc.BaseFragment
 import com.walker.demo.R
+import com.walker.common.feedback.FeedbackHelper
 import kotlinx.android.synthetic.main.fragment_demo_prepage_bitmap.*
 
 class PrePageBitmapFragment : BaseFragment() {
@@ -24,7 +24,11 @@ class PrePageBitmapFragment : BaseFragment() {
     override fun getLayoutId() = R.layout.fragment_demo_prepage_bitmap
 
     private fun genPrePageBitmapAndShow() {
-        FloatingWindowManager.genBitmapFromPreActivityView(requireActivity())?.apply {
+//        FloatingWindowManager.genBitmapFromPreActivityView(requireActivity())?.apply {
+//            ivShow.setImageBitmap(this)
+//        }
+
+        FeedbackHelper.getPrePageImage(requireActivity())?.apply {
             ivShow.setImageBitmap(this)
         }
     }

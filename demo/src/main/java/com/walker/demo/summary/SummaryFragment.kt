@@ -13,6 +13,7 @@ import com.walker.core.base.mvvm.BaseMvvmFragment
 import com.walker.core.base.mvvm.customview.BaseCustomViewModel
 import com.walker.demo.R
 import com.walker.demo.databinding.FragmentDemoSummaryBinding
+import com.walker.common.feedback.FeedbackHelper
 
 @Suppress("DEPRECATION")
 class SummaryFragment :
@@ -58,6 +59,8 @@ class SummaryFragment :
         viewDataBinding.refreshLayout.setOnLoadMoreListener { viewModel.tryToLoadNextPage() }
         setLoadSir(viewDataBinding.refreshLayout)
         showLoading()
+        //FeedbackHelper
+        FeedbackHelper.showPop(requireActivity())
     }
 
     override fun notifyData(sender: ObservableList<BaseCustomViewModel>?) {

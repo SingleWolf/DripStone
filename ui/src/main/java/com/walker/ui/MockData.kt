@@ -9,6 +9,8 @@ import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.ceiling.StarFragment
 import com.walker.ui.group.recyclerview.draworder.DrawOrderFragment
 import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
+import com.walker.ui.group.recyclerview.weblist.WebListAdapter
+import com.walker.ui.group.recyclerview.weblist.WebListFragment
 import com.walker.ui.summary.Summary
 import com.walker.ui.summary.SummaryListBean
 
@@ -110,6 +112,15 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = PhotoViewFragment.KEY_ID
                 title = "PhotoView图片查看"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = WebListFragment.KEY_ID
+                title = "web列表"
                 uri = ""
                 desc = ""
                 add(this)
