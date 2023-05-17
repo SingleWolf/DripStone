@@ -1,3 +1,8 @@
+//if (isRelease) {
+//    apply plugin: 'com.android.library' // 正式环境  library不能独立运行
+//} else {
+//    apply plugin: 'com.android.application' // 测试环境 application独立运行
+//}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'

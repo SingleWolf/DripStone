@@ -3,22 +3,24 @@ package com.walker.demo.feedback
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
+import com.lzf.easyfloat.EasyFloat
+import com.walker.common.BaseApplication
 import com.walker.common.view.floatview.FloatViewAdapter
+import com.walker.core.util.DisplayUtils
 import com.walker.demo.R
 
 class FeedbackFloatViewAdapter : FloatViewAdapter<String>() {
 
-    companion object{
-        const val DATA_FLOAT_OPEN="1"
-        const val DATA_FLOAT_CLOSE="2"
+    companion object {
+        const val DATA_FLOAT_OPEN = "1"
+        const val DATA_FLOAT_CLOSE = "2"
 
-        const val CODE_CLICK_BUSINESS=1
-        const val CODE_CLICK_REPORT=2
+        const val CODE_CLICK_BUSINESS = 1
+        const val CODE_CLICK_REPORT = 2
 
     }
 
-    private var datas = DATA_FLOAT_OPEN
+    private var datas = DATA_FLOAT_CLOSE
 
     fun setData(data: String) {
         datas = data
@@ -45,7 +47,8 @@ class FeedbackFloatViewAdapter : FloatViewAdapter<String>() {
                 setData(DATA_FLOAT_CLOSE)
                 notifyDataChanged()
             }
-        } else {
+        } else if (datas == DATA_FLOAT_CLOSE) {
+            view.findViewById<View>(R.id.groupFloatOpen).visibility = View.VISIBLE
             view.findViewById<View>(R.id.groupFloatOpen).visibility = View.GONE
             view.findViewById<View>(R.id.groupFloatClose).visibility = View.VISIBLE
 

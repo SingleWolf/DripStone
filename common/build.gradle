@@ -56,7 +56,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide_version"
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     //悬浮框
-    api 'com.github.princekin-f:EasyFloat:2.0.1'
+    api 'com.github.princekin-f:EasyFloat:2.0.4'
     //permissionx
     api 'com.guolindev.permissionx:permissionx:1.5.0'
     implementation files("libs\\walker-log-1.0.0.jar");

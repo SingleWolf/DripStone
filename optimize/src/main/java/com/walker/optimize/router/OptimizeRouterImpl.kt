@@ -1,8 +1,10 @@
 package com.walker.optimize.router
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import com.google.auto.service.AutoService
 import com.walker.common.router.IOptimizeRouter
+import com.walker.crash.CrashReport
 import com.walker.optimize.group.caton.blockcanary.BlockCanary
 import com.walker.optimize.group.epic.EpicHookHelper
 import com.walker.optimize.summary.SummaryFragment
@@ -13,8 +15,9 @@ class OptimizeRouterImpl : IOptimizeRouter {
         return SummaryFragment()
     }
 
-    override fun initBlockCanary() {
+    override fun init(context: Context) {
         BlockCanary.install()
+        CrashReport.init(context)
     }
 
     override fun transactEpicHooks() {

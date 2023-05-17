@@ -1,5 +1,6 @@
 package com.walker.common.router
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 
 /**
@@ -10,7 +11,7 @@ import androidx.fragment.app.Fragment
 interface IOptimizeRouter {
     fun getSummaryFragment(): Fragment?
 
-    fun initBlockCanary()
+    fun init(context :Context)
 
     fun transactEpicHooks()
 }

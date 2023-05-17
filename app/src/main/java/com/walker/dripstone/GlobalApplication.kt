@@ -5,12 +5,10 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.startup.AppInitializer
 import com.walker.common.BaseApplication
-import com.walker.common.BuildConfig
 import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
@@ -23,7 +21,6 @@ import com.walker.dripstone.initializer.CrashInitializer
 import com.walker.dripstone.share.ShareActionMgr
 import com.walker.network.retrofit.base.RetrofitNetworkApi
 import com.walker.platform.share.WechatShareConfig
-import com.walker.study.hotfix.HotfixHelper
 import leakcanary.LeakCanary
 import java.lang.ref.WeakReference
 
@@ -56,7 +53,7 @@ class GlobalApplication : BaseApplication() {
 
     private fun initOptimize() {
         val optimizeProvider = RouterLoader.load(IOptimizeRouter::class.java)
-        optimizeProvider?.initBlockCanary()
+        optimizeProvider?.init(this)
         optimizeProvider?.transactEpicHooks()
         LeakCanary.config = LeakCanary.config.copy(onHeapAnalyzedListener = LeakUploader())
     }
@@ -117,26 +114,26 @@ class GlobalApplication : BaseApplication() {
     }
 
     private fun setupStrictMode() {
-        if (BuildConfig.DEBUG) {
-            //线程检测策略
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads() //读、写操作
-                    .detectDiskWrites()
-                    .detectNetwork() // or .detectAll() for all detectable problems
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects() //Sqlite对象泄露
-                    .detectLeakedClosableObjects() //未关闭的Closable对象泄露
-                    .penaltyLog() //违规打印日志
-                    .penaltyDeath() //违规崩溃
-                    .build()
-            )
-        }
+//        if (BuildConfig.DEBUG) {
+//            //线程检测策略
+//            StrictMode.setThreadPolicy(
+//                StrictMode.ThreadPolicy.Builder()
+//                    .detectDiskReads() //读、写操作
+//                    .detectDiskWrites()
+//                    .detectNetwork() // or .detectAll() for all detectable problems
+//                    .penaltyLog()
+//                    .penaltyDeath()
+//                    .build()
+//            )
+//            StrictMode.setVmPolicy(
+//                VmPolicy.Builder()
+//                    .detectLeakedSqlLiteObjects() //Sqlite对象泄露
+//                    .detectLeakedClosableObjects() //未关闭的Closable对象泄露
+//                    .penaltyLog() //违规打印日志
+//                    .penaltyDeath() //违规崩溃
+//                    .build()
+//            )
+//        }
     }
 
     fun gotoMainPage(activity: Activity) {

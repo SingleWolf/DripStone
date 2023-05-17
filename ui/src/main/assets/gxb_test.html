@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+    <style>
+        #tpls-messageId {
+            /* border: 1px solid red; */
+        }
+
+        #tpls-messageId .pageBox {
+            width: 100%;
+            height: auto;
+            background: white;
+            display: inline-block;
+        }
+
+        #tpls-messageId .idea {
+            font-size: 14px;
+            margin-top: 10px;
+            border-top: 1px solid #ddd;
+            padding-top: 13px;
+        }
+
+        #tpls-messageId .textareaBox {
+            margin: 10px 0px;
+            margin-bottom: 0px;
+            padding-bottom: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #tpls-messageId .submit {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+        }
+        #tpls-messageId textarea {
+            width: 100%;
+            height: 80px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            padding: 10px;
+            resize: none;
+        }
+        
+        #tpls-messageId button {
+            border: 0px;
+            background: none;
+            font-size: 14px;
+            margin: auto;
+            cursor: pointer;
+        }
+        #tpls-messageId textarea:focus,
+        #tpls-messageId button:focus{
+            outline: none;
+        }
+        #tpls-messageId .tooltip{
+            display: inline-flex;
+            padding: 10px;
+            background: #333;
+            color: white;
+            position: absolute;
+            left: 50%;
+            margin-left: -34px;
+            border-radius: 5px;
+            display:none;
+        }
+    </style>
+    </head>
+
+    <body>
+    <div id="tpls-messageId">
+
+        <div class="pageBox">
+            <div class="tooltip">已提交</div>
+            
+            <div class="text">
+                抱歉没有给您满意的解答，我会努力学习，期待下次为您解决问题。
+                <div class="tooltip"></div>
+            </div>
+            <div class="form">
+                <div class="idea">
+                    <span>意见反馈</span>
+                </div>
+                <div id="textareaBox" class="textareaBox">
+                    <textarea maxlength="100" placeholder="请写下您的建议"></textarea>
+                </div>
+                <div class="submit" style="padding-top: 10px;">
+                    <button>提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+    setTimeout(() => {
+        var tpl_id  ='tpls-messageId';
+        var submitBox = document.getElementById(tpl_id).querySelector('.submit');
+        var submitBtn = submitBox.querySelector('button');
+
+        submitBtn.onclick = () => {
+            var textareaValue = document.getElementById(tpl_id).querySelector('textarea');
+                if(textareaValue.value ==''){
+                    var tooltip = document.getElementById(tpl_id).querySelector('.tooltip');
+                    tooltip.style.display = 'block';
+                    tooltip.innerText = '请写下您的意见，不要超过200字噢~';
+                    setTimeout(() => {
+                        tooltip.style.display = 'none';
+                    },2000);
+                    return;
+                }; 
+
+            var data = {
+                    "sSessionNo": "1fecca54-7d9e-45f9-8618-ebb530f9bbd4",
+                    "sRobotId": "74",
+                    "sAppId": "16",
+                    "sUserId": "000754445",
+                    "sFeedbackType": '1',
+                    "sProblemType": "0",
+                    "sComments": "textareaValue.value",
+                };
+                
+                var tooltip = document.getElementById(tpl_id).querySelector('.tooltip');
+                    tooltip.style.display = 'block';
+                    tooltip.innerText = '正在提交';
+                    submitBtn.disabled = 'disabled';
+
+            try {
+
+                httpRequest({
+                    method: "post",
+                    url: "

@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Process;
+import android.os.Looper;
+
+import com.walker.core.log.LogHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Walker
@@ -27,6 +31,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler mDefaultCrashHandler;
     private OnCrashListener mCrashListener;
     private Context mContext;
+    private List<String> msgAirBagList = new ArrayList<>();
+
 
     private CrashHandler() {
     }
@@ -46,44 +52,79 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         mCrashListener = listener;
     }
 
+    public void setAirBagConfig(List<String> msgConfigList) {
+        msgAirBagList.clear();
+        msgAirBagList.addAll(msgConfigList);
+    }
+
+    private boolean isStackTraceMatching(Throwable e) {
+        if (msgAirBagList.isEmpty()) {
+            LogHelper.get().e(TAG, "msgAirBagList is empty");
+        }
+        for (String msg : msgAirBagList) {
+            if (e.getMessage().contains(msg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        if (mCrashListener != null) {
-            mCrashListener.onTransact(e);
-        }
-        try {
-            //自行处理：保存本地
-            File crashFile = dealException(t, e);
-            //other action
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        } finally {
-            //如果系统提供了默认的异常处理器，则交给系统去结束程序，否则就由自己结束自己
-            if (mDefaultCrashHandler != null) {
-                mDefaultCrashHandler.uncaughtException(t, e);
-            } else {
-                Process.killProcess(Process.myPid());
+        dealException(t, e);
+        if (t == Looper.getMainLooper().getThread()) {
+            while (true) {
+                try {
+                    LogHelper.get().e(TAG, "主线程发生崩溃异常，重新启动loop");
+                    Looper.loop();
+                } catch (Throwable e2) {
+                    dealException(Thread.currentThread(), e2);
+                }
             }
         }
     }
 
     /*** 导出异常信息到SD卡 ** @param e */
-    private File dealException(Thread t, Throwable e) throws Exception {
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        File f = new File(mContext.getExternalCacheDir().getAbsoluteFile(), "crash_info");
-        if (!f.exists()) {
-            f.mkdirs();
+    private void dealException(Thread t, Throwable e) {
+        try {
+            //自行处理：保存本地
+            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            File f = new File(mContext.getExternalCacheDir().getAbsoluteFile(), "crash_info");
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            File file = new File(f, time + FILE_NAME_SUFFIX);
+            //往文件中写入数据
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            pw.println(time);
+            pw.println("Thread: " + t.getName());
+            pw.println(getPhoneInfo());
+            e.printStackTrace(pw);
+            //写入crash堆栈
+            pw.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        File file = new File(f, time + FILE_NAME_SUFFIX);
-        //往文件中写入数据
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        pw.println(time);
-        pw.println("Thread: " + t.getName());
-        pw.println(getPhoneInfo());
-        e.printStackTrace(pw);
-        //写入crash堆栈
-        pw.close();
-        return file;
+
+        if (mCrashListener != null) {
+            mCrashListener.onTransact(e);
+        }
+
+        //处理以捕获异常
+        if (isStackTraceMatching(e)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Java Crash 已捕获\n");
+            sb.append("FATAL EXCEPTION:" + t.getName() + "\n");
+            sb.append(e.getMessage());
+            LogHelper.get().e(TAG, sb.toString());
+        } else {
+            if (mDefaultCrashHandler != null) {
+                mDefaultCrashHandler.uncaughtException(t, e);
+            } else {
+                LogHelper.get().e(TAG, "mDefaultCrashHandler is null");
+            }
+        }
+
     }
 
     private String getPhoneInfo() throws PackageManager.NameNotFoundException {

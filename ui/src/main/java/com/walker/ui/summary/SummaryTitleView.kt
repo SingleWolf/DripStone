@@ -12,6 +12,7 @@ import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.ceiling.StarFragment
 import com.walker.ui.group.recyclerview.draworder.DrawOrderFragment
 import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
+import com.walker.ui.group.recyclerview.weblist.WebListFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
     override fun onRootClick(view: View?) {
@@ -28,6 +29,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             MultiTouchFragment.KEY_ID -> MultiTouchFragment.getInstance().javaClass.name
             SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance().javaClass.name
             DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.name
+            WebListFragment.KEY_ID -> WebListFragment.instance().javaClass.name
             else -> null
         }
         return fragment

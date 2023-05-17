@@ -15,6 +15,9 @@ import com.walker.demo.feedback.FeedbackPlayerImpl
 class GlobalApplication :BaseApplication() {
     override fun onCreate() {
         super.onCreate()
+        //log
+        LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
+            .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
         //SharedPreferences
         SPHelper.init(this)
         //LoadSir
@@ -26,9 +29,6 @@ class GlobalApplication :BaseApplication() {
             .addCallback(CustomCallback())
             .setDefaultCallback(LoadingCallback::class.java)//设置默认状态页
             .commit()
-        //log
-        LogHelper.get().setLevel(LogLevel.DEBUG).setLogger(DefaultLogger(this))
-            .setExtraLogHandler { tag, log -> ToastUtils.showCenter("$tag->$log") }.config()
         //toast
         ToastUtils.init(this)
         //StorageHelper

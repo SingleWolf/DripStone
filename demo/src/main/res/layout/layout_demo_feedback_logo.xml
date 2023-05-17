@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="ResourceName">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/groupFloatOpen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
+        android:visibility="gone"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -106,8 +106,5 @@
         android:id="@+id/groupFloatClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_demo_feedback_hide"
-        android:visibility="gone" />
-</RelativeLayout>
+        android:src="@drawable/ic_demo_feedback_hide" />
+</FrameLayout>

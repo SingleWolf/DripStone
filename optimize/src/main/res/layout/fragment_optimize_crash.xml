@@ -15,6 +15,26 @@
         android:text="模拟java层Crash" />
 
     <TextView
+        android:id="@+id/tvJavaCrash_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="空指针异常" />
+
+    <TextView
+        android:id="@+id/tvJavaCrash_2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="子线程java异常" />
+
+    <TextView
         android:id="@+id/tvNativeCrash"
         android:layout_width="match_parent"
         android:layout_height="50dp"
