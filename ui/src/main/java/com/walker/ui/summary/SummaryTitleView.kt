@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import com.walker.common.activity.ShowActivity
 import com.walker.common.view.titleview.TitleView
+import com.walker.ui.group.arcmenu.ArcMenuFragment
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
@@ -30,6 +31,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             SlideCardFragment.KEY_ID -> SlideCardFragment.getInstance().javaClass.name
             DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.name
             WebListFragment.KEY_ID -> WebListFragment.instance().javaClass.name
+            ArcMenuFragment.KEY_ID -> ArcMenuFragment.instance().javaClass.name
             else -> null
         }
         return fragment

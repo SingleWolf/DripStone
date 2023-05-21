@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArcMenuView">
+        <attr name="position" format="integer"/>
+        <attr name="radius" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlexibleMenuView">
+        <attr name="max_radius" format="dimension"/>
+    </declare-styleable>
+</resources>

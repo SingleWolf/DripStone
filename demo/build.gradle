@@ -79,6 +79,7 @@ android {
     dataBinding {
         enabled true
     }
+    ndkVersion '21.1.6352462'
 
     if (isRelease) {
         //给模块设置不同的资源前缀，可以避免重复命名

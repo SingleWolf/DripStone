@@ -1,110 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
     tools:ignore="ResourceName">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
         android:id="@+id/groupFloatOpen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/ivHead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_demo_feedback"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivShowSelectGroup"
-            android:layout_width="181dp"
-            android:layout_height="66dp"
-            android:src="@drawable/ic_demo_feedback_show_group"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/ivHead"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvBusinessClick"
-            android:layout_width="90dp"
-            android:layout_height="66dp"
-            app:layout_constraintBottom_toBottomOf="@id/ivShowSelectGroup"
-            app:layout_constraintStart_toStartOf="@id/ivShowSelectGroup"
-            app:layout_constraintTop_toTopOf="@id/ivShowSelectGroup" />
-
-        <ImageView
-            android:id="@+id/ivLogoBusiness"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_demo_feedback_business"
-            app:layout_constraintLeft_toLeftOf="@id/tvBusinessClick"
-            app:layout_constraintRight_toRightOf="@id/tvBusinessClick"
-            app:layout_constraintTop_toTopOf="@id/tvBusinessClick" />
-
-        <TextView
-            android:id="@+id/tvBusiness"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="业务办理"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/tvBusinessClick"
-            app:layout_constraintLeft_toLeftOf="@id/tvBusinessClick"
-            app:layout_constraintRight_toRightOf="@id/tvBusinessClick" />
-
-        <TextView
-            android:id="@+id/tvFeedbackClick"
-            android:layout_width="90dp"
-            android:layout_height="66dp"
-            app:layout_constraintBottom_toBottomOf="@id/ivShowSelectGroup"
-            app:layout_constraintEnd_toEndOf="@id/ivShowSelectGroup"
-            app:layout_constraintRight_toRightOf="@id/ivShowSelectGroup"
-            app:layout_constraintTop_toTopOf="@id/ivShowSelectGroup" />
-
-        <ImageView
-            android:id="@+id/ivLogoReport"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_demo_feedback_report"
-            app:layout_constraintLeft_toLeftOf="@id/tvFeedbackClick"
-            app:layout_constraintRight_toRightOf="@id/tvFeedbackClick"
-            app:layout_constraintTop_toTopOf="@id/tvFeedbackClick" />
-
-        <TextView
-            android:id="@+id/tvReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="意见反馈"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/tvFeedbackClick"
-            app:layout_constraintLeft_toLeftOf="@id/tvFeedbackClick"
-            app:layout_constraintRight_toRightOf="@id/tvFeedbackClick" />
-
-        <ImageView
-            android:id="@+id/ivHeadHide"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="@id/ivHead"
-            app:layout_constraintRight_toRightOf="@id/ivHead"
-            app:layout_constraintTop_toTopOf="@id/ivHead" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/groupFloatClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_demo_feedback_hide" />
-</FrameLayout>
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_demo_feedback" />
+</RelativeLayout>

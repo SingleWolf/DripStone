@@ -14,8 +14,8 @@ import com.walker.demo.window.PrePageBitmapFragment
 
 class FeedbackPlayerImpl : IPlayerCapacity {
 
-    private var floatView: FeedbackFloatView? = null
-    private val floatViewAdapter by lazy { FeedbackFloatViewAdapter() }
+    private var floatView: FeedbackLogoFloat? = null
+    private val floatViewAdapter by lazy { FeedbackLogoFloatAdapter() }
 
     override fun showPop(activity: Activity) {
         PermissionX.init(activity as FragmentActivity)
@@ -52,7 +52,7 @@ class FeedbackPlayerImpl : IPlayerCapacity {
         floatViewAdapter.setCallback<Int>(object : FloatViewAdapter.OnCallback {
             override fun <Int> callback(value: Int) {
                 //transact()
-                if (value == FeedbackFloatViewAdapter.CODE_CLICK_REPORT) {
+                if (value == FeedbackLogoFloatAdapter.CODE_CLICK_REPORT) {
                     floatView?.apply {
                         ShowActivity.start(
                             context,
@@ -61,14 +61,14 @@ class FeedbackPlayerImpl : IPlayerCapacity {
                             ::genInstance
                         )
                     }
-                }else if(value==FeedbackFloatViewAdapter.CODE_CLICK_BUSINESS){
+                }else if(value==FeedbackLogoFloatAdapter.CODE_CLICK_BUSINESS){
                     ToastUtils.showCenter("业务办理")
                 }
             }
 
         })
         if (floatView == null) {
-            floatView = FeedbackFloatView(activity)
+            floatView = FeedbackLogoFloat(activity)
         }
         floatView?.apply {
             setAdapter(floatViewAdapter)

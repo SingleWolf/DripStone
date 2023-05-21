@@ -16,4 +16,8 @@ abstract class BaseFloatView(context: Context) : IShowFloat {
         floatAdapter = adapter
     }
 
+    open fun showLocation(x:Int,y:Int){
+
+    }
+
 }

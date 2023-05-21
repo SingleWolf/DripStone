@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="ResourceName">
+
+    <com.walker.demo.feedback.FlexibleMenuView
+        android:id="@+id/flexibleMenu"
+        android:layout_width="80dp"
+        android:layout_height="220dp"
+        app:max_radius="150dp">
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_demo_float_close" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_demo_feedback"
+                android:tag="bg_close" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_demo_feedback_report"
+            android:tag="feedback_report" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_demo_feedback_business"
+            android:tag="feedback_business" />
+    </com.walker.demo.feedback.FlexibleMenuView>
+</RelativeLayout>

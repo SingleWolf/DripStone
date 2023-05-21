@@ -1,5 +1,6 @@
 package com.walker.demo.floatview
 
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,6 +40,16 @@ class MeetingFloatViewAdapter : FloatViewAdapter<MeetingComeBean>() {
         view.findViewById<ImageView>(R.id.ivHead).setImageResource(data.headResId)
         view.findViewById<TextView>(R.id.tvTitle).text = data.title
         view.findViewById<TextView>(R.id.tvDescription).text = data.desc
+    }
+
+    override fun touchEvent(view: View, event: MotionEvent) {
+
+    }
+
+    override fun dragIng(view: View, event: MotionEvent) {
+    }
+
+    override fun dragEnd(view: View) {
     }
 
 }

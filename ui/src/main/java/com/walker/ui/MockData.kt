@@ -2,6 +2,7 @@ package com.walker.ui
 
 import com.walker.core.log.LogHelper
 import com.walker.core.util.GsonUtils
+import com.walker.ui.group.arcmenu.ArcMenuFragment
 import com.walker.ui.group.colorlayout.ColorLayoutFragment
 import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
@@ -121,6 +122,15 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = WebListFragment.KEY_ID
                 title = "web列表"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = ArcMenuFragment.KEY_ID
+                title = "卫星菜单"
                 uri = ""
                 desc = ""
                 add(this)
