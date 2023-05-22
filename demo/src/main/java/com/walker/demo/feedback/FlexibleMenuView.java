@@ -152,23 +152,22 @@ public class FlexibleMenuView extends ViewGroup implements View.OnClickListener 
 
             AnimationSet animset = new AnimationSet(true);
             Animation tranAnim = null;
-
+            AlphaAnimation alphaAnim = null;
             // to open
             if (mStatus == Status.CLOSE) {
                 tranAnim = new TranslateAnimation(0, cl, ct, 0);
+                alphaAnim = new AlphaAnimation(0.0f, 1f);
                 childView.setClickable(true);
                 childView.setFocusable(true);
 
             } else
             // to close
             {
+                alphaAnim = new AlphaAnimation(1f, 0.0f);
                 tranAnim = new TranslateAnimation(cl, 0, 0, ct);
                 childView.setClickable(false);
                 childView.setFocusable(false);
             }
-            tranAnim.setFillAfter(true);
-            tranAnim.setDuration(duration);
-            tranAnim.setStartOffset(i * 200);
 
             tranAnim.setAnimationListener(new Animation.AnimationListener() {
 
@@ -191,6 +190,11 @@ public class FlexibleMenuView extends ViewGroup implements View.OnClickListener 
             });
 
             animset.addAnimation(tranAnim);
+            animset.addAnimation(alphaAnim);
+            animset.setFillAfter(true);
+            animset.setDuration(duration);
+            animset.setStartOffset(i * 200);
+
             childView.startAnimation(animset);
 
             final int pos = i + 1;

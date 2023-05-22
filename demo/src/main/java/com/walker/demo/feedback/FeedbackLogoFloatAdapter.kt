@@ -24,6 +24,9 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     private val transactFloatAdapter by lazy { FeedbackTransactFloatAdapter() }
     private var transactFloatView: FeedbackTransactFloat? = null
 
+    private val shadowFloatAdapter by lazy { FeedbackShadowFloatAdapter() }
+    private var shadowFloatView: FeedbackShadowFloat? = null
+
     private var datas = DATA_FLOAT_CLOSE
 
     /**
@@ -74,7 +77,7 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
             currentIsOpen = true
         } else if (datas == DATA_FLOAT_CLOSE) {
             if (currentIsOpen) {
-                execLogoAnimator(view, 0f, hideX)
+                execLogoAnimator(view, 0f, hideX, 0)
             }
             currentIsOpen = false
         }
@@ -124,6 +127,34 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
         }
     }
 
+    private fun showShadowFloatView(view: View) {
+        val context = view.context
+        var shadowX = 0
+        var shadowY = 1200
+        //获取图标悬浮框位置
+        var locLogo = intArrayOf(0, 0)
+        view.getLocationOnScreen(locLogo)
+        LogHelper.get().i(
+            FeedbackLogoFloat.TAG,
+            "showShadowFloatView locLogo=(x=${locLogo[0]},y=${locLogo[1]})"
+        )
+        if (locLogo[1] > 0) {
+            shadowY = locLogo[1] + view.height / 2 - DisplayUtils.dp2px(context, 158f)
+        }
+        if (shadowFloatView == null) {
+            shadowFloatView = FeedbackShadowFloat(context)
+        }
+
+        shadowFloatView?.apply {
+            setAdapter(shadowFloatAdapter)
+            showLocation(shadowX, shadowY)
+        }
+    }
+
+    private fun dismissShadowFloatView() {
+        shadowFloatView?.dismiss()
+    }
+
     override fun touchEvent(view: View, event: MotionEvent) {
     }
 
@@ -139,6 +170,7 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
                 val x2 = dragXList[dragXList.size - 4]
                 val x1 = dragXList[dragXList.size - 5]
                 if (x5 > x4 && x4 > x3 && x3 > x2 && x2 > x1) {
+                    showShadowFloatView(view)
                     val endX = (view.width / 2).toFloat()
                     execLogoAnimator(view, 0f, endX)
                     isHalfLogo = true
@@ -149,6 +181,7 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
                 //半球状态撤销
                 val startX = (view.width / 2).toFloat()
                 execLogoAnimator(view, startX, 0f)
+                dismissShadowFloatView()
                 isHalfLogo = false
             }
         }
@@ -157,6 +190,7 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     override fun dragEnd(view: View) {
         dragXList.clear()
         if (isHalfLogo) {
+            dismissShadowFloatView()
             val halfX = (view.width / 2).toFloat()
             execLogoAnimator(view, halfX, hideX)
             isHalfLogo = false
