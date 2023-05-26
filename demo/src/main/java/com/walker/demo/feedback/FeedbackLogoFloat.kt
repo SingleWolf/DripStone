@@ -23,18 +23,18 @@ class FeedbackLogoFloat(var context: Context) : BaseFloatView(context) {
             floatAdapter?.notifyDataChanged()
         } else {
             floatAdapter?.apply {
-                val dragMinY = DisplayUtils.dp2px(context, 220f)
-                val dragMaxX = DisplayUtils.getScreenWidth(context)
+                val screenW = DisplayUtils.getScreenWidth(context)
                 val screenH = DisplayUtils.getScreenHeight(context)
-                val dragMaxY =
-                    screenH - DisplayUtils.dp2px(context, 100f)
-                val locY = screenH - DisplayUtils.dp2px(context, 200f)
+                val dragMinY = DisplayUtils.dp2px(context, 200f)
+                val dragMaxX = screenW
+                val dragMaxY = screenH - DisplayUtils.dp2px(context, 75f)
+                val locY = screenH - DisplayUtils.dp2px(context, 300f)
                 EasyFloat.with(context.applicationContext)
                     .setShowPattern(ShowPattern.FOREGROUND)
                     .setSidePattern(SidePattern.RESULT_RIGHT)
                     .setAnimator(null)
                     .setDragEnable(true)
-                    .setBorder(0, dragMinY, dragMaxX, dragMaxY)
+                    .setBorder(0,dragMinY,dragMaxX,dragMaxY)
                     .setMatchParent(widthMatch = false, heightMatch = false)
                     .setGravity(Gravity.RIGHT, 0, locY)
                     .setLayoutChangedGravity(Gravity.END)

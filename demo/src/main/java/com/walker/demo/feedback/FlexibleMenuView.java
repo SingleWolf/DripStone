@@ -308,11 +308,11 @@ public class FlexibleMenuView extends ViewGroup implements View.OnClickListener 
     private void updateBackgroud() {
         if (isOpen()) {
             if (mBgCloseView != null) {
-                mBgCloseView.setVisibility(View.GONE);
+                mBgCloseView.setVisibility(View.VISIBLE);
             }
         } else {
             if (mBgCloseView != null) {
-                mBgCloseView.setVisibility(View.VISIBLE);
+                mBgCloseView.setVisibility(View.GONE);
             }
         }
     }

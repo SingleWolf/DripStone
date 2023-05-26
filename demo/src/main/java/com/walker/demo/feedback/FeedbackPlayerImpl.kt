@@ -3,16 +3,19 @@ package com.walker.demo.feedback
 import android.Manifest
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
+import com.lzf.easyfloat.EasyFloat
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
 import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.activity.ShowActivity
 import com.walker.common.feedback.IPlayerCapacity
 import com.walker.common.view.floatview.FloatViewAdapter
+import com.walker.common.window.OnOrientationListener
+import com.walker.core.log.LogHelper
 import com.walker.core.util.ToastUtils
 import com.walker.demo.window.PrePageBitmapFragment
 
-class FeedbackPlayerImpl : IPlayerCapacity {
+class FeedbackPlayerImpl : IPlayerCapacity, OnOrientationListener {
 
     private var floatView: FeedbackLogoFloat? = null
     private val floatViewAdapter by lazy { FeedbackLogoFloatAdapter() }
@@ -61,7 +64,7 @@ class FeedbackPlayerImpl : IPlayerCapacity {
                             ::genInstance
                         )
                     }
-                }else if(value==FeedbackLogoFloatAdapter.CODE_CLICK_BUSINESS){
+                } else if (value == FeedbackLogoFloatAdapter.CODE_CLICK_BUSINESS) {
                     ToastUtils.showCenter("业务办理")
                 }
             }
@@ -86,5 +89,15 @@ class FeedbackPlayerImpl : IPlayerCapacity {
             else -> null
         }
         return fragment
+    }
+
+    override fun setLandSpaceChange(activity: Activity, isShow: Boolean) {
+        LogHelper.get().i("FeedbackPlayerImpl", "showLandSpaceLogoFloatView,isShow=$isShow")
+        if (isShow) {
+            EasyFloat.updateFloat(FeedbackLogoFloat.TAG, 4000, 800)
+            EasyFloat.dragEnable(true, FeedbackLogoFloat.TAG)
+        } else {
+            EasyFloat.updateFloat(FeedbackLogoFloat.TAG, 1500, 1000)
+        }
     }
 }

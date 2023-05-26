@@ -8,6 +8,7 @@ import com.lzf.easyfloat.utils.DisplayUtils
 import com.walker.common.view.floatview.FloatViewAdapter
 import com.walker.core.log.LogHelper
 import com.walker.demo.R
+import kotlin.math.abs
 
 
 class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
@@ -30,11 +31,6 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     private var datas = DATA_FLOAT_CLOSE
 
     /**
-     * 记录当前打开、隐藏状态
-     */
-    private var currentIsOpen = true
-
-    /**
      * 拖动过程中的X触点集合
      */
     private var dragXList = mutableListOf<Float>()
@@ -49,11 +45,6 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
      */
     private var halfStateMinX = 950f
 
-    /**
-     * 隐藏logo的X坐标点
-     */
-    private val hideX = 150f
-
     fun setData(data: String) {
         datas = data
     }
@@ -67,30 +58,32 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     override fun bindView(view: View, data: String) {
         //超过当前logo宽度的1/5
         halfStateMinX = (DisplayUtils.getScreenWidth(view.context) - (view.width / 5 * 4)).toFloat()
-        //当前logo向右平移2/3
-        val hideX = (view.width / 3 * 2).toFloat()
-
         if (datas == DATA_FLOAT_OPEN) {
-            if (!currentIsOpen) {
-                execLogoAnimator(view, hideX, 0f)
-            }
-            currentIsOpen = true
+            setFloatGroupShow(view, true)
         } else if (datas == DATA_FLOAT_CLOSE) {
-            if (currentIsOpen) {
-                execLogoAnimator(view, 0f, hideX, 0)
-            }
-            currentIsOpen = false
+            setFloatGroupShow(view, false)
         }
         view.findViewById<View>(R.id.groupFloatOpen).setOnClickListener {
-            if (currentIsOpen) {
-                //唤起业务处理悬浮框
-                showTransactFloatView(view)
-                //隐藏logo悬浮窗
-                EasyFloat.hide(FeedbackLogoFloat.TAG)
+            //唤起业务处理悬浮框
+            showTransactFloatView(view)
+            //隐藏logo悬浮窗
+            EasyFloat.hide(FeedbackLogoFloat.TAG)
+        }
+        view.findViewById<View>(R.id.groupFloatHide).setOnClickListener {
+            setFloatGroupShow(view, true)
+        }
+    }
+
+    private fun setFloatGroupShow(view: View, isShow: Boolean) {
+        view?.apply {
+            if (isShow) {
+                findViewById<View>(R.id.groupFloatOpen)?.visibility = View.VISIBLE
+                findViewById<View>(R.id.groupFloatHide)?.visibility = View.GONE
             } else {
-                execLogoAnimator(view, hideX, 0f, 300)
-                currentIsOpen = true
+                findViewById<View>(R.id.groupFloatOpen)?.visibility = View.GONE
+                findViewById<View>(R.id.groupFloatHide)?.visibility = View.VISIBLE
             }
+            EasyFloat.dragEnable(isShow, FeedbackLogoFloat.TAG)
         }
     }
 
@@ -158,18 +151,28 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     override fun touchEvent(view: View, event: MotionEvent) {
     }
 
+    var currentX = 0f
+    var currentY = 0f
+
     override fun dragIng(view: View, event: MotionEvent) {
         LogHelper.get().i(FeedbackLogoFloat.TAG, "dragIng (rawX=${event.rawX},rawY=${event.rawY})")
         dragXList.add(event.rawX)
+        //非横向滑动则return
+        if (abs(event.rawX - currentX) < abs(event.rawY - currentY)) {
+            currentX = event.rawX
+            currentY = event.rawY
+            return
+        }
+        currentX = event.rawX
+        currentY = event.rawY
+
         if (event.rawX > halfStateMinX) {
             //符合条件，显示半球
-            if (!isHalfLogo && dragXList.size > 5) {
-                val x5 = dragXList[dragXList.size - 1]
-                val x4 = dragXList[dragXList.size - 2]
-                val x3 = dragXList[dragXList.size - 3]
-                val x2 = dragXList[dragXList.size - 4]
-                val x1 = dragXList[dragXList.size - 5]
-                if (x5 > x4 && x4 > x3 && x3 > x2 && x2 > x1) {
+            if (!isHalfLogo && dragXList.size > 3) {
+                val x3 = dragXList[dragXList.size - 1]
+                val x2 = dragXList[dragXList.size - 2]
+                val x1 = dragXList[dragXList.size - 3]
+                if (x1 >= halfStateMinX && x3 > x2 && x2 > x1) {
                     showShadowFloatView(view)
                     val endX = (view.width / 2).toFloat()
                     execLogoAnimator(view, 0f, endX)
@@ -192,9 +195,9 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
         if (isHalfLogo) {
             dismissShadowFloatView()
             val halfX = (view.width / 2).toFloat()
-            execLogoAnimator(view, halfX, hideX)
+            execLogoAnimator(view, halfX, 0f)
+            setFloatGroupShow(view, false)
             isHalfLogo = false
-            currentIsOpen = false
         }
     }
 

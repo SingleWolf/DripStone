@@ -6,6 +6,6 @@
     <ImageView
         android:id="@+id/groupFloatShadow"
         android:layout_width="40dp"
-        android:layout_height="260dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/ic_demo_feedback_half_shadow" />
 </RelativeLayout>

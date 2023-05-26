@@ -25,6 +25,9 @@ object FloatingWindowManager {
         context.registerActivityLifecycleCallbacks(lifecycle)
     }
 
+    fun setOnOrientationListener(listener: OnOrientationListener){
+        lifecycle.setOnOrientationListener(listener)
+    }
 
     /**
      * 判断该activity是否有弹框（可能有误判）

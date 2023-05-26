@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:ignore="ResourceName">
 
-    <ImageView
+    <RelativeLayout
         android:id="@+id/groupFloatOpen"
+        android:layout_width="80dp"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_demo_feedback" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/groupFloatHide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_demo_feedback" />
-</RelativeLayout>
+        android:src="@drawable/ic_demo_feedback_hide"
+        android:visibility="gone" />
+</FrameLayout>
