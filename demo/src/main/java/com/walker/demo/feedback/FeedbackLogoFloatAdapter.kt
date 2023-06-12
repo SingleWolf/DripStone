@@ -3,6 +3,7 @@ package com.walker.demo.feedback
 import android.animation.ObjectAnimator
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import com.lzf.easyfloat.EasyFloat
 import com.lzf.easyfloat.utils.DisplayUtils
 import com.walker.common.view.floatview.FloatViewAdapter
@@ -12,7 +13,6 @@ import kotlin.math.abs
 
 
 class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
-
     companion object {
         const val DATA_FLOAT_OPEN = "1"
         const val DATA_FLOAT_CLOSE = "2"
@@ -28,7 +28,7 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     private val shadowFloatAdapter by lazy { FeedbackShadowFloatAdapter() }
     private var shadowFloatView: FeedbackShadowFloat? = null
 
-    private var datas = DATA_FLOAT_CLOSE
+    private var datas = DATA_FLOAT_OPEN
 
     /**
      * 拖动过程中的X触点集合
@@ -38,12 +38,19 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
     /**
      * 标记是否为半球隐藏提示状态
      */
-    private var isHalfLogo = false
+    private var hideState: FeedbackHideState = FeedbackHideState.NONE
 
     /**
-     * 触发半球隐藏状态的最小值
+     * 左侧触发半球隐藏状态的最小值
      */
-    private var halfStateMinX = 950f
+    private var halfStateRightMinX = 950f
+
+    /**
+     * 右侧触发半球隐藏状态的最大值
+     */
+    private var halfStateLeftMaX = 100f
+
+    private var isLogoOpen = true
 
     fun setData(data: String) {
         datas = data
@@ -57,31 +64,54 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
 
     override fun bindView(view: View, data: String) {
         //超过当前logo宽度的1/5
-        halfStateMinX = (DisplayUtils.getScreenWidth(view.context) - (view.width / 5 * 4)).toFloat()
+        halfStateLeftMaX = (view.width / 5 * 4).toFloat()
+        halfStateRightMinX = DisplayUtils.getScreenWidth(view.context) - halfStateLeftMaX
         if (datas == DATA_FLOAT_OPEN) {
+            isLogoOpen = true
             setFloatGroupShow(view, true)
         } else if (datas == DATA_FLOAT_CLOSE) {
+            isLogoOpen = false
+            var locLogo = intArrayOf(0, 0)
+            view.getLocationOnScreen(locLogo)
+            if (locLogo[0] > 500) {
+                execLogoAnimator(view, 0f, (view.width / 2).toFloat(), 0)
+            } else {
+                execLogoAnimator(view, 0f, -(view.width / 2).toFloat(), 0)
+            }
             setFloatGroupShow(view, false)
         }
         view.findViewById<View>(R.id.groupFloatOpen).setOnClickListener {
-            //唤起业务处理悬浮框
-            showTransactFloatView(view)
-            //隐藏logo悬浮窗
-            EasyFloat.hide(FeedbackLogoFloat.TAG)
-        }
-        view.findViewById<View>(R.id.groupFloatHide).setOnClickListener {
-            setFloatGroupShow(view, true)
+            if (isLogoOpen) {
+                //唤起业务处理悬浮框
+                showTransactFloatView(view)
+                //隐藏logo悬浮窗
+                EasyFloat.hide(FeedbackLogoFloat.TAG)
+            } else {
+                isLogoOpen = true
+                setFloatGroupShow(view, true)
+                var locLogo = intArrayOf(0, 0)
+                view.getLocationOnScreen(locLogo)
+                if (locLogo[0] > 500) {
+                    execLogoAnimator(view, (view.width / 2).toFloat(), 0f)
+                } else {
+                    execLogoAnimator(view, -(view.width / 2).toFloat(), 0f)
+                }
+            }
         }
     }
 
     private fun setFloatGroupShow(view: View, isShow: Boolean) {
         view?.apply {
             if (isShow) {
-                findViewById<View>(R.id.groupFloatOpen)?.visibility = View.VISIBLE
-                findViewById<View>(R.id.groupFloatHide)?.visibility = View.GONE
+                findViewById<ImageView>(R.id.groupFloatOpen)?.setImageResource(R.drawable.ic_demo_feedback)
             } else {
-                findViewById<View>(R.id.groupFloatOpen)?.visibility = View.GONE
-                findViewById<View>(R.id.groupFloatHide)?.visibility = View.VISIBLE
+                var locLogo = intArrayOf(0, 0)
+                view.getLocationOnScreen(locLogo)
+                if (locLogo[0] > 500) {
+                    findViewById<ImageView>(R.id.groupFloatOpen)?.setImageResource(R.drawable.ic_demo_feedback_hide)
+                } else {
+                    findViewById<ImageView>(R.id.groupFloatOpen)?.setImageResource(R.drawable.ic_demo_feedback_hide_left)
+                }
             }
             EasyFloat.dragEnable(isShow, FeedbackLogoFloat.TAG)
         }
@@ -101,6 +131,8 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
             FeedbackLogoFloat.TAG,
             "showTransactFloatView locLogo=(x=${locLogo[0]},y=${locLogo[1]})"
         )
+
+        transactX = locLogo[0]
         //业务框的高度比logo框高140dp，故减去
         if (locLogo[1] > transactMinY) {
             transactY = locLogo[1] - DisplayUtils.dp2px(context, 168f)
@@ -131,6 +163,13 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
             FeedbackLogoFloat.TAG,
             "showShadowFloatView locLogo=(x=${locLogo[0]},y=${locLogo[1]})"
         )
+        if (hideState is FeedbackHideState.RIGHT) {
+            shadowX = DisplayUtils.getScreenWidth(context)
+            shadowFloatAdapter.setData(FeedbackShadowFloatAdapter.DATA_FLOAT_RIGHT)
+        } else if (hideState is FeedbackHideState.LEFT) {
+            shadowX = 0
+            shadowFloatAdapter.setData(FeedbackShadowFloatAdapter.DATA_FLOAT_LEFT)
+        }
         if (locLogo[1] > 0) {
             shadowY = locLogo[1] + view.height / 2 - DisplayUtils.dp2px(context, 158f)
         }
@@ -166,38 +205,61 @@ class FeedbackLogoFloatAdapter : FloatViewAdapter<String>() {
         currentX = event.rawX
         currentY = event.rawY
 
-        if (event.rawX > halfStateMinX) {
-            //符合条件，显示半球
-            if (!isHalfLogo && dragXList.size > 3) {
+        if (event.rawX > halfStateRightMinX) {
+            //右侧滑动符合条件，显示半球
+            if (hideState is FeedbackHideState.NONE && dragXList.size > 3) {
                 val x3 = dragXList[dragXList.size - 1]
                 val x2 = dragXList[dragXList.size - 2]
                 val x1 = dragXList[dragXList.size - 3]
-                if (x1 >= halfStateMinX && x3 > x2 && x2 > x1) {
+                if (x1 >= halfStateRightMinX && x3 > x2 && x2 > x1) {
+                    hideState = FeedbackHideState.RIGHT
                     showShadowFloatView(view)
                     val endX = (view.width / 2).toFloat()
                     execLogoAnimator(view, 0f, endX)
-                    isHalfLogo = true
+                }
+            }
+        } else if (event.rawX < halfStateLeftMaX) {
+            //左侧滑动符合条件，显示半球
+            if (hideState is FeedbackHideState.NONE && dragXList.size > 3) {
+                val x3 = dragXList[dragXList.size - 1]
+                val x2 = dragXList[dragXList.size - 2]
+                val x1 = dragXList[dragXList.size - 3]
+                if (x3 < halfStateLeftMaX && x3 < x2 && x2 < x1) {
+                    hideState = FeedbackHideState.LEFT
+                    showShadowFloatView(view)
+                    val endX = (view.width / 2).toFloat()
+                    execLogoAnimator(view, 0f, -endX)
                 }
             }
         } else {
-            if (isHalfLogo) {
+            if (hideState is FeedbackHideState.RIGHT) {
                 //半球状态撤销
                 val startX = (view.width / 2).toFloat()
                 execLogoAnimator(view, startX, 0f)
                 dismissShadowFloatView()
-                isHalfLogo = false
+                hideState = FeedbackHideState.NONE
+            } else if (hideState is FeedbackHideState.LEFT) {
+                //半球状态撤销
+                val startX = (view.width / 2).toFloat()
+                execLogoAnimator(view, -startX, 0f)
+                dismissShadowFloatView()
+                hideState = FeedbackHideState.NONE
             }
         }
     }
 
     override fun dragEnd(view: View) {
         dragXList.clear()
-        if (isHalfLogo) {
+        if (hideState is FeedbackHideState.RIGHT) {
             dismissShadowFloatView()
-            val halfX = (view.width / 2).toFloat()
-            execLogoAnimator(view, halfX, 0f)
+            isLogoOpen = false
             setFloatGroupShow(view, false)
-            isHalfLogo = false
+            hideState = FeedbackHideState.NONE
+        } else if (hideState is FeedbackHideState.LEFT) {
+            dismissShadowFloatView()
+            isLogoOpen = false
+            setFloatGroupShow(view, false)
+            hideState = FeedbackHideState.NONE
         }
     }
 

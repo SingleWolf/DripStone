@@ -5,22 +5,9 @@
     android:layout_height="wrap_content"
     tools:ignore="ResourceName">
 
-    <RelativeLayout
-        android:id="@+id/groupFloatOpen"
-        android:layout_width="80dp"
-        android:layout_height="80dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_demo_feedback" />
-    </RelativeLayout>
-
     <ImageView
-        android:id="@+id/groupFloatHide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_demo_feedback_hide"
-        android:visibility="gone" />
+        android:id="@+id/groupFloatOpen"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/ic_demo_feedback" />
 </FrameLayout>

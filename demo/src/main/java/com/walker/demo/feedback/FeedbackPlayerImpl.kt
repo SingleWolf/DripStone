@@ -2,6 +2,7 @@ package com.walker.demo.feedback
 
 import android.Manifest
 import android.app.Activity
+import android.view.MotionEvent
 import androidx.fragment.app.FragmentActivity
 import com.lzf.easyfloat.EasyFloat
 import com.permissionx.guolindev.PermissionX
@@ -50,6 +51,13 @@ class FeedbackPlayerImpl : IPlayerCapacity, OnOrientationListener {
     }
 
     override fun getCurrentFlag() = ""
+    override fun dispatchTouchEventFromScreen(event: MotionEvent) {
+        if (EasyFloat.isShow(FeedbackTransactFloat.TAG)) {
+            LogHelper.get().i("FeedbackPlayerImpl", "监测到屏幕滑动，收起业务处理悬浮框")
+            EasyFloat.dismiss(FeedbackTransactFloat.TAG)
+            EasyFloat.show(FeedbackLogoFloat.TAG)
+        }
+    }
 
     fun startFloatWindow(activity: Activity) {
         floatViewAdapter.setCallback<Int>(object : FloatViewAdapter.OnCallback {

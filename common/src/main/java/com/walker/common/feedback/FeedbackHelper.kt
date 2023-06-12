@@ -2,6 +2,7 @@ package com.walker.common.feedback
 
 import android.app.Activity
 import android.app.Application
+import android.view.MotionEvent
 import com.walker.common.window.FloatingWindowManager
 import com.walker.common.window.OnOrientationListener
 
@@ -34,4 +35,8 @@ object FeedbackHelper : IFeedback {
 
     override fun getPrePageImage(activity: Activity) =
         FloatingWindowManager.genBitmapFromPreActivityView(activity)
+
+    override fun dispatchTouchEventFromScreen(event: MotionEvent) {
+        playerProxy?.dispatchTouchEventFromScreen(event)
+    }
 }

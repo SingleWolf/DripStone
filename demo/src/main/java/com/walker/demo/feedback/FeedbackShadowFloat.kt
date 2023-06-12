@@ -23,7 +23,7 @@ class FeedbackShadowFloat(var context: Context) : BaseFloatView(context) {
         } else {
             floatAdapter?.apply {
                 val screenH = DisplayUtils.getScreenHeight(context)
-                val locY=screenH-DisplayUtils.dp2px(context,290f)
+                val locY = screenH - DisplayUtils.dp2px(context, 290f)
                 EasyFloat.with(context.applicationContext)
                     .setShowPattern(ShowPattern.FOREGROUND)
                     .setSidePattern(SidePattern.RESULT_RIGHT)
@@ -43,17 +43,17 @@ class FeedbackShadowFloat(var context: Context) : BaseFloatView(context) {
 
     override fun showLocation(x: Int, y: Int) {
         if (isShow()) {
-            EasyFloat.updateFloat(TAG,x,y)
+            EasyFloat.updateFloat(TAG, x, y)
             floatAdapter?.notifyDataChanged()
         } else {
             floatAdapter?.apply {
                 EasyFloat.with(context.applicationContext)
                     .setShowPattern(ShowPattern.FOREGROUND)
-                    .setSidePattern(SidePattern.RESULT_RIGHT)
+                    .setSidePattern(SidePattern.RESULT_HORIZONTAL)
                     .setAnimator(null)
                     .setDragEnable(false)
                     .setMatchParent(widthMatch = false, heightMatch = false)
-                    .setGravity(Gravity.RIGHT, x, y)
+                    .setLocation(x, y)
                     .setLayoutChangedGravity(Gravity.END)
                     .setLayout(getLayoutId()) { it ->
                         attachView(it)
