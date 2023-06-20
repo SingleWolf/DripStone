@@ -8,6 +8,7 @@ import com.walker.ui.group.floatlayout.FloatLayoutFragment
 import com.walker.ui.group.goodfish.GoodFishFragment
 import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.ceiling.StarFragment
+import com.walker.ui.group.recyclerview.dragsort.DragSortFragment
 import com.walker.ui.group.recyclerview.draworder.DrawOrderFragment
 import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
 import com.walker.ui.group.recyclerview.weblist.WebListAdapter
@@ -131,6 +132,15 @@ class MockSummaryData private constructor() {
             Summary().run {
                 key = ArcMenuFragment.KEY_ID
                 title = "卫星菜单"
+                uri = ""
+                desc = ""
+                add(this)
+                LogHelper.get().d("generateSummary", title, true)
+            }
+
+            Summary().run {
+                key = DragSortFragment.KEY_ID
+                title = "拖拽排序"
                 uri = ""
                 desc = ""
                 add(this)

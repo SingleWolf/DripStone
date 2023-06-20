@@ -11,6 +11,7 @@ import com.walker.ui.group.goodfish.GoodFishFragment
 import com.walker.ui.group.photoview.MultiTouchFragment
 import com.walker.ui.group.photoview.PhotoViewFragment
 import com.walker.ui.group.recyclerview.ceiling.StarFragment
+import com.walker.ui.group.recyclerview.dragsort.DragSortFragment
 import com.walker.ui.group.recyclerview.draworder.DrawOrderFragment
 import com.walker.ui.group.recyclerview.slidecard.SlideCardFragment
 import com.walker.ui.group.recyclerview.weblist.WebListFragment
@@ -32,6 +33,7 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             DrawOrderFragment.KEY_ID -> DrawOrderFragment.instance().javaClass.name
             WebListFragment.KEY_ID -> WebListFragment.instance().javaClass.name
             ArcMenuFragment.KEY_ID -> ArcMenuFragment.instance().javaClass.name
+            DragSortFragment.KEY_ID -> DragSortFragment.instance().javaClass.name
             else -> null
         }
         return fragment
