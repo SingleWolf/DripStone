@@ -18,11 +18,16 @@ class DragItemTouchHelper : ItemTouchHelper.Callback {
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        //拖拽时支持的方向
-        val dragFlags = ItemTouchHelper.UP.or(ItemTouchHelper.DOWN).or(ItemTouchHelper.LEFT)
-            .or(ItemTouchHelper.RIGHT)
-        //拖拽时支持的方向
-        val swipeFlags = ItemTouchHelper.LEFT
+        val isDrag = isDragByDataConfig(viewHolder.bindingAdapterPosition)
+        var dragFlags = 0
+        var swipeFlags = 0
+        if (isDrag) {
+            //拖拽时支持的方向
+            dragFlags = ItemTouchHelper.UP.or(ItemTouchHelper.DOWN).or(ItemTouchHelper.LEFT)
+                .or(ItemTouchHelper.RIGHT)
+            //拖拽时支持的方向
+            swipeFlags = ItemTouchHelper.LEFT
+        }
         return makeMovementFlags(dragFlags, swipeFlags)
     }
 
@@ -49,6 +54,10 @@ class DragItemTouchHelper : ItemTouchHelper.Callback {
     }
 
     fun transactDragAction(fromPosition: Int, toPosition: Int) {
+        val isDrag = isDragByDataConfig(toPosition)
+        if (!isDrag) {
+            return
+        }
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
                 Collections.swap(dataList, i, i + 1)
@@ -79,6 +88,16 @@ class DragItemTouchHelper : ItemTouchHelper.Callback {
 
     override fun isItemViewSwipeEnabled(): Boolean {
         return true
+    }
+
+    private fun isDragByDataConfig(bindingAdapterPosition: Int): Boolean {
+        var isDrag = true
+        dataList?.apply {
+            if (this.size > bindingAdapterPosition) {
+                isDrag = this[bindingAdapterPosition].isDrag
+            }
+        }
+        return isDrag
     }
 
 }

@@ -31,24 +31,31 @@ class DragSortFragment : BaseFragment() {
         val dataList = mutableListOf<DragData>()
         var imageId = 0
         for (i in 0 until 12) {
-            if (i % 3 == 0) {
-                imageId = R.color.red
-            } else if (i % 3 == 1) {
-                imageId = R.color.blue
-            } else if (i % 3 == 2) {
-                imageId = R.color.green
-            }
-            DragData("$i", imageId).also {
-                dataList.add(it)
+            if (i > 8) {
+                imageId=R.color.lightpink
+                DragData("$i", imageId, false).also {
+                    dataList.add(it)
+                }
+            } else {
+                if (i % 3 == 0) {
+                    imageId = R.color.red
+                } else if (i % 3 == 1) {
+                    imageId = R.color.blue
+                } else if (i % 3 == 2) {
+                    imageId = R.color.green
+                }
+                DragData("$i", imageId).also {
+                    dataList.add(it)
+                }
             }
         }
 
-        val myLayoutManager = GridLayoutManager(holdContext, 3)
-//        val myLayoutManager = LinearLayoutManager(holdContext)
+//        val myLayoutManager = GridLayoutManager(holdContext, 3)
+        val myLayoutManager = LinearLayoutManager(holdContext)
         recyclerView.layoutManager = myLayoutManager
         recyclerView.isNestedScrollingEnabled = true
 
-        val dragAdapter = DragAdapter(holdContext, dataList,R.layout.item_ui_image)
+        val dragAdapter = DragAdapter(holdContext, dataList, R.layout.item_ui_image)
         recyclerView.adapter = dragAdapter
 
         val itemTouchHelper = ItemTouchHelper(DragItemTouchHelper(dataList, dragAdapter))
