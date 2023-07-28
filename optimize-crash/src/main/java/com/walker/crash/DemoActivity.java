@@ -46,6 +46,18 @@ public class DemoActivity extends AppCompatActivity {
         CrashReport.testNativeCrash();
     }
 
+    public void onNativeAirBag(View v) {
+        NativeAirbagHelper.openNativeAirbag(11,"","");
+    }
+
+    public void onTestNativeAirBag_1(View v) {
+        NativeAirbagHelper.testNativeCrash_1();
+    }
+
+    public void onTestNativeAirBag_2(View v) {
+        NativeAirbagHelper.testNativeCrash_2();
+    }
+
     public static boolean isAvilible(Context context) {
         List<PackageInfo> pinfo = context.getPackageManager().getInstalledPackages(0);// 获取所有已安装程序的包信息
         if (pinfo != null) {

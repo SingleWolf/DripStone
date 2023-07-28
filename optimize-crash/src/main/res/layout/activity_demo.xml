@@ -22,5 +22,26 @@
             android:layout_margin="15dp"
             android:onClick="onNativeCrash"
             android:text="模拟Native层Crash" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="15dp"
+            android:onClick="onNativeAirBag"
+            android:text="设置Native层安全气囊" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="15dp"
+            android:onClick="onTestNativeAirBag_1"
+            android:text="验证native安全气囊(已配置)" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="15dp"
+            android:onClick="onTestNativeAirBag_2"
+            android:text="验证native安全气囊(未配置)" />
     </LinearLayout>
 </LinearLayout>
