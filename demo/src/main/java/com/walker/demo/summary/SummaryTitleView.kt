@@ -7,6 +7,7 @@ import com.walker.common.view.titleview.TitleView
 import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.floatview.FloatWindowFragment
 import com.walker.demo.fmod.VoiceChangeFragment
+import com.walker.demo.httpclient.HttpClientFragment
 import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.largebitmap.LargeBitmapFragment
 import com.walker.demo.location.LocationFragment
@@ -14,6 +15,7 @@ import com.walker.demo.paging3.RepoFragment
 import com.walker.demo.shortcut.ShortcutFragment
 import com.walker.demo.taskflow.TaskFlowFragment
 import com.walker.demo.vcard.VCardTestFragment
+import com.walker.demo.window.LongImageCutFragment
 import com.walker.demo.window.PrePageBitmapFragment
 
 class SummaryTitleView(context: Context) : TitleView(context) {
@@ -34,6 +36,8 @@ class SummaryTitleView(context: Context) : TitleView(context) {
             FloatWindowFragment.KEY_ID -> FloatWindowFragment.instance().javaClass.name
             VCardTestFragment.KEY_ID -> VCardTestFragment.instance().javaClass.name
             PrePageBitmapFragment.KEY_ID -> PrePageBitmapFragment.instance().javaClass.name
+            LongImageCutFragment.KEY_ID -> LongImageCutFragment.instance().javaClass.name
+            HttpClientFragment.KEY_ID -> HttpClientFragment.instance().javaClass.name
             else -> null
         }
         return fragment

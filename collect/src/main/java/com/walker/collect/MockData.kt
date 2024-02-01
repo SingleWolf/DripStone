@@ -24,9 +24,9 @@ class MockSummaryData private constructor() {
         const val IMAGE_URL_NEWS =
             "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.vjshi.com%2F2016-01-27%2F2015-6dc681e22794b6df133e5514323313ed%2F00002.jpg%3Fx-oss-process%3Dstyle%2Fwatermark&refer=http%3A%2F%2Fpic.vjshi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627540680&t=6fe14f9ee4c38233164f071a154da3ca"
         const val IMAGE_URL_FOOD =
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-09-19%2F5ba1c5466ecf4.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627541006&t=eac76db71fd4aecef8848b337a48c198"
+            "https://n.sinaimg.cn/sinacn16/165/w600h365/20181115/b05c-hnvukff4031804.jpg"
         const val IMAGE_URL_SMILE =
-            "https://img1.baidu.com/it/u=1756422723,3273404372&fm=26&fmt=auto&gp=0.jpg"
+            "https://inews.gtimg.com/newsapp_bt/0/14879405807/641"
 
         fun get(): MockSummaryData {
             return Holder.instance

@@ -13,6 +13,7 @@ import com.walker.common.location.LocationHelper
 import com.walker.common.router.IOptimizeRouter
 import com.walker.common.router.IStudyRouter
 import com.walker.common.share.IShareConfig
+import com.walker.common.view.watermark.WaterMarkHelper
 import com.walker.common.window.FloatingWindowManager
 import com.walker.core.log.LogHelper
 import com.walker.core.router.RouterLoader
@@ -44,6 +45,7 @@ class GlobalApplication : BaseApplication() {
         initPlugin()
         registerActivityLifecycle()
         initOptimize()
+        WaterMarkHelper.init(this)
     }
 
     private fun initSkin() {

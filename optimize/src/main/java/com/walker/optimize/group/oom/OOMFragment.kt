@@ -16,7 +16,7 @@ import com.lzf.easyfloat.enums.SidePattern
 import com.lzf.easyfloat.interfaces.OnInvokeView
 import com.lzf.easyfloat.interfaces.OnTouchRangeListener
 import com.lzf.easyfloat.utils.DragUtils
-import com.lzf.easyfloat.widget.switch.BaseSwitchView
+import com.lzf.easyfloat.widget.BaseSwitchView
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.callback.ExplainReasonCallback
 import com.permissionx.guolindev.callback.RequestCallback

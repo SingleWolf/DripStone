@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.walker.common.R
 import com.walker.common.fragment.EmptyFragment
+import com.walker.common.view.watermark.WaterMarkTag
 import com.walker.core.log.LogHelper
 import kotlinx.android.synthetic.main.activity_common_show.*
 
@@ -102,5 +103,10 @@ class ShowActivity : AppCompatActivity() {
             }
         }
         return fragment
+    }
+
+    @WaterMarkTag(markText = "walker", marginTop = 180)
+    fun setWaterMark() {
+
     }
 }

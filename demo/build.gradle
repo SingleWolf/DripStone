@@ -137,6 +137,8 @@ dependencies {
     implementation 'androidx.paging:paging-runtime:3.0.0-beta01'
     //fmd的jar包
     implementation files("libs\\fmod.jar")
+    //apache httpclient的jar包
+    implementation files("libs\\org.apache.http.legacy.jar")
     //vcard
     implementation ('com.googlecode.ez-vcard:ez-vcard:0.12.0'){
         exclude group: 'org.jsoup'
@@ -145,4 +147,6 @@ dependencies {
     }
     //二维码识别
     implementation 'com.github.yuzhiqiang1993:zxing:2.2.9'
+    //Subsampling Scale Image View
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
 }

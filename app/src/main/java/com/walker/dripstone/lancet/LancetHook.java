@@ -1,5 +1,7 @@
 package com.walker.dripstone.lancet;
 
+import android.util.Log;
+
 import com.walker.common.router.IUserCenterRouter;
 import com.walker.core.log.LogHelper;
 import com.walker.core.router.RouterLoader;
@@ -10,6 +12,7 @@ import com.walker.optimize.group.lancet.LancetFragment;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 import me.ele.lancet.base.Origin;
+import me.ele.lancet.base.Scope;
 import me.ele.lancet.base.This;
 import me.ele.lancet.base.annotations.Insert;
 import me.ele.lancet.base.annotations.Proxy;
@@ -22,11 +25,10 @@ public class LancetHook {
     @Insert("testError")
     @TargetClass("com.walker.optimize.group.lancet.LancetTest")
     public static void testFun(String msg) {
-        msg = msg + "   -lancet";
         try {
             Origin.callVoid();
         } catch (Exception e) {
-            LogHelper.get().e("LancetHook", e.toString());
+            LogHelper.get().e("LancetHook", "testError : " + e.toString());
             ToastUtils.showCenterLong("error=" + e.toString());
         }
     }
@@ -47,9 +49,17 @@ public class LancetHook {
 
     @Proxy("i")
     @TargetClass("android.util.Log")
-    public static int logFun(String tag, String msg) {
+    public static int interceptLogI(String tag, String msg) {
         msg = msg + "-lancet";
         return (int) Origin.call();
+    }
+
+
+    @TargetClass(value = "androidx.appcompat.app.AppCompatActivity", scope = Scope.LEAF)
+    @Insert(value = "onStop", mayCreateSuper = true)
+    protected void onStop() {
+        Log.i("LancetHook", This.get().getClass().getSimpleName() + " - onStop()");
+        Origin.callVoid();
     }
 
     public static class CallbackFunction implements Function2<Integer, String, Unit> {
@@ -74,4 +84,18 @@ public class LancetHook {
             return null;
         }
     }
+
+//    @TargetClass("org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager")
+//    @Proxy("finalize")
+//    protected void finalize() {
+//        LogHelper.get().i("LancetHook", "ThreadSafeClientConnManager -> finalize()");
+//        Origin.callVoid();
+//    }
+//
+//    @TargetClass("org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager")
+//    @Proxy("shutdown")
+//    public void shutdown() {
+//        LogHelper.get().i("LancetHook", "ThreadSafeClientConnManager -> shutdown()");
+//        Origin.callVoid();
+//    }
 }

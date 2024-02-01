@@ -24,6 +24,7 @@ import com.walker.common.view.banner.holder.ViewHolder
 import com.walker.common.view.banner.view.MultiBanner
 import com.walker.common.view.banner.view.MultiBanner.OnPageClickListener
 import com.walker.core.base.mvc.BaseFragment
+import com.walker.core.log.LogHelper
 import com.walker.core.util.DisplayUtils
 
 
@@ -114,6 +115,7 @@ class SummaryFragment : BaseFragment(), Observer<SummaryListBean> {
         }
 
         override fun onBind(context: Context?, data: Summary, position: Int, size: Int) {
+            LogHelper.get().i("BannerViewHolder","onBind position=$position")
             ImageLoadHelper.loadUrl(imageView, data.imageUrl, null)
         }
 

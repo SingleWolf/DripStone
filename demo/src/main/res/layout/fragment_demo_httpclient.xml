@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tvStart"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="开始持续请求" />
+
+    <TextView
+        android:id="@+id/tvStop"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="停止请求" />
+
+    <TextView
+        android:id="@+id/tvGC"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_react_theme_r10"
+        android:gravity="center"
+        android:text="执行GC" />
+</LinearLayout>

@@ -5,6 +5,7 @@ import com.walker.core.util.GsonUtils
 import com.walker.demo.a2b.AppA2bFragment
 import com.walker.demo.floatview.FloatWindowFragment
 import com.walker.demo.fmod.VoiceChangeFragment
+import com.walker.demo.httpclient.HttpClientFragment
 import com.walker.demo.install.AppInstallFragment
 import com.walker.demo.largebitmap.LargeBitmapFragment
 import com.walker.demo.location.LocationFragment
@@ -14,6 +15,7 @@ import com.walker.demo.summary.Summary
 import com.walker.demo.summary.SummaryListBean
 import com.walker.demo.taskflow.TaskFlowFragment
 import com.walker.demo.vcard.VCardTestFragment
+import com.walker.demo.window.LongImageCutFragment
 import com.walker.demo.window.PrePageBitmapFragment
 
 class MockSummaryData private constructor() {
@@ -128,7 +130,22 @@ class MockSummaryData private constructor() {
             summaryList.add(this)
         }
 
+        Summary().run {
+            key = LongImageCutFragment.KEY_ID
+            title = "长图截屏"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
 
+
+        Summary().run {
+            key = HttpClientFragment.KEY_ID
+            title = "HttpClient复用问题"
+            uri = ""
+            desc = ""
+            summaryList.add(this)
+        }
         return summaryList
     }
 
