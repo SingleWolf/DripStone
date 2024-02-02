@@ -3,7 +3,9 @@ package com.walker.demo
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.TextUtils
+import android.os.Handler
+import android.os.Looper
+import android.provider.MediaStore
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +14,14 @@ import com.permissionx.guolindev.callback.ExplainReasonCallback
 import com.permissionx.guolindev.callback.RequestCallback
 import com.walker.common.feedback.FeedbackHelper
 import com.walker.core.log.LogHelper
-import com.walker.core.util.ToastUtils
 import com.walker.demo.summary.SummaryFragment
+import com.walker.demo.screenshot.ScreenshotObserver
 import kotlinx.android.synthetic.main.activity_demo_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private var screenshotObserver: ScreenshotObserver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo_main)
@@ -46,6 +51,23 @@ class MainActivity : AppCompatActivity() {
             )
 
         interceptWindowCallback()
+        initScreenShot()
+    }
+
+    private fun initScreenShot() {
+        if (screenshotObserver == null) {
+            screenshotObserver = ScreenshotObserver(
+                Handler(Looper.getMainLooper()),
+                this
+            )
+        }
+        screenshotObserver?.apply {
+            contentResolver?.registerContentObserver(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                true,
+                this
+            )
+        }
     }
 
     private fun initToolbar() {
@@ -167,6 +189,13 @@ class MainActivity : AppCompatActivity() {
             override fun onActionModeFinished(mode: ActionMode) {
                 super@MainActivity.onActionModeFinished(mode)
             }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        screenshotObserver?.apply {
+            contentResolver?.unregisterContentObserver(this)
         }
     }
 }

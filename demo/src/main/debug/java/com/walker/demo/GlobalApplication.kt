@@ -12,7 +12,7 @@ import com.walker.core.util.ToastUtils
 import com.walker.common.feedback.FeedbackHelper
 import com.walker.demo.feedback.FeedbackPlayerImpl
 
-class GlobalApplication :BaseApplication() {
+class GlobalApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         //log
@@ -35,6 +35,6 @@ class GlobalApplication :BaseApplication() {
         StorageHelper.init(context, "DripStone")
         //FloatingWindow
         //FloatingWindowManager.init(this)
-        FeedbackHelper.config(this,FeedbackPlayerImpl())
+//        FeedbackHelper.config(this,FeedbackPlayerImpl())
     }
 }
