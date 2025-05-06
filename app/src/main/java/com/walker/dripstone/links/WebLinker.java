@@ -4,7 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.walker.webview.WebviewActivity;
+import com.walker.common.router.IWebviewRouter;
+import com.walker.core.router.RouterLoader;
 
 /**
  * @Author Walker
@@ -32,7 +33,10 @@ public class WebLinker implements ILinker {
     @Override
     public void onTransact(Context context) {
         if (!TextUtils.isEmpty(url)) {
-            WebviewActivity.start(context, "DeepLink", url);
+            IWebviewRouter webviewRouter = RouterLoader.load(IWebviewRouter.class);
+            if (webviewRouter != null) {
+                webviewRouter.startActivity(context, "DeepLink", url);
+            }
         }
         isEnable = false;
     }

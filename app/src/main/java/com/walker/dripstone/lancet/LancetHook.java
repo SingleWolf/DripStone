@@ -7,7 +7,6 @@ import com.walker.core.log.LogHelper;
 import com.walker.core.router.RouterLoader;
 import com.walker.core.util.ToastUtils;
 import com.walker.dripstone.GlobalApplication;
-import com.walker.optimize.group.lancet.LancetFragment;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -75,9 +74,9 @@ public class LancetHook {
             if (resultCode == 1) {
                 isLoginSuccess = true;
                 LogHelper.get().i("LancetHook", "登录成功");
-                if (instance != null && instance instanceof LancetFragment) {
-                    ((LancetFragment) instance).onAopLoginTapped();
-                }
+//                if (instance != null && instance instanceof LancetFragment) {
+//                    ((LancetFragment) instance).onAopLoginTapped();
+//                }
             } else {
                 LogHelper.get().i("LancetHook", "登录失败");
             }
